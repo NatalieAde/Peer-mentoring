@@ -4,8 +4,8 @@ import {
   Grid
 } from '@material-ui/core';
 
-import { Route } from "react-router-dom";
-import Home from "../Home/home";
+import { Route, Redirect } from "react-router-dom";
+import ProfilePage from "../Profile";
 
 import MaterialLayout from '../../Layout/layout';
 import FormModel from '../Registration/FormModel/formModel';
@@ -21,7 +21,7 @@ export default function SignInPage() {
     email: '',
     password: '',
   });
-  const [isSignedIn, setSignIn] = useState('false')
+  const [isSignedIn, setSignIn] = useState(false)
 
   const { email, password, textChange } = formFields
   const handleChange = text => e => {
@@ -29,61 +29,31 @@ export default function SignInPage() {
   };
 
   const handleSubmit = e => {
+    console.log(isSignedIn);
     console.log('http://localhost:5000/app/signin');
     e.preventDefault();
-fetch('http://localhost:5000/app/signin', {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify(formFields)
-})
-.then(res => res.json())
-.then(json => {
-  console.log(json);
-  if(json.success){
-    alert('SUCCESS')
-    setSignIn('true')
-  }else{
-    alert('FAIL')
-  }
-})
-
-  //   if(email && password) {
-  //     setFormFields({ ...formFields, textChange: 'Loading' });
-  //     axios.post('http://localhost:5000/app/signin', {
-  //       email:email,
-  //       password:password
-  //     })
-  //     // .then(res => {
-  //     //     setFormFields({
-  //     //       ...formFields,
-  //     //       email: '',
-  //     //       password: '',
-  //     //       textChange: 'Submitted'
-  //     //     });
-  //     //   })
-  //       .then(res => {
-  //         if(res.success){
-  //           alert('SUCCESS')
-  //         }else{
-  //           alert('FAIL')
-  //         }
-  //       })
-  //       .catch(err => {
-  //         setFormFields({
-  //           ...formFields,
-  //           email: '',
-  //           password: '',
-  //           textChange: 'Sign In'
-  //         });
-  //         console.log(err.response);
-  //       });
-  //   }
+    fetch('http://localhost:5000/app/signin', {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(formFields)
+    })
+    .then(res => res.json())
+    .then(json => {
+      console.log(json);
+      if(json.success){
+        alert('SUCCESS')
+        setSignIn(true)
+        console.log(isSignedIn);
+      }else{
+        alert('FAIL')
+        setSignIn(false)
+      }
+    })
   }
 
   return(
     <div>
-      {isSignedIn ?         <Route path="/" exact component={Home} />
- : null}
+      {isSignedIn ? <Redirect to="/profile" /> : null}
       <MaterialLayout>
         <p>Sign In</p>
         <form onSubmit={handleSubmit}>
