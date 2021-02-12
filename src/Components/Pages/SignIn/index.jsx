@@ -1,161 +1,114 @@
-import React, { Component } from 'react';
+import React, { usestate } from 'react';
 import {
   Typography,
   Grid
 } from '@material-ui/core';
-import {
-    getFromStorage,
-    setInStorage
-} from '../../utils/storage';
+
+import { Route } from "react-router-dom";
+import Home from "../Home/home";
 
 import MaterialLayout from '../../Layout/layout';
 import FormModel from '../Registration/FormModel/formModel';
+import { useState } from 'react';
+import axios from 'axios';
+import { Form } from 'formik';
 
 const { formId, formField } = FormModel;
 
 
-    class SignInPage extends Component {
-        constructor() {
-          super()
-          this.state = {
-            email: '',
-            password: '',
-            isAuthenticated: false,
-            token: '',
-            signInError: '',
-            isLoading: false
-          }
-          this.changeEmail = this.changeEmail.bind(this);
-          this.changePassword = this.changePassword.bind(this);
-          this.onSubmit = this.onSubmit.bind(this);
-        }
+export default function SignInPage() {
+  const [formFields, setFormFields] = useState({
+    email: '',
+    password: '',
+  });
+  const [isSignedIn, setSignIn] = useState('false')
 
-        changeEmail(event) {
-            this.setState ({
-              email: event.target.value
-            })
-          }
-        
-          changePassword(event) {
-            this.setState ({
-              password: event.target.value
-            })
-          }
+  const { email, password, textChange } = formFields
+  const handleChange = text => e => {
+    setFormFields({ ...formFields, [text]: e.target.value });
+  };
 
-          componentDidMount() {
-            const obj = getFromStorage('the_main_page');
-            if (obj && obj.token) {
-                const { token } = obj;
-                fetch('http://localhost:5000/app/verify?token=' + token)
-              .then(response => response.json())
-              .then(json => {
-                  if (json.success) {
-                      this.setState({
-                          token: token,
-                          isLoading: false
-                      });
-                  } else {
-                      this.setState({
-                          isLoading: false
-                      })
-                  }
-              })
-            } else {
-                this.setState({
-                    isLoading: false
-                })
-            }}
+  const handleSubmit = e => {
+    console.log('http://localhost:5000/app/signin');
+    e.preventDefault();
+fetch('http://localhost:5000/app/signin', {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify(formFields)
+})
+.then(res => res.json())
+.then(json => {
+  console.log(json);
+  if(json.success){
+    alert('SUCCESS')
+    setSignIn('true')
+  }else{
+    alert('FAIL')
+  }
+})
 
-          onSubmit() {
-              const {
-                email,
-                password
-              }=this.setState;
+  //   if(email && password) {
+  //     setFormFields({ ...formFields, textChange: 'Loading' });
+  //     axios.post('http://localhost:5000/app/signin', {
+  //       email:email,
+  //       password:password
+  //     })
+  //     // .then(res => {
+  //     //     setFormFields({
+  //     //       ...formFields,
+  //     //       email: '',
+  //     //       password: '',
+  //     //       textChange: 'Submitted'
+  //     //     });
+  //     //   })
+  //       .then(res => {
+  //         if(res.success){
+  //           alert('SUCCESS')
+  //         }else{
+  //           alert('FAIL')
+  //         }
+  //       })
+  //       .catch(err => {
+  //         setFormFields({
+  //           ...formFields,
+  //           email: '',
+  //           password: '',
+  //           textChange: 'Sign In'
+  //         });
+  //         console.log(err.response);
+  //       });
+  //   }
+  }
 
-              this.setState({
-                  isLoading:true,
-            });
-
-            fetch('http://localhost:5000/app/signin', {
-                  method: 'POST',
-                  headers:{
-                    'Content-type': 'application/jason'
-                  },
-                  body: JSON.stringify({
-                      email: email,
-                      password: password
-                  })
-              }).then(response => response.json())
-              .then(json => {
-                    console.log('json', json);
-                    if (json.success) {
-                        setInStorage('the_main_app', { token: json.token })
-                        this.setState({
-                            email: 'test',
-                            password: '',
-                            isLoading: false,
-                            token: json.token
-                        });
-                    } else {
-                        this.setState({
-                            isloading: false
-                        })
-                    }
-              })
-          }
-
-render(){ 
-const {
-    isLoading,
-    token,
-    email,
-    password
-} = this.state;
-      
-      if (isLoading){
-      return (<div><p>Loading... {email}</p></div>)
-      } 
-
-      if (!token){
-        return (<div>
+  return(
+    <div>
+      {isSignedIn ?         <Route path="/" exact component={Home} />
+ : null}
       <MaterialLayout>
-        <Typography component="h1" variant="h4" align="center">
-          Sign In
-        </Typography>
-        <form onSubmit = {this.onSubmit}>
-                <Grid container spacing={3}> 
-                
-                <Grid item xs={12}>
-               
-                <input type = 'email'
-                placeholder = 'Email'
-                value = {email}
-                className = 'form-control form-group'
-                onChange={this.changeEmail}
-                />
-                </Grid>
-                <Grid item xs={12}>
-
-                <input type = 'password'
-                placeholder = 'Password'
-                value = {password}
-                className = 'form-control form-group'
-                onChange={this.changePassword}
-                />                
-                </Grid>
-            </Grid>
-              <button onClick={this.onSubmit}>SiGN in</button>
-            </form>
+        <p>Sign In</p>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Email:
+            <input 
+              type="email"
+              name="email" 
+              onChange={handleChange('email')}
+              value={email}
+            />
+          </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange('password')}
+              value={password}
+            />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
       </MaterialLayout>
-        </div>)
-} 
+    </div>
+  )
 
-        return(
-            <div>
-                <p>Success</p>
-            </div>
-        )
-}};
-
-
-export default SignInPage;
+};
