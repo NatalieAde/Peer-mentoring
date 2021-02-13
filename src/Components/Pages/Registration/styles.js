@@ -20,12 +20,13 @@ export default makeStyles(theme => ({
   buttons: {
     display: 'flex',
     justifyContent: 'flex-end',
-    textTransform: 'none'
+    textTransform: 'none',
   },
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
-    textTransform: 'none'
+    textTransform: 'none',
+    backgroundColor: "#F1960D",
   },
   wrapper: {
     margin: theme.spacing(1),

@@ -1,22 +1,17 @@
-import React, { usestate } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Typography,
-  Grid
+  TextField,
+  Button,
 } from '@material-ui/core';
+import { AuthContext } from '../../../App';
 
-import { Route, Redirect } from "react-router-dom";
-import ProfilePage from "../Profile";
+import { Redirect } from "react-router-dom";
 
 import MaterialLayout from '../../Layout/layout';
-import FormModel from '../Registration/FormModel/formModel';
-import { useState } from 'react';
-import axios from 'axios';
-import { Form } from 'formik';
-
-const { formId, formField } = FormModel;
-
 
 export default function SignInPage() {
+  const { dispatch } = useContext(AuthContext);
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
@@ -30,7 +25,6 @@ export default function SignInPage() {
 
   const handleSubmit = e => {
     console.log(isSignedIn);
-    console.log('http://localhost:5000/app/signin');
     e.preventDefault();
     fetch('http://localhost:5000/app/signin', {
       method: "POST",
@@ -49,36 +43,56 @@ export default function SignInPage() {
         setSignIn(false)
       }
     })
+    .then(resJson => {
+      dispatch({
+        type: "SIGNIN",
+        payload: resJson
+      })
+    })
   }
 
   return(
-    <div>
+    <React.Fragment>
       {isSignedIn ? <Redirect to="/profile" /> : null}
       <MaterialLayout>
-        <p>Sign In</p>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email:
-            <input 
-              type="email"
-              name="email" 
-              onChange={handleChange('email')}
-              value={email}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange('password')}
-              value={password}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+          <Typography component="h1" variant="h4" align="center" style={{textAlign:'center'}}>
+            Sign In
+          </Typography>
+            <form onSubmit={handleSubmit} style={{display: 'flex',flexWrap: 'wrap',}}>
+              <TextField
+                type="email"
+                name="email" 
+                onChange={handleChange('email')}
+                value={email}
+                label= "Email"
+                style={{width:"100%", marginBottom:"5%" }}
+              />
+              <TextField
+              id="standard-full-width"
+              fullWidth
+                type="password"
+                name="password"
+                onChange={handleChange('password')}
+                value={password}
+                label="Password"
+                style={{width:"100%" }}
+              />
+              <Button
+                disabled={!email && !password}
+                type="submit"
+                variant="contained"
+                style={{ 
+                  marginTop: "10%",
+                  textTransform: 'none',
+                  backgroundColor: "#F1960D",
+                  color: "#FFFFFF",
+                }}
+              >
+                Sign In
+              </Button>
+            </form>
       </MaterialLayout>
-    </div>
+    </React.Fragment>
   )
 
 };

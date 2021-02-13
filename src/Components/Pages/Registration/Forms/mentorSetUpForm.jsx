@@ -26,7 +26,7 @@ export default function MentorSetUpForm(props) {
           />
         </Grid>
         
-        {/* <Grid item xs={12}>
+        <Grid item xs={12}>
           <SelectField
             name={numOfMentees.name}
             label={numOfMentees.label}
@@ -34,7 +34,7 @@ export default function MentorSetUpForm(props) {
             fullWidth
           />
         </Grid>
-         */}
+        
         <Grid item xs={12}>
           <SelectField
             name={matchingCriteria.name}

@@ -3,11 +3,33 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { IconButton } from '@material-ui/core';
+import { AccountCircle, ExitToApp } from '@material-ui/icons';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+
+import { Link } from "react-router-dom";
+
 import useStyles from './styles';
 
 export default function Header() {
   const classes = useStyles();
   const [clicked, setClick] = useState(false);
+  const [isSignedIn, setSignIn] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  // const handleChange = (event) => {
+  //   setSignIn(event.props.isSignedIn);
+  // };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     
@@ -20,7 +42,50 @@ export default function Header() {
         <Button className={classes.button} href="/">Calendar</Button>
         <Button className={classes.button} href="/">Resources</Button>
         <Button className={classes.button} href="/">Testimonials</Button>
-        
+
+        {isSignedIn && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <Link to="/profile" style={{ textDecoration: 'none', display: 'block', color: '#000000' }}>
+                <MenuItem
+                  onClick={handleClose}
+                  >
+                    Profile
+                </MenuItem>
+                </Link>
+                <Link to="/profile" style={{ textDecoration: 'none', display: 'block', color: '#000000' }}>
+                <MenuItem onClick={handleClose}>
+                  <ExitToApp fontSize="small" />
+                  Log Out
+                </MenuItem>
+                </Link>
+              </Menu>
+            </div>
+          )}
+        {!isSignedIn && (
         <div style={{ display: "flex", justifyContent: 'flex-end', flexWrap: 'nowrap', marginLeft: 'auto'  }}>
             <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '2%'}} href="/signin">
               <Typography noWrap>
@@ -31,6 +96,7 @@ export default function Header() {
               Register
             </Button>
         </div>
+        )}
       </Toolbar>
     </AppBar>
   );

@@ -1,2 +1,2 @@
-import ReviewForm from './reviewOrder';
+import ReviewForm from './reviewForm';
 export default ReviewForm;
