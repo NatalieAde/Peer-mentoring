@@ -18,7 +18,7 @@ export default function SignInPage() {
   });
   const [isSignedIn, setSignIn] = useState(false)
 
-  const { email, password, textChange } = formFields
+  const { email, password} = formFields
   const handleChange = text => e => {
     setFormFields({ ...formFields, [text]: e.target.value });
   };
@@ -38,6 +38,13 @@ export default function SignInPage() {
         alert('SUCCESS')
         setSignIn(true)
         console.log(isSignedIn);
+        localStorage.setItem("users", JSON.stringify(json));
+        
+        // dispatch({
+        //   type: "SIGNIN",
+        //   payload: json
+        // })
+        
       }else{
         alert('FAIL')
         setSignIn(false)

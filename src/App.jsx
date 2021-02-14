@@ -7,6 +7,12 @@ import Home from './Components/Pages/Home/home';
 import Navbar from './Components/Header';
 import NavbarSignedOut from './Components/Header/navBarSignedOut';
 import ProfilePage from "./Components/Pages/Profile";
+import MyMatchPage from "./Components/Pages/MyMatch";
+import MessagesPage from "./Components/Pages/Messages";
+import GoalsPage from "./Components/Pages/Goals";
+import CalendarPage from "./Components/Pages/Calendar";
+import ResourcesPage from "./Components/Pages/Resources";
+import TestimonialsPage from "./Components/Pages/Testimonials";
 import { isNull } from 'lodash';
 
 export const AuthContext = createContext();
@@ -51,12 +57,18 @@ function App() {
     >
       <Router>
         <div>
-          {state.isSignedIn ? <Navbar /> : <NavbarSignedOut/>}
+          {localStorage.getItem("users") ? <Navbar /> : <NavbarSignedOut/>}
           <br/>
           <Route path="/" exact component={Home} />
           <Route path="/registration" exact component={RegistrationPage} />
           <Route path="/signin" exact component={SignInPage} />
           <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/myMatch" exact component={MyMatchPage} />
+          <Route path="/messages" exact component={MessagesPage} />
+          <Route path="/goals" exact component={GoalsPage} />
+          <Route path="/calendar" exact component={CalendarPage} />
+          <Route path="/resources" exact component={ResourcesPage} />
+          <Route path="/testimonials" exact component={TestimonialsPage} />
         </div>
       </Router>
     </AuthContext.Provider>

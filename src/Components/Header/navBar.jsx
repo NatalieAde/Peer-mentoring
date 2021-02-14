@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext }from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,20 +8,19 @@ import { AccountCircle, ExitToApp } from '@material-ui/icons';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
+import { AuthContext } from '../../App';
+
 import { Link } from "react-router-dom";
 
 import useStyles from './styles';
 
 export default function Header() {
+  const { dispatch } = useContext(AuthContext);
   const classes = useStyles();
   const [clicked, setClick] = useState(false);
-  const [isSignedIn, setSignIn] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  // const handleChange = (event) => {
-  //   setSignIn(event.props.isSignedIn);
-  // };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,14 +35,13 @@ export default function Header() {
     <AppBar position="absolute" className={classes.appBar}>
       <Toolbar style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'nowrap'  }}>
         <Button onClick={() => setClick(true)} className={clicked ? classes.clickedButton :classes.button} href="/">Peer2Peer Mentoring</Button>
-        <Button className={classes.button} href="/">My Match</Button>
-        <Button className={classes.button} href="/">Messages</Button>
-        <Button className={classes.button} href="/">Goals</Button>
-        <Button className={classes.button} href="/">Calendar</Button>
-        <Button className={classes.button} href="/">Resources</Button>
-        <Button className={classes.button} href="/">Testimonials</Button>
+        <Button className={classes.button} href="/myMatch">My Match</Button>
+        <Button className={classes.button} href="/messages">Messages</Button>
+        <Button className={classes.button} href="/goals">Goals</Button>
+        <Button className={classes.button} href="/calendar">Calendar</Button>
+        <Button className={classes.button} href="/resources">Resources</Button>
+        <Button className={classes.button} href="/testimonials">Testimonials</Button>
 
-        {isSignedIn && (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -76,27 +74,21 @@ export default function Header() {
                     Profile
                 </MenuItem>
                 </Link>
-                <Link to="/profile" style={{ textDecoration: 'none', display: 'block', color: '#000000' }}>
-                <MenuItem onClick={handleClose}>
+                <Link 
+                  to="/" 
+                  style={{ textDecoration: 'none', display: 'block', color: '#000000' }}
+                >
+                <MenuItem 
+                  onClick={() => dispatch({
+                    type: "LOGOUT"
+                  })}
+                >
                   <ExitToApp fontSize="small" />
                   Log Out
                 </MenuItem>
                 </Link>
               </Menu>
             </div>
-          )}
-        {!isSignedIn && (
-        <div style={{ display: "flex", justifyContent: 'flex-end', flexWrap: 'nowrap', marginLeft: 'auto'  }}>
-            <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '2%'}} href="/signin">
-              <Typography noWrap>
-              Sign In
-              </Typography>
-            </Button>
-            <Button variant="contained" style={{backgroundColor: '#FF9505', color: '#FFFFFF', textTransform: 'none'}} href="/registration">
-              Register
-            </Button>
-        </div>
-        )}
       </Toolbar>
     </AppBar>
   );
