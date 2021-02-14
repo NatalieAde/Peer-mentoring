@@ -84,5 +84,11 @@ router.post("/signin", (req, res) => {
       });
   });
 
+  router.get("/:id", (req, res) => {
+    UserSession.findById(req.params.id)
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+  });
+
 
 module.exports = router;
