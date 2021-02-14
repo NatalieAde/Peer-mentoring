@@ -55,39 +55,6 @@ export default function AccountForm(props) {
             </Button>
           </label>
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
-          <SelectField
-            name={city.name}
-            label={city.label}
-            data={cities}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <SelectField
-            name={state.name}
-            label={state.label}
-            data={states}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <InputField name={zipcode.name} label={zipcode.label} fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <SelectField
-            name={country.name}
-            label={country.label}
-            data={countries}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <CheckboxField
-            name={useAddressForPaymentDetails.name}
-            label={useAddressForPaymentDetails.label}
-          />
-        </Grid> */}
       </Grid>
     </React.Fragment>
   );
