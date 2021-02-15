@@ -83,14 +83,12 @@ export default function Header() {
           <Button onClick={() => setClick(true)} className={clicked ? classes.clickedButton :classes.button} href="/">Peer2Peer Mentoring</Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <Button className={classes.button} href="/">Resources</Button>
-          <Button className={classes.button} href="/">Testimonials</Button>
-              <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '2%'}} href="/signin">
-                <Typography noWrap>
+          <Button className={classes.button} href="/resources">Resources</Button>
+          <Button className={classes.button} href="/testimonials">Testimonials</Button>
+              <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '2%', fontSize: 20}} href="/signin">
                 Sign In
-                </Typography>
               </Button>
-              <Button variant="contained" style={{backgroundColor: '#FF9505', color: '#FFFFFF', textTransform: 'none'}} href="/registration">
+              <Button variant="contained" style={{backgroundColor: '#FF9505', color: '#FFFFFF', textTransform: 'none', fontSize: 20}} href="/registration">
                 Register
               </Button>
           </div>

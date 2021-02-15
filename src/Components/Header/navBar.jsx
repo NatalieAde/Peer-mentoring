@@ -22,12 +22,14 @@ export default function Header() {
   const [clicked, setClick] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [sighpost, setSignpost] = useState(false)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const open = Boolean(anchorEl);
 
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+    setSignpost(true);
   };
 
   const handleClose = () => {
@@ -41,6 +43,7 @@ export default function Header() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -59,7 +62,7 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Link to="/myMatch" style={{ textDecoration: 'none', display: 'block', color: '#000000' }}>
+      <Link to="/myMatch" style={{ textDecoration: 'none', display: 'block', color: '#000000',  }}>
         <MenuItem onClick={handleMenuClose}>
           My Match
         </MenuItem>
@@ -95,7 +98,7 @@ export default function Header() {
 
   return (
     <div>
-    <AppBar position="absolute" className={classes.appBar}>
+    <AppBar position="absolute" className={classes.appBar} >
       <Toolbar style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'nowrap'  }}>
       <div className={classes.sectionMobile}>
         <IconButton
@@ -113,7 +116,7 @@ export default function Header() {
         <Button onClick={() => setClick(true)} className={clicked ? classes.clickedButton :classes.button} href="/">Peer2Peer Mentoring</Button>
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
-        <Button className={classes.button} href="/myMatch">My Match</Button>
+        <Button onClick={() => setClick(true)} className={classes.button} style={{textDecorationLine: clicked && 'underline'}} href="/myMatch">My Match</Button>
         <Button className={classes.button} href="/messages">Messages</Button>
         <Button className={classes.button} href="/goals">Goals</Button>
         <Button className={classes.button} href="/calendar">Calendar</Button>
@@ -121,15 +124,17 @@ export default function Header() {
         <Button className={classes.button} href="/testimonials">Testimonials</Button>
 
       </div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              <div style={{ backgroundColor: sighpost && "#FFC971", borderRadius: 40}}>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <AccountCircle style={{fontSize: 50}} />
+                </IconButton>
+              </div>
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

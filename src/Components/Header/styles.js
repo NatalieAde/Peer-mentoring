@@ -27,10 +27,15 @@ export default makeStyles(theme => ({
   },
   button: {
     textTransform: 'none',
-    color: 'inherit'
+    color: 'inherit',
+    fontSize: 24,
+    // textDecorationLine: 'underline'
   },
-  blickedButton: {
+  clickedButton: {
     fontWeight: 'bold',
     color: 'inherit'
+  },
+  indicator: {
+    backgroundColor: "white"
   }
 }));
