@@ -62,11 +62,12 @@ export default function SignInPage() {
     <React.Fragment>
       {isSignedIn ? <Redirect to="/profile" /> : null}
       <MaterialLayout>
-          <Typography component="h1" variant="h4" align="center" style={{textAlign:'center'}}>
+          <Typography data-testid="title" component="h1" variant="h4" align="center" style={{textAlign:'center'}}>
             Sign In
           </Typography>
-            <form onSubmit={handleSubmit} style={{display: 'flex',flexWrap: 'wrap',}}>
+            <form data-testid="form" onSubmit={handleSubmit} style={{display: 'flex',flexWrap: 'wrap',}}>
               <TextField
+                data-testid="textFieldEmail"
                 type="email"
                 name="email" 
                 onChange={handleChange('email')}
@@ -75,8 +76,9 @@ export default function SignInPage() {
                 style={{width:"100%", marginBottom:"5%" }}
               />
               <TextField
-              id="standard-full-width"
-              fullWidth
+                data-testid="textFieldPass"
+                id="standard-full-width"
+                fullWidth
                 type="password"
                 name="password"
                 onChange={handleChange('password')}
@@ -85,6 +87,7 @@ export default function SignInPage() {
                 style={{width:"100%" }}
               />
               <Button
+                data-testid="submit"
                 disabled={!email && !password}
                 type="submit"
                 variant="contained"
