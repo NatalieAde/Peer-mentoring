@@ -27,14 +27,16 @@ export default makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     textTransform: 'none',
     backgroundColor: "#F1960D",
+    color: "white"
   },
-  wrapper: {
-    margin: theme.spacing(1),
-    position: 'relative'
-  },
+  // wrapper: {
+  //   margin: theme.spacing(1),
+  //   position: 'relative'
+  // },
   buttonProgress: {
     position: 'absolute',
     top: '50%',
     left: '50%',
+    color: "black"
   }
 }));

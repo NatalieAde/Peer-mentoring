@@ -28,11 +28,12 @@ const reducer = (state, action) => {
     case "SIGNIN":
       localStorage.setItem("user", JSON.stringify(action.user));
       localStorage.setItem("token", JSON.stringify(action.token));
+      console.log(state);
       return {
         ...state,
         isSignedIn: true,
         user: action.user,
-        token: action.token
+        token: action.token,
       };
       case "LOGOUT":
         localStorage.clear();
@@ -45,6 +46,7 @@ const reducer = (state, action) => {
         return state;
   }
 }
+console.log(initialState.isSignedIn);
 
 // for (var i = 0; i < localStorage.length; i++) {
 //   var obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
@@ -53,6 +55,7 @@ const reducer = (state, action) => {
 // }
 
 console.log(localStorage.getItem("users"));
+console.log(localStorage.getItem("token"));
 
 function App() {
   const [state, dispatch] = useReducer(reducer,initialState);

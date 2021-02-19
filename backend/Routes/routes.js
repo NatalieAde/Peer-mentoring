@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../Models/SignUpModels');
-const UserSession = require('../Models/UserSessionModel');
+// const UserSession = require('../Models/UserSessionModel');
 const bcrypt = require('bcrypt');
 
 router.post('/signup', async (request, response) =>{
@@ -73,9 +73,10 @@ router.post("/signin", (req, res) => {
           res.send({
             success: true,
             token,
-            user: {
-              email: user.email
-            }
+            // user: {
+              email: user.email,
+              id: user.id
+            // }
           });
         });
       }).catch(err => {
@@ -84,11 +85,32 @@ router.post("/signin", (req, res) => {
       });
   });
 
-  router.get("/:id", (req, res) => {
-    UserSession.findById(req.params.id)
+router.get("/getUserDetails/:id", (req,res) => {
+
+      User.findOne({_id:req.params.id}) 
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
-  });
+    
+     // var id=req.params.userid;
+    // var getUserDetails= User.find({email:id});
+    // getUserDetails.exec()
+    // .then(data=>{
+    //     res.status(200).json({
+    //         message:"OK",
+    //         results:data
+    //     });
+    // })
+    // .catch(err=>{
+    //     res.json(err);
+    // })
+
+    });
+
+    // router.route('/:id').get((req, res) => {
+    //   User.findById(req.params.id)
+    //     .then(user => res.json(user))
+    //     .catch(err => res.status(400).json('Error: ' + err));
+    // });
 
 
 module.exports = router;

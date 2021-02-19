@@ -1,11 +1,32 @@
 let course = [
-  'Computer Science',
-  'Computer Science with Business',
-  'Computer Science with Maths',
-  'Law',
-  'Psychology',
-  'Chemical Engineering',
-  'Accounting'
+  {
+    value: "1",
+    label: 'Computer Science'
+  },
+  {
+    value: "2",
+    label: 'Computer Science with Business'
+  },
+  {
+    value: "3",
+    label:'Computer Science with Maths'
+  },
+  {
+    value: "4",
+    label:'Law'
+  },
+  {
+    value: "5",
+    label:'Psychology'
+  },
+  {
+    value: "6",
+    label:'Chemical Engineering'
+  },
+  {
+    value: "7",
+    label:'Accounting'
+  }
 ];
 
 let nationalities = [
@@ -40,6 +61,25 @@ const genders = [
   {
     value: '3',
     label: 'Prefer not to say'
+  }
+];
+
+const years = [
+  {
+    value: '1',
+    label: 'First'
+  },
+  {
+    value: '2',
+    label: 'Second'
+  },
+  {
+    value: '3',
+    label: 'Placement'
+  },
+  {
+    value: '4',
+    label: 'Final'
   }
 ];
 
@@ -154,7 +194,7 @@ export default {
         name: 'yearOfStudy',
         label: 'Year of study*',
         requiredErrorMsg: 'Please select one',
-        options: [1,2,3],
+        options: years,
       },
       placement: {
         name: 'placement',
