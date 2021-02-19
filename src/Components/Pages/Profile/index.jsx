@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Typography, Chip } from '@material-ui/core';
+import { Typography, Chip, Grid } from '@material-ui/core';
 import { AccountCircle, EmailRounded, SchoolRounded } from '@material-ui/icons';
 import axios from 'axios';
 import { AuthContext } from '../../../App';
 import ProfileImg from '../../../profilePic.jpg';
+import { identity } from 'lodash';
 
 
 export default function ProfilePage() {
@@ -24,11 +25,11 @@ export default function ProfilePage() {
         
 
       useEffect(() => {
-        const myName = JSON.parse(localStorage.getItem('users')).id;
-        console.log(myName);
-        if(myName){
+        const id = JSON.parse(localStorage.getItem('users')).id;
+        console.log(id);
+        if(id){
             console.log("USER_ID");
-            axios.get("http://localhost:5000/app/getUserDetails/"+myName,{
+            axios.get("http://localhost:5000/app/getUserDetails/"+id,{
                 headers: {
                     "content-type": "application/json"
                 }
@@ -52,36 +53,40 @@ console.log(profileInfo);
 
     return (
         <React.Fragment>
-            <div style={{margin: "2%"}}>
-                <div style={{display: "flex", flexDirection:"row"}}>
-                    {/* <img src={ProfileImg} alt="Logo" style={{width:"15%", borderRadius: 200}} /> */}
-                    <div style={{marginRight: "2%"}}>
-                        <AccountCircle style={{fontSize: 200}}/>
+            <Grid container style={{marginTop: "3%"}}>
+                <Grid item xs={12} sm={3} >
+                    <AccountCircle style={{fontSize: 300}}/>
+                    <Grid item xs={12} style={{marginLeft: "5%"}}>
                         <div style={{display: "flex", flexDirection:"row"}}>
                             <SchoolRounded />
                             <Typography>
-                                 {profileInfo.yearOfStudy} Year {profileInfo.course}
+                                {profileInfo.yearOfStudy} Year {profileInfo.course}
                             </Typography>
                         </div>
+                    </Grid>
+                    <Grid item xs={12} style={{marginLeft: "5%"}}>
                         <div style={{display: "flex", flexDirection:"row"}}>
                             <EmailRounded />
                             <Typography>
                                 {profileInfo.email}
                             </Typography>
                         </div>
-                    </div>
-                    <div style={{display: "flex", flexDirection:"column"}}>
-    <Typography variant="h3" style={{marginBottom: "5%"}}>{profileInfo.firstName} {profileInfo.lastName}</Typography>
-                        <Typography variant="h5" style={{marginBottom: "2%"}}>Personal Information:</Typography>
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} sm={9}>
+                    <Typography variant="h3" style={{marginBottom: "5%"}}>
+                        {profileInfo.firstName} {profileInfo.lastName}
+                    </Typography>
+                    <Typography variant="h5" style={{marginBottom: "2%"}}>Personal Information:</Typography>
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
                         <Typography style={{marginBottom: "2%"}}>
                             {profileInfo.summary}
                         </Typography>
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
                         <Typography style={{marginBottom: "2%"}}>
                             {profileInfo.interests}
                         </Typography>
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
                         <Typography style={{marginBottom: "2%"}}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -92,7 +97,7 @@ console.log(profileInfo);
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
                         </Typography>
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
                         <div>
                             <Chip 
                                 label="Deletable primary"
@@ -113,9 +118,8 @@ console.log(profileInfo);
                                 style={{backgroundColor: "#ffdbbf", color: "#000000"}}
                             />
                         </div>
-                    </div>
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         </React.Fragment>
     )
 }
