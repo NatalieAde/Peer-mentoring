@@ -1,6 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Typography, Chip, Grid } from '@material-ui/core';
-import { AccountCircle, EmailRounded, SchoolRounded } from '@material-ui/icons';
+import React, {
+    useState,
+    useEffect,
+    useContext
+} from 'react';
+import {
+    Typography,
+    Chip,
+    Grid,
+    Button,
+} from '@material-ui/core';
+import {
+    AccountCircle,
+    EmailRounded,
+    SchoolRounded,
+    Edit
+} from '@material-ui/icons';
 import axios from 'axios';
 import { AuthContext } from '../../../App';
 import ProfileImg from '../../../profilePic.jpg';
@@ -17,6 +31,7 @@ export default function ProfilePage() {
         yearOfStudy: '',
         summary: '',
         interests: '',
+        placement: '',
 
       });
     const handleDelete = () => {
@@ -42,6 +57,7 @@ export default function ProfilePage() {
                     yearOfStudy: res.data.yearOfStudy,
                     summary: res.data.summary,
                     interests: res.data.interests,
+                    placement: res.data.placement
                   })   
                 console.log(JSON.stringify(res));
                 
@@ -53,13 +69,27 @@ console.log(profileInfo);
 
     return (
         <React.Fragment>
+            <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
+                    <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Profile</Typography> 
+            </div>
+            <div style={{marginLeft: '90%', position: 'absolute'}}>
+                <Button
+                    variant="contained"
+                    size="large"
+                    style={{color: '#FFFFFF', backgroundColor: '#F1960D'}}
+                    startIcon={<Edit />}
+                    href='/editprofile'
+                >
+                    Edit
+                </Button>
+            </div>
             <Grid container style={{marginTop: "3%"}}>
                 <Grid item xs={12} sm={3} >
                     <AccountCircle style={{fontSize: 300}}/>
                     <Grid item xs={12} style={{marginLeft: "5%"}}>
                         <div style={{display: "flex", flexDirection:"row"}}>
                             <SchoolRounded />
-                            <Typography>
+                            <Typography style={{marginLeft: "5%"}}>
                                 {profileInfo.yearOfStudy} Year {profileInfo.course}
                             </Typography>
                         </div>
@@ -67,7 +97,7 @@ console.log(profileInfo);
                     <Grid item xs={12} style={{marginLeft: "5%"}}>
                         <div style={{display: "flex", flexDirection:"row"}}>
                             <EmailRounded />
-                            <Typography>
+                            <Typography style={{marginLeft: "5%"}}>
                                 {profileInfo.email}
                             </Typography>
                         </div>
@@ -82,22 +112,27 @@ console.log(profileInfo);
                         <Typography style={{marginBottom: "2%"}}>
                             {profileInfo.summary}
                         </Typography>
+                    { profileInfo.placement &&
+                        <>
+                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                            <Typography style={{marginBottom: "2%"}}>
+                                {profileInfo.placement}
+                            </Typography>
+                        </>
+                    }
+                    
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
+                        <Typography style={{marginBottom: "2%"}}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
+                        </Typography>
                     <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
-                        <Typography style={{marginBottom: "2%"}}>
-                            {profileInfo.interests}
-                        </Typography>
-                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
-                        <Typography style={{marginBottom: "2%"}}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                        </Typography>
-                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
                         <div>
                             <Chip 
                                 label="Deletable primary"

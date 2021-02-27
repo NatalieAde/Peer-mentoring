@@ -1,2 +1,4 @@
 POST http://localhost:5000/app/signup
 Content-Type: application/json
+
+I am a Freelance Writer and Social Media Intern who helps finance professionals and Fin-tech startups build an audience and get more paying clients online. Both my parents are entrepreneurs. They both inspired my to chose this career path.

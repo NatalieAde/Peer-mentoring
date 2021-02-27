@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, MenuItem, IconButton } from '@material-ui/core';
+import { 
+  AppBar,
+  Button,
+  MenuItem,
+  IconButton,
+  Tab,
+  Tabs
+} from '@material-ui/core';
+import {
+  Home,
+  Info,
+  FormatQuote,
+  ExitToApp,
+  HowToReg
+} from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 
@@ -9,7 +23,7 @@ import useStyles from './styles';
 
 export default function Header() {
   const classes = useStyles();
-  const [clicked, setClick] = useState(false);
+  const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -27,6 +41,10 @@ export default function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -38,35 +56,44 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Link to="/resources" style={{ textDecoration: 'none', display: 'block', color: '#000000' }}>
+      <Link to="/resources" className={classes.link}>
         <MenuItem onClick={handleMenuClose}>
+          <Info fontSize="small"/>
           Resources
         </MenuItem>
       </Link> 
-      <Link to="/testimonials" style={{ textDecoration: 'none', display: 'block', color: '#000000' }}>
+      <Link to="/testimonials" className={classes.link}>
         <MenuItem onClick={handleMenuClose}>
+          <FormatQuote fontSize="small"/>
           Testimonials
         </MenuItem>
       </Link> 
-      <MenuItem onClick={handleMenuClose}>
-      <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '2%'}} href="/signin">
-        <Typography noWrap>
+      <Link to="/signin" className={classes.link}>
+        <MenuItem onClick={handleMenuClose}>
+          <ExitToApp fontSize="small" />
           Sign In
-        </Typography>
-      </Button>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
-      <Button variant="contained" style={{backgroundColor: '#FF9505', color: '#FFFFFF', textTransform: 'none'}} href="/registration">
-        Register
-      </Button>
-      </MenuItem>
+        </MenuItem>
+      </Link> 
+      <Link to="/register" className={classes.link}>
+        <MenuItem onClick={handleMenuClose}>
+          <HowToReg fontSize="small" />
+          Register
+        </MenuItem>
+      </Link> 
     </Menu>
   );
 
   return (
     <div>
       <AppBar position="absolute" className={classes.appBar}>
-        <Toolbar style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'nowrap'  }}>
+        <Tabs
+          value={value}
+          variant="fullWidth"
+          onChange={handleChange}
+          indicatorColor="inherit"
+          // textColor="primary"
+          aria-label="scrollable force tabs example"
+        >
           <div className={classes.sectionMobile}>
             <IconButton
               edge="start"
@@ -80,19 +107,20 @@ export default function Header() {
               <MenuIcon />
             </IconButton>
           </div>
-          <Button onClick={() => setClick(true)} className={clicked ? classes.clickedButton :classes.button} href="/">Peer2Peer Mentoring</Button>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-          <Button className={classes.button} href="/resources">Resources</Button>
-          <Button className={classes.button} href="/testimonials">Testimonials</Button>
-              <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '2%', fontSize: 20}} href="/signin">
+          <Tab className={classes.tabsText} label="Home" icon={<Home/>} href="/" value={value}/>
+          <div className={classes.sectionDesktop}>  
+            <Tab className={classes.tabsText} label="Resources" icon={<Info/>} href="/resources" value={value} selected/>
+            <Tab className={classes.tabsText} label="Testimonials" icon={<FormatQuote/>} href="/testimonials" value={value} selected/>
+            <div style={{alignSelf:"center"}}>
+              <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '4%', fontSize: 20}} href="/signin">
                 Sign In
               </Button>
               <Button variant="contained" style={{backgroundColor: '#FF9505', color: '#FFFFFF', textTransform: 'none', fontSize: 20}} href="/registration">
                 Register
               </Button>
+            </div>
           </div>
-        </Toolbar>
+        </Tabs>
       </AppBar>
       {renderMobileMenu}
     </div>

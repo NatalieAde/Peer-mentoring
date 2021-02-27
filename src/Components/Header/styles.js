@@ -6,6 +6,9 @@ export default makeStyles(theme => ({
   },
   sectionDesktop: {
     display: 'none',
+    width:'100%',
+    justifyContent:'flex-end',
+    marginRight: '2%',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
     },
@@ -21,6 +24,15 @@ export default makeStyles(theme => ({
     background: '#EC6D0A',
     width: '100%',
     flexGrow: 1,
+  },
+  tabsText: {
+    textTransform: 'none',
+    fontSize: 20,
+  },
+  link: {
+    textDecoration: 'none',
+    display: 'block',
+    color: '#000000' 
   },
   font: {
     color: '#FFFFFF'

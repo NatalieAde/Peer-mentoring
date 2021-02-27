@@ -13,6 +13,7 @@ import GoalsPage from "./Components/Pages/Goals";
 import CalendarPage from "./Components/Pages/Calendar";
 import ResourcesPage from "./Components/Pages/Resources";
 import TestimonialsPage from "./Components/Pages/Testimonials";
+import EditProfilePage from "./Components/Pages/EditProfile";
 import { isNull } from 'lodash';
 
 export const AuthContext = createContext();
@@ -74,6 +75,7 @@ function App() {
           <Route path="/registration" exact component={RegistrationPage} />
           <Route path="/signin" exact component={SignInPage} />
           <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/editprofile" exact component={EditProfilePage} />
           <Route path="/myMatch" exact component={MyMatchPage} />
           <Route path="/messages" exact component={MessagesPage} />
           <Route path="/goals" exact component={GoalsPage} />

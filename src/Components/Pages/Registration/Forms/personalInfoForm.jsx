@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { InputField, SelectField } from '../../../Form';
 
 export default function PersonalInfoForm(props) {
+  // const [interests, setInterests] = useState(['']);
   const {
     formField: {
       course,
@@ -28,13 +29,28 @@ export default function PersonalInfoForm(props) {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <InputField name={course.name} label={course.label} fullWidth />
+          <SelectField
+              name={course.name}
+              label={course.label}
+              data={course.options}
+              fullWidth
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <InputField name={yearOfStudy.name} label={yearOfStudy.label} fullWidth />
+          <SelectField
+              name={yearOfStudy.name}
+              label={yearOfStudy.label}
+              data={yearOfStudy.options}
+              fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={placement.name} label={placement.label} fullWidth />
+          <SelectField
+              name={placement.name}
+              label={placement.label}
+              data={placement.options}
+              fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
           <InputField name={summary.name} label={summary.label} fullWidth />
@@ -46,16 +62,21 @@ export default function PersonalInfoForm(props) {
           <InputField name={experience.name} label={experience.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={residency.name} label={residency.label} fullWidth />
+          <SelectField
+              name={residency.name}
+              label={residency.label}
+              data={residency.options}
+              fullWidth
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-        <SelectField
-            name={gender.name}
-            label={gender.label}
-            data={gender.options}
-            fullWidth
-          />
-          </Grid>
+          <SelectField
+              name={gender.name}
+              label={gender.label}
+              data={gender.options}
+              fullWidth
+            />
+        </Grid>
         <Grid item xs={12} sm={6}>
           <InputField name={age.name} label={age.label} fullWidth />
         </Grid>
