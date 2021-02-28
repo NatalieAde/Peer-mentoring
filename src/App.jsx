@@ -13,6 +13,7 @@ import GoalsPage from "./Components/Pages/Goals";
 import CalendarPage from "./Components/Pages/Calendar";
 import ResourcesPage from "./Components/Pages/Resources";
 import TestimonialsPage from "./Components/Pages/Testimonials";
+import EditProfilePage from "./Components/Pages/EditProfile";
 import { isNull } from 'lodash';
 
 export const AuthContext = createContext();
@@ -28,11 +29,12 @@ const reducer = (state, action) => {
     case "SIGNIN":
       localStorage.setItem("user", JSON.stringify(action.user));
       localStorage.setItem("token", JSON.stringify(action.token));
+      console.log(state);
       return {
         ...state,
         isSignedIn: true,
         user: action.user,
-        token: action.token
+        token: action.token,
       };
       case "LOGOUT":
         localStorage.clear();
@@ -45,6 +47,7 @@ const reducer = (state, action) => {
         return state;
   }
 }
+console.log(initialState.isSignedIn);
 
 // for (var i = 0; i < localStorage.length; i++) {
 //   var obj = JSON.parse(localStorage.getItem(localStorage.key(i)));
@@ -53,6 +56,7 @@ const reducer = (state, action) => {
 // }
 
 console.log(localStorage.getItem("users"));
+console.log(localStorage.getItem("token"));
 
 function App() {
   const [state, dispatch] = useReducer(reducer,initialState);
@@ -71,6 +75,7 @@ function App() {
           <Route path="/registration" exact component={RegistrationPage} />
           <Route path="/signin" exact component={SignInPage} />
           <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/editprofile" exact component={EditProfilePage} />
           <Route path="/myMatch" exact component={MyMatchPage} />
           <Route path="/messages" exact component={MessagesPage} />
           <Route path="/goals" exact component={GoalsPage} />

@@ -4,7 +4,9 @@ import { Typography } from '@material-ui/core';
 export default function TestimonialsPage() {
     return (
         <React.Fragment>
-            <Typography>TESTIMONIALS</Typography>
+            <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
+               <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Testimonials</Typography> 
+            </div>
         </React.Fragment>
     )
 }

@@ -1,11 +1,48 @@
 let course = [
-  'Computer Science',
-  'Computer Science with Business',
-  'Computer Science with Maths',
-  'Law',
-  'Psychology',
-  'Chemical Engineering',
-  'Accounting'
+  {
+    value: "Computer Science",
+    label: 'Computer Science'
+  },
+  {
+    value: "Computer Science with Business",
+    label: 'Computer Science with Business'
+  },
+  {
+    value: "Computer Science with Maths",
+    label:'Computer Science with Maths'
+  },
+  {
+    value: "Law",
+    label:'Law'
+  },
+  {
+    value: "Psychology",
+    label:'Psychology'
+  },
+  {
+    value: "Chemical Engineering",
+    label:'Chemical Engineering'
+  },
+  {
+    value: "Accounting",
+    label:'Accounting'
+  },
+  {
+    value: "Marketing",
+    label:'Marketing'
+  },
+  {
+    value: "Business",
+    label:'Business'
+  },
+  {
+    value: "International Business",
+    label:'International Business'
+  },
+  {
+    value: "Economics",
+    label:'Economics'
+  }
 ];
 
 let nationalities = [
@@ -30,64 +67,83 @@ let nationalities = [
 
 const genders = [
   {
-    value: '1',
+    value: 'Female',
     label: 'Female'
   },
   {
-    value: '2',
+    value: 'Male',
     label: 'Male'
   },
   {
-    value: '3',
+    value: 'Prefer not to say',
     label: 'Prefer not to say'
+  }
+];
+
+const years = [
+  {
+    value: 'First',
+    label: 'First'
+  },
+  {
+    value: 'Second',
+    label: 'Second'
+  },
+  {
+    value: 'Placement',
+    label: 'Placement'
+  },
+  {
+    value: 'Final',
+    label: 'Final'
   }
 ];
 
 const yesNo = [
   {
-    value: '1',
+    value: 'Yes',
     label: 'Yes'
   },
   {
-    value: '2',
+    value: 'No',
     label: 'No'
   },
   {
-    value: '3',
+    value: 'Prefer not to say',
     label: 'Prefer not to say'
   }
 ];
 
 const roles = [
   {
-    value: '1',
+    value: 'Mentee',
     label: 'Mentee'
   },
   {
-    value: '2',
+    value: 'Mentor',
     label: 'Mentor'
   },
   {
-    value: '3',
+    value: 'Mentee and mentor',
     label: 'Mentee and mentor'
   }
 ];
 
 const criteria = [
   {
-    value: '1',
+    value: 'None',
     label: 'None'
   },
   {
-    value: '2',
+    value: 'Same gender',
     label: 'Same gender'
   },
   {
-    value: '3',
+    value: 'Same Ethnicity',
     label: 'Same Ethnicity'
   },
   {
-    value: '4',
+    value: 'Placement',
     label: 'Placement'
   }
 ];
@@ -104,6 +160,21 @@ const numOfMentees = [
   {
     value: '3',
     label: '3'
+  }
+];
+
+const residencyy = [
+  {
+    value: 'On campus',
+    label: 'On campus'
+  },
+  {
+    value: 'Off campus - Birmingham',
+    label: 'Off campus - Birmingham'
+  },
+  {
+    value: 'Off campus - outside of Birmingham',
+    label: 'Off campus - outside of Birmingham'
   }
 ];
 
@@ -154,13 +225,13 @@ export default {
         name: 'yearOfStudy',
         label: 'Year of study*',
         requiredErrorMsg: 'Please select one',
-        options: [1,2,3],
+        options: years,
       },
       placement: {
         name: 'placement',
-        label: 'Have you taken part in a placement',
+        label: 'Have you taken part in a placement?',
         requiredErrorMsg: 'Please select an option',
-        options: ['Yes', 'No']
+        options: yesNo
       },
       summary: {
         name: 'summary',
@@ -201,7 +272,7 @@ export default {
       residency: {
         name: 'residency',
         label: 'Where do you reside during the academic year? (e.g. on campus)',
-        options: ['On campus', 'Off campus - Birmingham', 'Off campus - outside of Birmingham']
+        options: residencyy
       },
       role: {
         name: 'role',

@@ -2,8 +2,9 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../Models/SignUpModels');
-const UserSession = require('../Models/UserSessionModel');
 const bcrypt = require('bcrypt');
+const MatchesModel = require('../Models/MatchesModel');
+const { update } = require('../Models/SignUpModels');
 
 router.post('/signup', async (request, response) =>{
    
@@ -73,22 +74,70 @@ router.post("/signin", (req, res) => {
           res.send({
             success: true,
             token,
-            user: {
-              email: user.email
-            }
+            // user: {
+              email: user.email,
+              id: user.id
+            // }
           });
         });
       }).catch(err => {
         console.log(err);
         res.status(500).send(err);
       });
-  });
+});
 
-  router.get("/:id", (req, res) => {
-    UserSession.findById(req.params.id)
+router.put('/updateProfile/:id', (req, res) => {
+  const _id = req.params._id;
+  const update ={
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    course: req.body.course,
+    yearOfStudy: req.body.yearOfStudy,
+    placement: req.body.placement,
+    summary: req.body.summary,
+    // experience: req.body.experience,
+    interests: req.body.interests,
+    // imageURL: req.body.imageURL,
+  };
+console.log(update);
+  User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
+    if (err) {
+      console.log("err", err);
+    } else {
+      console.log("success");
+      console.log(data);
+      res.send(data);
+    }
+  });
+  
+});
+
+router.get("/getUserDetails/:id", (req,res) => {
+
+      User.findOne({_id:req.params.id}) 
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
-  });
+});
+
+router.get("/createMatch", (req,res) => {
+  
+  User.findOne({role: "Mentee"})
+  .then(user => { 
+    User.findOne({role: "Mentor"})
+      .then(mentor => {
+         if(user.gender = mentor.gender){
+          res.json('Mentee: '+user + 'Mentor: '+mentor)
+          const newMatch = new MatchesModel({
+            mentor: mentor._id,
+            mentee: user._id
+          })
+          newMatch.save();
+        }
+        res.json(mentor + user)}) 
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 
 
 module.exports = router;

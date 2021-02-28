@@ -168,12 +168,12 @@ export default function RegistrationPage() {
                         Back
                       </Button>
                     )}
-                    <div className={classes.wrapper}>
+                    <div>
                       <Button
                         disabled={isSubmitting}
                         type="submit"
                         variant="contained"
-                        color="primary"
+                        // color="primary"
                         className={classes.button}
                       >
                         {isLastStep ? 'Confirm Registration' : 'Next'}

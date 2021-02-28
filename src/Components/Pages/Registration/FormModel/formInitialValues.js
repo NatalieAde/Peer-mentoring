@@ -38,7 +38,7 @@ export default {
   [placement.name]: '',
   [summary.name]: '',
   [experience.name]: '',
-  [interests.name]: '',
+  [interests.name]: [''],
   [gender.name]: '',
   [age.name]: '',
   [ethnicity.name]: '',

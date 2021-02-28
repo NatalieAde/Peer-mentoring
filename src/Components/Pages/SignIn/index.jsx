@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Typography,
   TextField,
@@ -11,7 +11,7 @@ import { Redirect } from "react-router-dom";
 import MaterialLayout from '../../Layout/layout';
 
 export default function SignInPage() {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, state } = useContext(AuthContext);
   const [formFields, setFormFields] = useState({
     email: '',
     password: '',
@@ -35,28 +35,44 @@ export default function SignInPage() {
     .then(json => {
       console.log(json);
       if(json.success){
+        setSignIn(true);
         alert('SUCCESS')
-        setSignIn(true)
-        console.log(isSignedIn);
-        localStorage.setItem("users", JSON.stringify(json));
         
-        // dispatch({
-        //   type: "SIGNIN",
-        //   payload: json
-        // })
+        // console.log(isSignedIn);
+        localStorage.setItem("users", JSON.stringify(json));
+        dispatch({
+          type: "SIGNIN",
+          // payload: json
+        })
         
       }else{
         alert('FAIL')
         setSignIn(false)
       }
     })
-    .then(resJson => {
+    // .then(resJson => {
+    //   dispatch({
+    //     type: "SIGNIN",
+    //     payload: resJson,
+    //     isSignedIn: true
+    //   })
+    // })
+  }
+
+  
+  useEffect(() => {
+    if(localStorage.getItem("users")){
+      setSignIn(true);
+      console.log(state.user)
       dispatch({
         type: "SIGNIN",
-        payload: resJson
+        payload: "payload"
       })
-    })
-  }
+    }
+  }, []);
+
+  console.log(isSignedIn);
+
 
   return(
     <React.Fragment>

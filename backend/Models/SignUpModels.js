@@ -31,7 +31,7 @@ const signUpTemplate = new mongoose.Schema({
     },
     placement: {
         type: String,
-        required: true
+        required: false
     },
     summary: {
         type: String,
@@ -42,7 +42,7 @@ const signUpTemplate = new mongoose.Schema({
         required: false
     },
     interests: {
-        type: String,
+        type: [String],
         required: false
     },
     gender: {
