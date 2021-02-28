@@ -91,7 +91,8 @@ const signUpTemplate = new mongoose.Schema({
     },
     applicationStatus: {
         type: String,
-        required: false
+        required: false,
+        default: 'Pending'
     },
     matchingCriteria: {
         type: String,

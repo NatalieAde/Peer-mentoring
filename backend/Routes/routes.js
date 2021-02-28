@@ -1,8 +1,9 @@
+const cron = require('node-cron');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-const User = require('../Models/SignUpModels');
 const bcrypt = require('bcrypt');
+const User = require('../Models/SignUpModels');
 const MatchesModel = require('../Models/MatchesModel');
 const { update } = require('../Models/SignUpModels');
 
@@ -120,24 +121,87 @@ router.get("/getUserDetails/:id", (req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.get("/createMatch", (req,res) => {
-  
-  User.findOne({role: "Mentee"})
-  .then(user => { 
-    User.findOne({role: "Mentor"})
-      .then(mentor => {
-         if(user.gender = mentor.gender){
-          res.json('Mentee: '+user + 'Mentor: '+mentor)
-          const newMatch = new MatchesModel({
+const findMatch = async (req, res) => {
+  console.log("running every minute");
+  const mentees = await User.find({role: "Mentee"})
+  const mentors = await User.find({role: "Mentor"})
+  // console.log('Mentees: ' + mentees);
+  // console.log('Mentors: ' + mentors);
+
+  mentees.map((mentee) => {
+    if(mentee.applicationStatus != "Matched"){
+      mentors.map((mentor) => {
+        if(mentor.applicationStatus != "Matched"){
+          if(mentee.course = mentor.course){
+            console.log('Mentee: '+mentee + 'Mentor: '+mentor)
+            const newMatch = new MatchesModel({
             mentor: mentor._id,
-            mentee: user._id
-          })
-          newMatch.save();
+            mentee: mentee._id
+            })
+            User.findByIdAndUpdate(mentee._id, {applicationStatus:"Matched"}, (err, data) =>  {
+              if (err) {
+                console.log("err", err);
+              } else {
+                console.log("success");
+                console.log(data);
+              }
+            });
+            User.findByIdAndUpdate(mentor._id, {applicationStatus:"Matched"}, (err, data) =>  {
+              if (err) {
+                console.log("err", err);
+              } else {
+                console.log("success");
+              }
+            });
+            newMatch.save();
+          }
         }
-        res.json(mentor + user)}) 
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+      })
+    }
+  })
+}
+    
+  // .then(mentee => { 
+  //   if(mentee.applicationStatus != "Matched"){
+  //     console.log(mentee.applicationStatus != "Matched");
+  //     User.findOne({role: "Mentor"})
+  //       .then(mentor => {
+  //         console.log(mentee.applicationStatus != "Matched");
+  //         if(mentor.applicationStatus != "Matched"){
+  //         //checks if both students study the same course
+  //           if(mentee.course = mentor.course){
+  //             console.log('Mentee: '+mentee + 'Mentor: '+mentor)
+  //             const newMatch = new MatchesModel({
+  //               mentor: mentor._id,
+  //               mentee: mentee._id
+  //             })
+  //             newMatch.save();
+  //             User.findByIdAndUpdate(mentee._id, {applicationStatus:"Matched"}, (err, data) =>  {
+  //               if (err) {
+  //                 console.log("err", err);
+  //               } else {
+  //                 console.log("success");
+  //                 console.log(data);
+  //               }
+  //             });
+  //             User.findByIdAndUpdate(mentor._id, {applicationStatus:"Matched"}, (err, data) =>  {
+  //               if (err) {
+  //                 console.log("err", err);
+  //               } else {
+  //                 console.log("success");
+  //               }
+  //             });
+  //           }
+  //         }
+  //         console.log(mentor + mentee)}) 
+  //     }
+  //   })
+  //   .catch(err => res.status(400).json('Error: ' + err));
+
+
+  cron.schedule("* * * * *", async() => {
+    await findMatch();
+  });
 
 
 module.exports = router;
