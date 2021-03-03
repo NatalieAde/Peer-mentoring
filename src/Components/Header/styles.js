@@ -29,6 +29,12 @@ export default makeStyles(theme => ({
     textTransform: 'none',
     fontSize: 20,
   },
+  tabsText2: {
+    textTransform: 'none',
+    fontSize: 20,
+    color: '#FFFFFF',
+    textDecorationLine: 'none',
+  },
   link: {
     textDecoration: 'none',
     display: 'block',

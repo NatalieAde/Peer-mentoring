@@ -17,7 +17,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import useStyles from './styles';
 
@@ -109,8 +109,29 @@ export default function Header() {
           </div>
           <Tab className={classes.tabsText} label="Home" icon={<Home/>} href="/" value={value}/>
           <div className={classes.sectionDesktop}>  
-            <Tab className={classes.tabsText} label="Resources" icon={<Info/>} href="/resources" value={value} selected/>
-            <Tab className={classes.tabsText} label="Testimonials" icon={<FormatQuote/>} href="/testimonials" value={value} selected/>
+            <NavLink
+              to="/resources"
+              activeStyle={{
+                fontWeight: "bold",
+                color: "#FFFFFF",
+                textDecorationLine: 'underline'
+              }}
+              className={classes.tabsText2}
+            >
+              <Tab className={classes.tabsText} label="Resources" icon={<Info/>} href="/resources" value={value} selected/>
+            </NavLink>
+
+            <NavLink
+              to="/testimonials"
+              activeStyle={{
+                fontWeight: "bold",
+                color: "#FFFFFF",
+                textDecorationLine: 'underline'
+              }}
+              className={classes.tabsText2}
+            >
+              <Tab className={classes.tabsText} label="Testimonials" icon={<FormatQuote/>} href="/testimonials" value={value} selected/>
+            </NavLink> 
             <div style={{alignSelf:"center"}}>
               <Button variant="contained" style={{backgroundColor:'#FFFFFF' , color:'#FF9505', textTransform: 'none', width: '100px', marginRight: '4%', fontSize: 20}} href="/signin">
                 Sign In
