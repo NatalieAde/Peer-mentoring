@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const socketio = require('socket.io');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { response } = require('express');
@@ -10,6 +12,8 @@ require('dotenv').config();
 //how express server is created
 const app = express();
 const port = process.env.PORT || 5000;
+// const server = http.createServer(app);
+// const io = socketio(server);
 
 //databased uri, where DB is stored, get from mondoDB dashbored
 const uri = process.env.ATLAS_URI;
@@ -22,12 +26,35 @@ connection.once('open', () => {
 })
 
 
+
+
 //middleware
 app.use(express.json());
 app.use(cors());
 app.use('/app', routeUrls)
 
 //starts server
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
+
+// const io = socketio(server);
+const io = socketio(server, { cors: { origin: '*' } });
+
+
+io.on("connection", (socket) => {
+  
+  // Join a conversation
+  // const { roomId } = socket.handshake.query;
+  // socket.join(roomId);
+
+  // Listen for new messages
+  socket.on("newChatMessage", (data) => {
+    io.emit("newChatMessage", data);
+  });
+
+  // Leave the room if the user closes the socket
+  socket.on("disconnect", () => {
+    console.log('Disconnected');
+  });
+});console.log('user connected');
