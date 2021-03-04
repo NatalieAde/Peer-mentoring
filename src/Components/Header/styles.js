@@ -47,7 +47,6 @@ export default makeStyles(theme => ({
     textTransform: 'none',
     color: 'inherit',
     fontSize: 24,
-    // textDecorationLine: 'underline'
   },
   clickedButton: {
     fontWeight: 'bold',
