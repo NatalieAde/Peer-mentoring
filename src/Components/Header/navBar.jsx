@@ -219,17 +219,26 @@ export default function Header() {
         </NavLink>          
        </div> 
       
-        <div style={{ backgroundColor: sighpost && '#83008F', borderRadius: 40, width:'64px', height:'64px'}}>
-          <IconButton
+        {/* <div style={{ backgroundColor: sighpost && '#83008F', borderRadius: 40, width:'64px', height:'64px'}}> */}
+        <NavLink
+          to="/profile"
+          activeStyle={{
+            fontWeight: "bold",
+            color: "#FFFFFF",
+            textDecorationLine: 'underline'
+          }}
+          className={classes.tabsText2}
+        >
+          <Tab className={classes.tabsText}
+            label={JSON.parse(localStorage.getItem('userInfo')).firstName}
+            icon={<AccountCircle style={{fontSize: 40}}/>}
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleMenu}
-            color="inherit"
-          >
-            <AccountCircle style={{fontSize: 40}} />
-          </IconButton>
-        </div>
+          value={value} selected/>
+        </NavLink>  
+        {/* </div> */}
 
         <Menu
           id="menu-appbar"

@@ -2,8 +2,8 @@ import React, {useEffect, useState, useRef} from 'react';
 import { Typography, TextField, Button, Grid } from '@material-ui/core';
 import {
     AccountCircle,
-    EmailRounded,
-    SchoolRounded,
+    TrackChanges,
+    EventAvailable,
 } from '@material-ui/icons';
 import useStyles from './styles';
 import useChat from './useChat';
@@ -54,24 +54,26 @@ export default function MessagesPage() {
                         </Button>
                         </div>
                         <div style={{marginBottom: '5%'}}>
-                              <Button
-                            variant="contained"
-                            size="large"
-                            style={{color: '#000000', backgroundColor: '#FFFFFF'}}
-                            startIcon={<AccountCircle />}
-                        >
-                            Schedule Meeting
-                        </Button>
+                            <Button
+                                to="/calendar"
+                                variant="contained"
+                                size="large"
+                                style={{color: '#000000', backgroundColor: '#FFFFFF'}}
+                                startIcon={<EventAvailable />}
+                            >  
+                                Schedule Meeting
+                            </Button>
                         </div>
                         <div style={{marginBottom: '5%'}}>
                            <Button
-                            variant="contained"
-                            size="large"
-                            style={{color: '#000000', backgroundColor: '#FFFFFF'}}
-                            startIcon={<AccountCircle />}
-                        >
-                            Goals
-                        </Button> 
+                                to="/goals"
+                                variant="contained"
+                                size="large"
+                                style={{color: '#000000', backgroundColor: '#FFFFFF'}}
+                                startIcon={<TrackChanges />}
+                            >
+                                Goals
+                            </Button> 
                         </div>
                        
                       
