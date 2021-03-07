@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, CircularProgress } from '@material-ui/core';
 import MaterialLayout from '../../Layout/layout';
 import Skeleton from '@material-ui/lab/Skeleton';
 
@@ -12,7 +12,13 @@ export default function MyMatchPage() {
             </div>
 
             <MaterialLayout>
-                <Typography>Status: Pending</Typography>
+                <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                    <Typography>Status: We are searching for your match.</Typography>
+                    <CircularProgress
+                        size={60}
+                        style={{color: '#EC6D0A'}}
+                    />
+                </div>
             </MaterialLayout>
         </React.Fragment>
     )
