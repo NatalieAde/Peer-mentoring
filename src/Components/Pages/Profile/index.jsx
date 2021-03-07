@@ -39,7 +39,7 @@ export default function ProfilePage() {
       };
         
 
-      useEffect(() => {
+    useEffect(() => {
         const id = JSON.parse(localStorage.getItem('users')).id;
         console.log(id);
         if(id){
@@ -64,8 +64,9 @@ export default function ProfilePage() {
             })
             .catch(err=>console.log(err))
         }
-      }, [])
-console.log(profileInfo);
+    }, [])
+    localStorage.setItem("userInfo", JSON.stringify(profileInfo));
+    console.log(profileInfo);
 
     return (
         <React.Fragment>
