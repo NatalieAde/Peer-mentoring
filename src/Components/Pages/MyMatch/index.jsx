@@ -15,12 +15,10 @@ export default function MyMatchPage() {
                 <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
                     <Typography>Status: We are searching for your match.</Typography>
                     <CircularProgress
-                            size={60}
-                            style={{color: '#EC6D0A'}}
-                            
+                        size={60}
+                        style={{color: '#EC6D0A'}}
                     />
                 </div>
-                
             </MaterialLayout>
         </React.Fragment>
     )

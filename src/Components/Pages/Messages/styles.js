@@ -1,5 +1,29 @@
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(theme => ({
+    sectionDesktop: {
+        display: 'none',
+        // margin: '1%',
+        [theme.breakpoints.up('md')]: {
+            backgroundColor: '#F6F6F6',
+            height: '650px',
+            borderRadius: 15,
+            display: "flex",
+            flexDirection: 'column',
+            justifyContent: "center",
+            alignItems: "center",
+        },
+    },
+
+      sectionMobile: {
+        display: 'flex',
+        backgroundColor: '#F6F6F6',
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+          display: 'none',
+          backgroundColor: 'black',
+        },
+    },
+
     profileContainer: {
         backgroundColor: '#F6F6F6',
         height: '650px',
@@ -7,7 +31,7 @@ export default makeStyles(theme => ({
         display: "flex",
         flexDirection: 'column',
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
 
     messagesContainer: {
