@@ -5,7 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../Models/SignUpModels');
 const MatchesModel = require('../Models/MatchesModel');
-const { update } = require('../Models/SignUpModels');
+
 
 router.post('/signup', async (request, response) =>{
    
@@ -160,48 +160,34 @@ const findMatch = async (req, res) => {
     }
   })
 }
-    
-  // .then(mentee => { 
-  //   if(mentee.applicationStatus != "Matched"){
-  //     console.log(mentee.applicationStatus != "Matched");
-  //     User.findOne({role: "Mentor"})
-  //       .then(mentor => {
-  //         console.log(mentee.applicationStatus != "Matched");
-  //         if(mentor.applicationStatus != "Matched"){
-  //         //checks if both students study the same course
-  //           if(mentee.course = mentor.course){
-  //             console.log('Mentee: '+mentee + 'Mentor: '+mentor)
-  //             const newMatch = new MatchesModel({
-  //               mentor: mentor._id,
-  //               mentee: mentee._id
-  //             })
-  //             newMatch.save();
-  //             User.findByIdAndUpdate(mentee._id, {applicationStatus:"Matched"}, (err, data) =>  {
-  //               if (err) {
-  //                 console.log("err", err);
-  //               } else {
-  //                 console.log("success");
-  //                 console.log(data);
-  //               }
-  //             });
-  //             User.findByIdAndUpdate(mentor._id, {applicationStatus:"Matched"}, (err, data) =>  {
-  //               if (err) {
-  //                 console.log("err", err);
-  //               } else {
-  //                 console.log("success");
-  //               }
-  //             });
-  //           }
-  //         }
-  //         console.log(mentor + mentee)}) 
-  //     }
-  //   })
-  //   .catch(err => res.status(400).json('Error: ' + err));
 
+cron.schedule("* * * * *", async() => {
+  await findMatch();
+});
 
-  cron.schedule("* * * * *", async() => {
-    await findMatch();
-  });
+router.get("/getMatchDetails/:id", (req,res) => {
+  const mentee =  MatchesModel.find({mentee:req.params.id});
+  const mentor = MatchesModel.findOne({mentor:req.params.id});
+  
+  if (mentor) {
+    MatchesModel.findOne({mentor:req.params.id})
+    .then(mentor => {
+      User.findOne({_id:mentor.mentee}) 
+        .then(mentee => res.json(mentee))
+      // res.json(mentor)
+    })
+  }
+
+  if (mentee) {
+    MatchesModel.findOne({mentee:req.params.id})
+    .then(mentee => {
+        User.findOne({_id:mentee.mentor}) 
+          .then(mentor => res.json(mentor))
+        // res.json(mentee.mentor)
+      })
+  }
+
+});
 
 
 module.exports = router;

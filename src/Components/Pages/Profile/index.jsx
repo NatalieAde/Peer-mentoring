@@ -33,7 +33,7 @@ export default function ProfilePage() {
         interests: '',
         placement: '',
 
-      });
+    });
     const handleDelete = () => {
         console.info('You clicked the delete icon.');
       };
