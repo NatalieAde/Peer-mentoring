@@ -123,42 +123,123 @@ router.get("/getUserDetails/:id", (req,res) => {
 
 const findMatch = async (req, res) => {
   console.log("running every minute");
-  const mentees = await User.find({role: "Mentee"})
-  const mentors = await User.find({role: "Mentor"})
+  const mentees = await User.find({role: "Mentee", applicationStatus: "Pending"})
+  const mentors = await User.find({role: "Mentor", applicationStatus: "Pending"})
+  const matches = await MatchesModel.find()
+  console.log(matches);
+  // const menteeMatches = await MatchesModel.find() 
   // console.log('Mentees: ' + mentees);
   // console.log('Mentors: ' + mentors);
 
-  mentees.map((mentee) => {
-    if(mentee.applicationStatus != "Matched"){
-      mentors.map((mentor) => {
-        if(mentor.applicationStatus != "Matched"){
-          if(mentee.course = mentor.course){
-            console.log('Mentee: '+mentee + 'Mentor: '+mentor)
-            const newMatch = new MatchesModel({
-            mentor: mentor._id,
-            mentee: mentee._id
-            })
-            User.findByIdAndUpdate(mentee._id, {applicationStatus:"Matched"}, (err, data) =>  {
-              if (err) {
-                console.log("err", err);
-              } else {
-                console.log("success");
-                console.log(data);
-              }
-            });
-            User.findByIdAndUpdate(mentor._id, {applicationStatus:"Matched"}, (err, data) =>  {
-              if (err) {
-                console.log("err", err);
-              } else {
-                console.log("success");
-              }
-            });
-            newMatch.save();
-          }
-        }
-      })
+  // MatchesModel.update(
+  //   { _id: "604fa36ba3c4a06b41afbfd1" },
+  //   { $push: { mentee: ["604f5de9959f8812d8ded499"] } }
+  // )
+
+  MatchesModel.updateOne(
+    { _id: "604fa36ba3c4a06b41afbfd1" },
+    { $push: { mentee: ["604f5ec20b34f47d2ce36a3f"] } },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        // res.json(result);
+      }
     }
-  })
+  );
+
+//   MatchesModel.findByIdAndUpdate(
+//      "604fa36ba3c4a06b41afbfd1",
+//     {
+//         $push: {
+//           mentee: "604f5de9959f8812d8ded499"
+//         }
+//     }
+// )
+
+  // mentees.map((mentee) => {
+    
+  //     mentors.map((mentor) => {
+  //       if(mentee.applicationStatus = "Matched"){
+  //       if(mentor.applicationStatus = "Matched"){
+          
+  //         if(mentee.course = mentor.course){
+  //           // console.log('Mentee: '+mentee + 'Mentor: '+mentor)
+  //           // const mentees = [];
+  //           // mentees.push(mentee._id)
+  //           const newMatch = new MatchesModel({
+  //             mentor: mentor._id,
+  //             mentorName: mentor.firstName,
+  //             mentee: mentee._id
+  //           })
+
+  //           MatchesModel.update(
+  //             { _id: "604fa36ba3c4a06b41afbfd1" },
+  //             { $push: { mentee: "602e8792b49764f121a35c47" } }
+  //           )
+            
+  //           User.findByIdAndUpdate(mentee._id, {applicationStatus:"Matched"}, (err, data) =>  {
+  //             if (err) {
+  //               console.log("err", err);
+  //             } else {
+  //               console.log("successful status update-MENTEE");
+  //               // console.log(data);
+  //             }
+  //           });
+
+  //           User.findByIdAndUpdate(mentor._id, {applicationStatus:"Matched"}, (err, data) =>  {
+  //             if (err) {
+  //               console.log("err", err);
+  //             } else {
+  //               console.log("successful status update-MENTOR");
+  //             }
+  //           });
+            
+  //           // matches.map((match) => {
+  //           //   console.log(match);
+  //           //   if(match.mentor = mentor._id) {
+  //           //     console.log("MATCH" + match);
+  //           //     MatchesModel.update(
+  //           //       { mentor: mentor._id },
+  //           //       { $push: { mentee: mentee._id  } }
+  //           //     )
+                  
+  //           //   }else{
+  //           //     newMatch.save(); 
+  //           //   }
+  //           // })
+
+  //           // if(matches != []) {
+  //           //   matches.map((match) => {
+  //           //     console.log(match);
+  //           //     if(match.mentor = mentor._id) {
+  //           //       console.log("MATCH" + match);
+  //           //       MatchesModel.update(
+  //           //         { mentor: mentor._id },
+  //           //         { $push: { mentee: mentee._id  } }
+  //           //       )
+  //           //     }
+  //           //   })
+  //           // }else{
+  //           //   newMatch.save(); 
+  //           // }
+            
+
+  //         //   MatchesModel.update({mentor:mentor._id}, { $push: { mentee: mentee._id }}, (err, data) =>  {
+  //         //     if (err) {
+  //         //       console.log("err", err);
+  //         //     } else {
+  //         //       console.log("success push");
+  //         //       console.log(data);
+  //         //     }
+  //         //   });
+            
+  //         }
+  //       }
+  //       console.log("EVERYONE MATCHED");
+  //    } })
+    
+  // })
 }
 
 cron.schedule("* * * * *", async() => {
