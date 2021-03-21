@@ -5,6 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../Models/SignUpModels');
 const MatchesModel = require('../Models/MatchesModel');
+const MessagesModel = require('../Models/MessagesModel');
 
 
 router.post('/signup', async (request, response) =>{
@@ -126,30 +127,60 @@ const findMatch = async (req, res) => {
   const mentees = await User.find({role: "Mentee"})
   const mentors = await User.find({role: "Mentor"})
   const matches = await MatchesModel.find()
-  console.log(matches);
-  const i = 0;
-  // const menteeMatches = await MatchesModel.find() 
-  // console.log('Mentees: ' + mentees);
-  // console.log('Mentors: ' + mentors);
+  // console.log(matches);
 
 
   mentees.map((mentee) => {
     
       mentors.map((mentor) => {
-        console.log(mentee.course);
-          console.log(mentor.course);
-          console.log(mentee.course == mentor.course);
+        // console.log(mentee.course);
+        //   console.log(mentor.course);
+        //   console.log(mentee.course == mentor.course);
         if(mentee.applicationStatus != "Matched"){
-        if(mentor.applicationStatus != "Matched"){
-          
           if(mentee.course == mentor.course){
-            
-            // console.log(i++ + "MENTEE" + mentee.course + "MENTOR" + mentor.course);
             const newMatch = new MatchesModel({
               mentor: mentor._id,
               mentorName: mentor.firstName,
               mentee: mentee._id
             })
+            console.log("MATCH - COURSE");
+            if(mentee.matchingCriteria == "Same Gender" || mentor.matchingCriteria == "Same Gender"){
+              if(mentee.gender == mentor.gender){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - GENDER");
+              }
+            }else if(mentee.matchingCriteria == "Same Ethnicity" || mentor.matchingCriteria == "Same Ethnicity"){
+              if(mentee.ethniciy == mentor.ethnicity){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - ETHNICITY");
+              }
+            }else if(mentee.matchingCriteria == "Same Nationality" || mentor.matchingCriteria == "Same Nationality"){
+              if(mentee.nationality == mentor.nationality){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - NATIONALITY");
+              }
+            }else if(mentee.matchingCriteria == "Placement" || mentor.matchingCriteria == "Placement"){
+              if(mentor.placement == "Yes"){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - PLACEMENT");
+              }
+            }
             
             User.findByIdAndUpdate(mentee._id, {applicationStatus: "Matched"}, (err, data) =>  {
               if (err) {
@@ -167,20 +198,6 @@ const findMatch = async (req, res) => {
                 console.log("successful status update-MENTOR");
               }
             });
-            
-            // matches.map((match) => {
-            //   console.log(match);
-            //   if(match.mentor = mentor._id) {
-            //     console.log("MATCH" + match);
-            //     MatchesModel.update(
-            //       { mentor: mentor._id },
-            //       { $push: { mentee: mentee._id  } }
-            //     )
-                  
-            //   }else{
-            //     newMatch.save(); 
-            //   }
-            // })
 
             if(matches.length > 0) {
               console.log(matches.length == 0);
@@ -195,61 +212,189 @@ const findMatch = async (req, res) => {
                       if (err) {
                         res.send(err);
                       } else {
-                        // res.json(result);
                       }
                     }
                   );
-                }else{
-              newMatch.save();
-              console.log("NewMatch");
+                }else {
+                  newMatch.save();
+                  console.log("NewMatch");
             } 
               })
             }
-            
-
-            // MatchesModel.update({mentor:mentor._id}, { $push: { mentee: mentee._id }}, (err, data) =>  {
-            //   if (err) {
-            //     console.log("err", err);
-            //   } else {
-            //     console.log("success push");
-            //     console.log(data);
-            //   }
-            // });
-            
           }
-        }
         console.log("EVERYONE MATCHED");
      } })
     
   })
-}
+};
 
-cron.schedule("* * * * *", async() => {
+cron.schedule("3 * * * *", async() => {
   await findMatch();
 });
 
-router.get("/getMatchDetails/:id", (req,res) => {
-  const mentee =  MatchesModel.find({mentee:req.params.id});
-  const mentor = MatchesModel.findOne({mentor:req.params.id});
-  
+router.get("/getMatchDetails/:id", async(req,res) => {
+  const mentee = await MatchesModel.findOne({mentee:req.params.id});
+  const mentor = await MatchesModel.findOne({mentor:req.params.id});
+  const menteeDetails = [];
+  console.log("HEEE"+mentee);
+
   if (mentor) {
     MatchesModel.findOne({mentor:req.params.id})
-    .then(mentor => {
-      User.findOne({_id:mentor.mentee}) 
+    .then(match => {
+      User.find({_id:match.mentee}) 
         .then(mentee => res.json(mentee))
       // res.json(mentor)
     })
   }
 
+
   if (mentee) {
     MatchesModel.findOne({mentee:req.params.id})
-    .then(mentee => {
-        User.findOne({_id:mentee.mentor}) 
+    .then(match => {
+      console.log(match);
+        User.findOne({_id:match.mentor}) 
           .then(mentor => res.json(mentor))
         // res.json(mentee.mentor)
       })
   }
 
+});
+
+router.put("/confirmMatch/:id", async(req,res) => {
+  const mentee = await MatchesModel.find({mentee:req.params.id});
+  const mentor = await MatchesModel.findOne({mentor:req.params.id});
+
+  if (mentor) {
+    MatchesModel.findOne({mentor:req.params.id})
+      .then(match => {
+        User.findOneAndUpdate({_id:match.mentor }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
+          if (err) {
+            console.log("err", err);
+          } else {
+            console.log("success");
+            console.log(data);
+            res.send(data);
+          }
+        })
+        User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
+          if (err) {
+            console.log("err", err);
+          } else {
+            console.log("success");
+            console.log(data);
+            res.send(data);
+          }
+        })
+      })
+  }
+
+  if (mentee) {
+    MatchesModel.findOne({mentee:req.params.id})
+    .then(match => {
+      User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
+        if (err) {
+          console.log("err", err);
+        } else {
+          console.log("success");
+          console.log(data);
+          res.send(data);
+        }
+      })
+      User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
+        if (err) {
+          console.log("err", err);
+        } else {
+          console.log("success");
+          console.log(data);
+          res.send(data);
+        }
+      })
+    })
+  }
+
+  // if (mentor.confirmed && mentee.confirmed) {
+  //   // if (mentor) {
+  //     MatchesModel.findOne({mentor:req.params.id})
+  //     .then(match => {
+  //       User.findOneAndUpdate({_id:match.mentor }, {applicationStatus:"Match Confirmed"}, (err, data) =>  {
+  //         if (err) {
+  //           console.log("err", err);
+  //         } else {
+  //           console.log("success");
+  //           console.log(data);
+  //           res.send(data);
+  //         }
+  //       })
+  //       User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:"Match Confirmed"}, (err, data) =>  {
+  //         if (err) {
+  //           console.log("err", err);
+  //         } else {
+  //           console.log("success");
+  //           console.log(data);
+  //           res.send(data);
+  //         }
+  //       })
+  //     })
+  //   // }
+  // } else if (!mentor.confirmed || !mentee.confirmed){
+  //   MatchesModel.findOne({mentor:req.params.id})
+  //     .then(match => {
+  //       User.findOneAndUpdate({_id:match.mentor }, {applicationStatus:"Match Declined"}, (err, data) =>  {
+  //         if (err) {
+  //           console.log("err", err);
+  //         } else {
+  //           console.log("success");
+  //           console.log(data);
+  //           res.send(data);
+  //         }
+  //       })
+  //       User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:"Match Declined"}, (err, data) =>  {
+  //         if (err) {
+  //           console.log("err", err);
+  //         } else {
+  //           console.log("success");
+  //           console.log(data);
+  //           res.send(data);
+  //         }
+  //       })
+  //     })
+  // }
+
+
+
+});
+
+router.post("/saveMessage", (req, res) => {
+ const message = new MessagesModel({
+  //  chatID: req.body.chatID,
+   from: req.body.from,
+   to: req.body.to,
+   message: req.body.message
+ });
+
+  message.save()
+    .then(message => {
+      console.log(message + "SAVED");
+    }).catch(err => {
+      console.log(err);
+      // res.status(500).json({msg: `User ${err.keyValue['email']} already exists. Try Loggin In.`});
+  });
+});
+
+router.get("/getMessages/:id", (req,res) => {
+//find chat based on if sender id:
+// if from == user.id or to==user.id
+  const fromMsg = MessagesModel.find({from:req.params.id});
+  const toMsg = MessagesModel.find({to:req.params.id});
+  if(fromMsg){
+    MessagesModel.find({from:req.params.id}).sort({createdAt: -1}) 
+    .then(message => res.json(message))
+    .catch(err => res.status(400).json('Error: ' + err));
+  } else if (toMsg){
+    MessagesModel.find({to:req.params.id}).sort({createdAt: -1}) 
+    .then(message => res.json("MESSAGE" + message))
+    .catch(err => res.status(400).json('Error: ' + err));
+  }
 });
 
 

@@ -86,7 +86,7 @@ export default function EditProfilePage() {
             summary: profileInfo.summary,
             interests: profileInfo.interests,
             placement: profileInfo.placement
-          })  
+        })  
         axios.put('http://localhost:5000/app/updateProfile/' + id, profileInfo)
         .then( res => {
           alert(res.data);
@@ -96,7 +96,7 @@ export default function EditProfilePage() {
           console.log(err.response);
           alert('An error occurred! Try submitting the form again.');
         });
-      }
+    }
       
 
     return (

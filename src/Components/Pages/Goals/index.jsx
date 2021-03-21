@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Typography, TextField, Button, Grid, Checkbox } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import HomeImg from '../../../goalsImg.svg';
 
 export default function GoalsPage() {
     const [inputValue, setInputValue] = useState('');
@@ -55,6 +56,12 @@ export default function GoalsPage() {
                 </Grid>
             </Grid>
 
+        {goals.length == 0 &&
+            <div style={{marginTop: "5%"}}>
+                <img src={HomeImg} alt="Logo" style={{width: "60%", height: "50%"}} />
+                <Typography variant='h6' align={'center'}>Set your first goal.</Typography>
+            </div>
+        }
         <div style={{margin: 'auto', width: '70%'}}>
             {goals.map((item, index) => (
                 <div style={{marginTop: '2%'}}>
