@@ -183,7 +183,7 @@ export default function Header() {
         </NavLink>
 
         <NavLink
-          to="/calnedar"
+          to="/calendar"
           activeStyle={{
             fontWeight: "bold",
             color: "#FFFFFF",
