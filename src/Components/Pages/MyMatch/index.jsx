@@ -22,6 +22,7 @@ import {
 import useStyle from './styles';
 import MaterialLayout from '../../Layout/layout';
 import axios from 'axios';
+import { object } from 'prop-types';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -101,24 +102,42 @@ export default function MyMatchPage() {
                 }
             }).then(res=>{  
                 const a = JSON.parse(JSON.stringify(res)).data; 
-                a.map((match, i) => {
-                    console.log(match);
-                    setProfileInfo(oldArray => [...oldArray, {firstName: match.firstName,
-                        lastName: match.lastName,
-                        email: match.email,
-                        course: match.course,
-                        yearOfStudy: match.yearOfStudy,
-                        summary: match.summary,
-                        interests: match.interests,
-                        placement: match.placement
-                    }]);
-                   
-                  })
+                console.log("LENGTH" + a);
+                if(a == "[object Object]"){
+                    setProfileInfo({
+                        firstName: res.data.firstName,
+                        lastName: res.data.lastName,
+                        email: res.data.email,
+                        course: res.data.course,
+                        yearOfStudy: res.data.yearOfStudy,
+                        summary: res.data.summary,
+                        interests: res.data.interests,
+                        placement: res.data.placement
+                    })  
+                }
+               
+                if(a.length > 1){
+                    a.map((match, i) => {
+                        console.log(match);
+                        setProfileInfo(oldArray => [...oldArray, {firstName: match.firstName,
+                            lastName: match.lastName,
+                            email: match.email,
+                            course: match.course,
+                            yearOfStudy: match.yearOfStudy,
+                            summary: match.summary,
+                            interests: match.interests,
+                            placement: match.placement
+                        }]);
+                     console.log(match.role); 
+                    })
+                }
+                
             })
             .catch(err=>console.log(err))
         }
       }, [])
     console.log(profileInfo);
+    console.log(typeof profileInfo.firstName === 'string');
 
     return (
         <React.Fragment>
@@ -126,7 +145,8 @@ export default function MyMatchPage() {
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>My Match</Typography> 
             </div>
 
-            <div className={classes.root2}>
+            {profileInfo.length > 1 &&
+                <div className={classes.root2}>
                 <Tabs
                     orientation="vertical"
                     variant="scrollable"
@@ -164,9 +184,6 @@ export default function MyMatchPage() {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={12} sm={9}>
-                                    <Typography variant="h3" style={{marginBottom: "5%"}}>
-                                        {match.firstName} {match.lastName}
-                                    </Typography>
                                     { !confirmed &&
                                     <div>
                                         <Button
@@ -175,7 +192,7 @@ export default function MyMatchPage() {
                                             style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none', marginRight: "10%"}}
                                             onClick={handleClickConfirm}
                                         >
-                                        Confirm
+                                        Confirm Match
                                         </Button>
                                         <Button
                                             variant="contained"
@@ -183,11 +200,14 @@ export default function MyMatchPage() {
                                             style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none',}}
                                             onClick={handleClickDecline}
                                         >
-                                        Decline
+                                        Decline Match
                                         </Button>
                                         
                                     </div>
                                     }
+                                    <Typography variant="h3" style={{marginBottom: "5%"}}>
+                                        {match.firstName} {match.lastName}
+                                    </Typography>
                                     {/* dialogue pops up when user clicks decline button */}
                                     <Dialog open={openDecline} onClose={handleClose} aria-labelledby="form-dialog-title">
                                         <DialogTitle id="form-dialog-title">Decline Match</DialogTitle>
@@ -262,9 +282,9 @@ export default function MyMatchPage() {
                         </div> 
                     </TabPanel>
                 ))}
-            </div>
+            </div>}
 
-            { profileInfo.length == 1 &&
+            { typeof profileInfo.firstName === 'string' &&
                 <div className={classes.root}>
                     <Paper className={classes.paper} style={{backgroundColor: '#FFFFFF', color: 'black'}}>
                         <Grid container style={{marginTop: "3%"}}>
@@ -276,27 +296,6 @@ export default function MyMatchPage() {
                                         <Typography style={{marginLeft: "5%"}}>
                                             {profileInfo.yearOfStudy} Year {profileInfo.course}
                                         </Typography>
-                                        { !confirmed &&
-                                        <div>
-                                            <Button
-                                                variant="contained"
-                                                size="large"
-                                                style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none', marginRight: "10%"}}
-                                                onClick={handleClickConfirm}
-                                            >
-                                            Confirm
-                                            </Button>
-                                            <Button
-                                                variant="contained"
-                                                size="large"
-                                                style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none',}}
-                                                onClick={handleClickDecline}
-                                            >
-                                            Decline
-                                            </Button>
-                                            
-                                        </div>
-                                    }
                                     </div>
                                 </Grid>
                                 <Grid item xs={12} style={{marginLeft: "5%"}}>
@@ -309,6 +308,26 @@ export default function MyMatchPage() {
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} sm={9}>
+                                { !confirmed &&
+                                    <div>
+                                        <Button
+                                            variant="contained"
+                                            size="large"
+                                            style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none', marginRight: "10%"}}
+                                            onClick={handleClickConfirm}
+                                        >
+                                        Confirm Match
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            size="large"
+                                            style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none',}}
+                                            onClick={handleClickDecline}
+                                        >
+                                        Decline Match
+                                        </Button>  
+                                    </div>
+                                }
                                 <Typography variant="h3" style={{marginBottom: "5%"}}>
                                     {profileInfo.firstName} {profileInfo.lastName}
                                 </Typography>
