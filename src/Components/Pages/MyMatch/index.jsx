@@ -20,9 +20,7 @@ import {
     SchoolRounded,
 } from '@material-ui/icons';
 import useStyle from './styles';
-import MaterialLayout from '../../Layout/layout';
 import axios from 'axios';
-import { object } from 'prop-types';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -60,9 +58,13 @@ export default function MyMatchPage() {
     const [openDecline, setOpenDecline] = useState(false);
     const [openConfirm, setOpenConfirm] = useState(false);
     const [profileInfo, setProfileInfo] = useState([]);
+    const [declineReason, setDeclineReason] = useState('');
+    const [confirmation, setConfirmation] = useState();
+    const [matchName, setMatchName] = useState('');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        setConfirmed(false);
     };
 
     const handleClickDecline = () => {
@@ -73,9 +75,29 @@ export default function MyMatchPage() {
         setOpenConfirm(true);
     };
     
-    const handleCloseDecline = () => {
+    function handleCloseDecline() {
+        const id = JSON.parse(localStorage.getItem('users')).id;
+        const confirmationInfo = {
+            declineReason: matchName+": " +declineReason,
+            isConfirmed: false
+        };
         setOpenDecline(false);
         setConfirmed(true);
+        // alert(confirmation);
+        console.log(confirmationInfo);
+        // axios.put('http://localhost:5000/app/declineReason/'+id, confirmationInfo)
+        // .then(response => console.log(response.data))
+
+        axios.put('http://localhost:5000/app/declineReason/'+id, confirmationInfo)
+        .then( res => {
+          alert(res.data);
+         }   
+        )
+        .catch(err => {
+          console.log(err.response);
+          alert('An error occurred! Try submitting the form again.');
+        });
+        
     };
 
     const handleCloseConfirm = () => {
@@ -112,7 +134,8 @@ export default function MyMatchPage() {
                         yearOfStudy: res.data.yearOfStudy,
                         summary: res.data.summary,
                         interests: res.data.interests,
-                        placement: res.data.placement
+                        placement: res.data.placement,
+                        confirmedMatch: false,
                     })  
                 }
                
@@ -126,7 +149,8 @@ export default function MyMatchPage() {
                             yearOfStudy: match.yearOfStudy,
                             summary: match.summary,
                             interests: match.interests,
-                            placement: match.placement
+                            placement: match.placement,
+                            confirmedMatch: false,
                         }]);
                      console.log(match.role); 
                     })
@@ -156,7 +180,7 @@ export default function MyMatchPage() {
                     className={classes.tabs}
                 >
                 {profileInfo.map((match, i) => (
-                    <Tab style={{textTransform: 'none'}} label={match.firstName + " " + match.lastName} {...a11yProps(i)} />
+                    <Tab style={{textTransform: 'none', fontSize:18}} label={match.firstName + " " + match.lastName} {...a11yProps(i)} />
                 ))} 
                 </Tabs> 
                 {profileInfo.map((match, i) => (
@@ -184,7 +208,7 @@ export default function MyMatchPage() {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={12} sm={9}>
-                                    { !confirmed &&
+                                    { !match.confirmedMatch &&
                                     <div>
                                         <Button
                                             variant="contained"
@@ -198,7 +222,10 @@ export default function MyMatchPage() {
                                             variant="contained"
                                             size="large"
                                             style={{color: '#FFFFFF', backgroundColor: '#F1960D', textTransform: 'none',}}
-                                            onClick={handleClickDecline}
+                                            onClick={() => {
+                                                handleClickDecline()
+                                                setMatchName(match.firstName)
+                                            }}
                                         >
                                         Decline Match
                                         </Button>
@@ -213,21 +240,32 @@ export default function MyMatchPage() {
                                         <DialogTitle id="form-dialog-title">Decline Match</DialogTitle>
                                         <DialogContent>
                                         <DialogContentText>
-                                            Please enter the reason why you do not want to be match with {match.firstName} {match.lastName}
+                                            Please enter the reason why you do not want to be match with {match.firstName} {match.lastName}?
                                         </DialogContentText>
                                         <TextField
+                                            onChange={(event) => setDeclineReason(event.target.value)}
+                                            InputProps={{
+                                                className: classes.MuiInputBase
+                                            }}
                                             autoFocus
                                             margin="dense"
                                             id="reason"
                                             label="Reason"
+                                            value={declineReason}
                                             fullWidth
                                         />
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={handleClose} color="primary">
+                                        <Button style={{textTransform: 'none', color:'#83008F'}} onClick={handleClose}>
                                             Cancel
                                         </Button>
-                                        <Button onClick={handleCloseDecline} color="primary">
+                                        <Button 
+                                            style={{textTransform: 'none', color:'#83008F'}}
+                                            onClick={() => {
+                                                handleCloseDecline();
+                                                match.confirmedMatch = true;
+                                            }} 
+                                        >
                                             Submit
                                         </Button>
                                         </DialogActions>
@@ -235,7 +273,7 @@ export default function MyMatchPage() {
 
                                     {/* dialogue pops up when user clicks confirm button */}
                                     <Dialog open={openConfirm} onClose={handleCloseC} aria-labelledby="form-dialog-title">
-                                        <DialogTitle id="form-dialog-title">Decline Match</DialogTitle>
+                                        <DialogTitle id="form-dialog-title">Confirm Match</DialogTitle>
                                         <DialogContent>
                                         <DialogContentText>
                                             Are you sure you want to be matched with {match.firstName} {match.lastName}
@@ -245,7 +283,13 @@ export default function MyMatchPage() {
                                         <Button onClick={handleCloseC} color="primary">
                                             Cancel
                                         </Button>
-                                        <Button onClick={handleCloseConfirm} color="primary">
+                                        <Button 
+                                            onClick={() => {
+                                                handleCloseConfirm();
+                                                match.confirmedMatch = true;
+                                            }} 
+                                            color="primary"
+                                        >
                                             Yes
                                         </Button>
                                         </DialogActions>

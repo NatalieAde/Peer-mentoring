@@ -102,7 +102,7 @@ router.put('/updateProfile/:id', (req, res) => {
     interests: req.body.interests,
     // imageURL: req.body.imageURL,
   };
-console.log(update);
+  console.log(update);
   User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
     if (err) {
       console.log("err", err);
@@ -396,6 +396,25 @@ router.get("/getMessages/:id", (req,res) => {
     .catch(err => res.status(400).json('Error: ' + err));
   }
 });
+
+router.put('/declineReason/:id', (req,res) => {
+  const update ={
+    declineReason: req.body.declineReason,
+    isConfirmed: req.body.isConfirmed
+  };
+  // const listName = req.body.declineReason.slice(0,-1)
+// console.log("LOOK: "+update);
+  User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
+    if (err) {
+      console.log("err", err);
+    } else {
+      console.log("success");
+      console.log(data);
+      res.send(data);
+    }
+  });
+
+})
 
 
 module.exports = router;

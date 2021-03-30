@@ -98,6 +98,14 @@ const signUpTemplate = new mongoose.Schema({
         type: String,
         required: false
     },
+    declineReason: {
+        type: String,
+        required: false
+    },
+    isConfirmed: {
+        type: Boolean,
+        required: false
+    },
     date: {
         type: Date,
         default: Date.now

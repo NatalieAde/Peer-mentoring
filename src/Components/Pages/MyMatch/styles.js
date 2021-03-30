@@ -14,14 +14,20 @@ export default makeStyles((theme) => ({
             alignItems: "center",
         },
     },
+   
+    MuiInputBase: {
+        olor:'red'
+    },
     root2: {
         flexGrow: 1,
         display: 'flex',
         height: 224,
+        textAlign: "left"
     },
     tabs: {
         borderRight: `1px solid ${theme.palette.divider}`,
-        width: "40%"
+        width: "40%",
+        textAlign: "left"
     },
     root: {
         width: 'auto',
