@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 import useStyle from './styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import HomeImg from '../../../goalsImg.svg';
+import HomeImg from '../../../Images/goalsImg.svg';
 import axios from 'axios';
 
 function TabPanel(props) {

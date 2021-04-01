@@ -1,5 +1,5 @@
 import React from 'react';
-import image from '../../imgt.png'
+import image from '../../Images/imgt.png'
 import { Grid, Typography, Button } from '@material-ui/core';
 
 function Arrow(props) {

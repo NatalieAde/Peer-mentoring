@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
-import HomeImg from '../../../imgt.png';
+import HomeImg from '../../../Images/imgt.png';
 
 import { Link } from "react-router-dom";
 

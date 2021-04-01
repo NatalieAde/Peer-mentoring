@@ -83,10 +83,8 @@ export default function MyMatchPage() {
         };
         setOpenDecline(false);
         setConfirmed(true);
-        // alert(confirmation);
+
         console.log(confirmationInfo);
-        // axios.put('http://localhost:5000/app/declineReason/'+id, confirmationInfo)
-        // .then(response => console.log(response.data))
 
         axios.put('http://localhost:5000/app/declineReason/'+id, confirmationInfo)
         .then( res => {
@@ -95,14 +93,25 @@ export default function MyMatchPage() {
         )
         .catch(err => {
           console.log(err.response);
-          alert('An error occurred! Try submitting the form again.');
-        });
-        
+        //   alert('An error occurred! Try submitting the form again.');
+        }); 
     };
 
+    //TODO: FIGURE OUT CONFIRM LOGIC
     const handleCloseConfirm = () => {
+        const id = JSON.parse(localStorage.getItem('users')).id;
         setOpenConfirm(false);
         setConfirmed(true);
+
+        axios.put('http://localhost:5000/app/confirmMatch/'+id, {isConfirmed: true})
+        .then( res => {
+          alert(res.data);
+         }   
+        )
+        .catch(err => {
+          console.log(err.response);
+        //   alert('An error occurred! Try submitting the form again.');
+        }); 
     };
 
     const handleClose = () => {

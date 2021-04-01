@@ -18,7 +18,7 @@ import {
 } from '@material-ui/icons';
 import axios from 'axios';
 import { AuthContext } from '../../../App';
-import ProfileImg from '../../../profilePic.jpg';
+import ProfileImg from '../../../Images/profilePic.jpg';
 import { identity } from 'lodash';
 
 

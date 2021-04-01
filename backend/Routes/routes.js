@@ -260,110 +260,6 @@ router.get("/getMatchDetails/:id", async(req,res) => {
 
 });
 
-router.put("/confirmMatch/:id", async(req,res) => {
-  const mentee = await MatchesModel.find({mentee:req.params.id});
-  const mentor = await MatchesModel.findOne({mentor:req.params.id});
-
-  if (mentor) {
-    MatchesModel.findOne({mentor:req.params.id})
-      .then(match => {
-        User.findOneAndUpdate({_id:match.mentor }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
-          if (err) {
-            console.log("err", err);
-          } else {
-            console.log("success");
-            console.log(data);
-            res.send(data);
-          }
-        })
-        User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
-          if (err) {
-            console.log("err", err);
-          } else {
-            console.log("success");
-            console.log(data);
-            res.send(data);
-          }
-        })
-      })
-  }
-
-  if (mentee) {
-    MatchesModel.findOne({mentee:req.params.id})
-    .then(match => {
-      User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
-        if (err) {
-          console.log("err", err);
-        } else {
-          console.log("success");
-          console.log(data);
-          res.send(data);
-        }
-      })
-      User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:req.body.applicationStatus}, (err, data) =>  {
-        if (err) {
-          console.log("err", err);
-        } else {
-          console.log("success");
-          console.log(data);
-          res.send(data);
-        }
-      })
-    })
-  }
-
-  // if (mentor.confirmed && mentee.confirmed) {
-  //   // if (mentor) {
-  //     MatchesModel.findOne({mentor:req.params.id})
-  //     .then(match => {
-  //       User.findOneAndUpdate({_id:match.mentor }, {applicationStatus:"Match Confirmed"}, (err, data) =>  {
-  //         if (err) {
-  //           console.log("err", err);
-  //         } else {
-  //           console.log("success");
-  //           console.log(data);
-  //           res.send(data);
-  //         }
-  //       })
-  //       User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:"Match Confirmed"}, (err, data) =>  {
-  //         if (err) {
-  //           console.log("err", err);
-  //         } else {
-  //           console.log("success");
-  //           console.log(data);
-  //           res.send(data);
-  //         }
-  //       })
-  //     })
-  //   // }
-  // } else if (!mentor.confirmed || !mentee.confirmed){
-  //   MatchesModel.findOne({mentor:req.params.id})
-  //     .then(match => {
-  //       User.findOneAndUpdate({_id:match.mentor }, {applicationStatus:"Match Declined"}, (err, data) =>  {
-  //         if (err) {
-  //           console.log("err", err);
-  //         } else {
-  //           console.log("success");
-  //           console.log(data);
-  //           res.send(data);
-  //         }
-  //       })
-  //       User.findOneAndUpdate({_id:match.mentee }, {applicationStatus:"Match Declined"}, (err, data) =>  {
-  //         if (err) {
-  //           console.log("err", err);
-  //         } else {
-  //           console.log("success");
-  //           console.log(data);
-  //           res.send(data);
-  //         }
-  //       })
-  //     })
-  // }
-
-
-
-});
-
 router.post("/saveMessage", (req, res) => {
  const message = new MessagesModel({
   //  chatID: req.body.chatID,
@@ -402,8 +298,7 @@ router.put('/declineReason/:id', (req,res) => {
     declineReason: req.body.declineReason,
     isConfirmed: req.body.isConfirmed
   };
-  // const listName = req.body.declineReason.slice(0,-1)
-// console.log("LOOK: "+update);
+
   User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
     if (err) {
       console.log("err", err);
@@ -413,8 +308,19 @@ router.put('/declineReason/:id', (req,res) => {
       res.send(data);
     }
   });
+});
 
-})
+router.put('/confirmMatch/:id', (req,res) => {
+  User.findByIdAndUpdate(req.params.id, {isConfirmed: req.body.isConfirmed}, (err, data) =>  {
+    if (err) {
+      console.log("err", err);
+    } else {
+      console.log("success");
+      console.log(data);
+      res.send(data);
+    }
+  });
+});
 
 
 module.exports = router;
