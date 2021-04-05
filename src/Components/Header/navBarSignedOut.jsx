@@ -74,7 +74,7 @@ export default function Header() {
           Sign In
         </MenuItem>
       </Link> 
-      <Link to="/register" className={classes.link}>
+      <Link to="/registration" className={classes.link}>
         <MenuItem onClick={handleMenuClose}>
           <HowToReg fontSize="small" />
           Register

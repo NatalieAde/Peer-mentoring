@@ -46,23 +46,181 @@ let course = [
 ];
 
 let nationalities = [
-  'Afghan',
-  'Albanian',
-  'Algerian',
-  'American',
-  'Andorran',
-  'Angolan',
-  'Anguillan',
-  'Argentine',
-  'Armenian',
-  'Australian',
-  'Beninese',
-  'Bermudian',
-  'New Zealander',
-  'Nigerian',
-  'Nigerien',
-  'Sudanese',
-  'Zimbabwea'
+  {
+    value: 'Afghan',
+    label: 'Afghan',
+  },
+  {
+    value: 'Albanian',
+    label: 'Albanian',
+  },
+  {
+    value: 'Albanian',
+    label: 'Albanian',
+  },
+  {
+    value: 'Algerian',
+    label: 'Algerian',
+  },
+  {
+    value: 'American',
+    label: 'American',
+  },
+  {
+    value: 'Andorran',
+    label: 'Andorran',
+  },
+  {
+    value: 'Angolan',
+    label: 'Angolan',
+  },
+  {
+    value: 'Argentine',
+    label: 'Argentine',
+  },
+  {
+    value: 'Armenian',
+    label: 'Armenian',
+  },
+  {
+    value: 'Australian',
+    label: 'Australian',
+  },
+  {
+    value: 'British',
+    label: 'British',
+  },
+  {
+    value: 'Belgian',
+    label: 'Belgian',
+  },
+  {
+    value: 'Bangladeshi',
+    label: 'Bangladeshi',
+  },
+  {
+    value: 'Brazilian',
+    label: 'Brazilian',
+  },
+  {
+    value: 'Canadian',
+    label: 'Canadian',
+  },
+  {
+    value: 'Chinese',
+    label: 'Chinese',
+  },
+  {
+    value: 'Filipino',
+    label: 'Filipino',
+  },
+  {
+    value: 'French',
+    label: 'French',
+  },
+  {
+    value: 'Ghanaian',
+    label: 'Ghanaian',
+  },
+  {
+    value: 'Israeli',
+    label: 'Israeli',
+  },
+  {
+    value: 'Jamaican',
+    label: 'Jamaican',
+  },
+  {
+    value: 'New Zealander',
+    label: 'New Zealander',
+  },
+  {
+    value: 'Nigerian',
+    label: 'Nigerian',
+  },
+  {
+    value: 'Sudanese',
+    label: 'Sudanese',
+  },
+  {
+    value: 'Zimbabwea',
+    label: 'Zimbabwea',
+  },
+];
+
+const ethnicities = [
+  {
+    value: 'White English, Welsh, Scottish, Northern Irish or British',
+    label: 'White English, Welsh, Scottish, Northern Irish or British'
+  },
+  {
+    value: 'Irish',
+    label: 'Irish'
+  },
+  {
+    value: 'Any other White background',
+    label: 'Any other White background'
+  },
+  {
+    value: 'African',
+    label: 'African'
+  },
+  {
+    value: 'Caribbean',
+    label: 'Caribbean'
+  },
+  {
+    value: 'Black British',
+    label: 'Black British'
+  },
+  {
+    value: 'Any other Black, African or Caribbean background',
+    label: 'Any other Black, African or Caribbean background'
+  },
+  {
+    value: 'White and Black Caribbean',
+    label: 'White and Black Caribbean'
+  },
+  {
+    value: 'White and Black African',
+    label: 'White and Black African'
+  },
+  {
+    value: 'White and Asian',
+    label: 'White and Asian'
+  },
+  {
+    value: 'Any other Mixed or Multiple ethnic background',
+    label: 'Any other Mixed or Multiple ethnic background'
+  },
+  {
+    value: 'Indian',
+    label: 'Indian'
+  },
+  {
+    value: 'Pakistani',
+    label: 'Pakistani'
+  },
+  {
+    value: 'Bangladeshi',
+    label: 'Bangladeshi'
+  },
+  {
+    value: 'Chinese',
+    label: 'Chinese'
+  },
+  {
+    value: 'Any other Asian background',
+    label: 'Any other Asian background'
+  },
+  {
+    value: 'Arab',
+    label: 'Arab'
+  },
+  {
+    value: 'Any other ethnic group',
+    label: 'Any other ethnic group'
+  }
 ];
 
 const genders = [
@@ -135,12 +293,16 @@ const criteria = [
     label: 'None'
   },
   {
-    value: 'Same gender',
-    label: 'Same gender'
+    value: 'Same Gender',
+    label: 'Same Gender'
   },
   {
     value: 'Same Ethnicity',
     label: 'Same Ethnicity'
+  },
+  {
+    value: 'Same Nationality',
+    label: 'Same Nationality'
   },
   {
     value: 'Placement',
@@ -257,7 +419,8 @@ export default {
       },
       ethnicity: {
         name: 'ethnicity',
-        label: 'Ethnicity'
+        label: 'Ethnicity',
+        options: ethnicities
       },
       nationality: {
         name: 'nationality',

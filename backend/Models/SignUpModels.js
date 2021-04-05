@@ -91,10 +91,19 @@ const signUpTemplate = new mongoose.Schema({
     },
     applicationStatus: {
         type: String,
-        required: false
+        required: false,
+        default: 'Pending'
     },
     matchingCriteria: {
         type: String,
+        required: false
+    },
+    declineReason: {
+        type: String,
+        required: false
+    },
+    isConfirmed: {
+        type: Boolean,
         required: false
     },
     date: {

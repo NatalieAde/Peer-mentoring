@@ -53,7 +53,7 @@ export default function PersonalInfoForm(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <InputField name={summary.name} label={summary.label} fullWidth />
+          <InputField multiline name={summary.name} label={summary.label} fullWidth />
         </Grid>
         <Grid item xs={12}>
           <InputField name={interests.name} label={interests.label} fullWidth />
@@ -81,10 +81,20 @@ export default function PersonalInfoForm(props) {
           <InputField name={age.name} label={age.label} fullWidth />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <InputField name={ethnicity.name} label={ethnicity.label} fullWidth />
+          <SelectField
+              name={ethnicity.name}
+              label={ethnicity.label}
+              data={ethnicity.options}
+              fullWidth
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <InputField name={nationality.name} label={nationality.label} fullWidth />
+          <SelectField
+              name={nationality.name}
+              label={nationality.label}
+              data={nationality.options}
+              fullWidth
+            />
         </Grid>
         <Grid item xs={12}>
         <SelectField

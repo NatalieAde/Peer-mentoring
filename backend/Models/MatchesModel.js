@@ -5,6 +5,10 @@ const MatchesSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    mentorName: {
+        type: String,
+        required: true
+    },
     mentee: {
         type: [String],
         required: true
