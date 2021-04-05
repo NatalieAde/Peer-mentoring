@@ -22,7 +22,11 @@ export default {
             text10:
             'Whether you are looking for a match that is the same gender, ethnicity or even a mentor that has completed a placement. The choice is yours! You choose the criteria you would like to be matched on!',
         },
-        MyMatch: {
+        steps: {
+            one: 'Register and create a profile to help us find your perfect match.',
+            two: 'View our resources and begin training whilst we find your match.',
+            three: 'View your match(es) profile and confirm your match(es)!',
+            four: 'Start mentoring! Introduce yourself to your match and get mentoring.'
         
         },
         Messages: {

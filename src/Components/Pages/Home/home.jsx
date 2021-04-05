@@ -135,7 +135,7 @@ export default function HomePage() {
                             </p>
                         </div>
                         <Typography style={{marginRight: "1%", marginLeft: "1%"}} align={"center"}>
-                           Register and create a profile to help us find your perfect match.
+                            {Home.steps.one}
                         </Typography>
                     </Paper>
                 </Grid>
@@ -162,7 +162,7 @@ export default function HomePage() {
                             </p>
                         </div>
                         <Typography style={{marginRight: "1%", marginLeft: "1%"}} align={"center"}>
-                            Register and create a profile to help us find your perfect match.
+                            {Home.steps.two}
                         </Typography>
                     </Paper>
                 </Grid>
@@ -189,7 +189,7 @@ export default function HomePage() {
                             </p>
                         </div>
                         <Typography style={{marginRight: "1%", marginLeft: "1%"}} align={"center"}>
-                            Register and create a profile to help us find your perfect match.
+                            {Home.steps.three}
                         </Typography>
                     </Paper>
                 </Grid>
@@ -216,7 +216,7 @@ export default function HomePage() {
                             </p>
                         </div>
                         <Typography style={{marginRight: "1%", marginLeft: "1%"}} align={"center"}>
-                            Register and create a profile to help us find your perfect match.
+                            {Home.steps.four}
                         </Typography>
                     </Paper>
                 </Grid>
