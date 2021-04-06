@@ -41,10 +41,17 @@ export default {
         Resources: {
         
         },
-        Testimonials: {
         
-        },
-    }
+    },
+    Testimonials: {
+        slider: {
+            one: 'Denisa & Oana - Transition Mentor and Mentee',
+            one2: 'Aston University Student, Ashraf talks about his experiences of the University Peer Mentoring Scheme.',
+            two: 'Ashraf - Transition Mentor',
+            two2: 'Aston University Student, Ashraf talks about his experiences of the University Peer Mentoring Scheme.',
+
+        }
+    },
 }
 
 // 'Improve communication and personal skills and develop leadership and management qualities Reinforce your study skills and knowledge of your course'
