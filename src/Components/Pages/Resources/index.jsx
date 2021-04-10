@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     Typography,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Button,
-    MenuItem,   
+    Grid
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
+import DialogCustom from '../../Dialog/index'; 
+import CardCustom from '../../Card/index';
 import HomeImg from '../../../Images/imgt.png';
+import TeamworkImg from '../../../Images/teamWork.svg';
+import CodingImg from '../../../Images/coding.png';
+import ExerciseImg from '../../../Images/exercise.png';
+import SocialInteractionImg from '../../../Images/socialInteraction.svg';
+import PersonalImg from '../../../Images/personalInfo.png';
 
 import { Link } from "react-router-dom";
 
@@ -22,78 +23,124 @@ export default function ResourcesPage() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [open, setOpen] = useState(false);
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
+    const handleClickOpen = () => () => {
+        setOpen(true);
+    };
+    
+    const handleClose = () => {
+        setOpen(false);
     };
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
+    const descriptionElementRef = useRef(null);
+    useEffect(() => {
+        if (open) {
+        const { current: descriptionElement } = descriptionElementRef;
+        if (descriptionElement !== null) {
+            descriptionElement.focus();
+        }
+        }
+    }, [open]);
 
     return (
         <React.Fragment>
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Resources</Typography> 
             </div>
-            <Menu
-                anchorEl={mobileMoreAnchorEl}
-                anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-                // id={mobileMenuId}
-                keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-                open={isMobileMenuOpen}
-                onClose={handleMobileMenuClose}
-                >
-                <Link to="/resources" className={classes.link}>
-                    <MenuItem onClick={handleMenuClose}>
-                    {/* <Info fontSize="small"/> */}
-                    Resources
-                    </MenuItem>
-                </Link> 
-                <Link to="/testimonials" className={classes.link}>
-                    <MenuItem onClick={handleMenuClose}>
-                    {/* <FormatQuote fontSize="small"/> */}
-                    Testimonials
-                    </MenuItem>
-                </Link> 
-                <Link to="/signin" className={classes.link}>
-                    <MenuItem onClick={handleMenuClose}>
-                    {/* <ExitToApp fontSize="small" /> */}
-                    Sign In
-                    </MenuItem>
-                </Link> 
-                <Link to="/register" className={classes.link}>
-                    <MenuItem onClick={handleMenuClose}>
-                    {/* <HowToReg fontSize="small" /> */}
-                    Register
-                    </MenuItem>
-                </Link> 
-            </Menu>
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        image={HomeImg}
-                        title="img"
+
+            <Grid container spacing={1} style={{marginLeft:"1%"}}>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={HomeImg}
+                        handleClick={handleClickOpen}
+                        colour={'#FF9505'}
                     />
-                    <CardContent>
-                    <Typography gutterBottom align={'center'} style={{backgroundColor: '#FF9505', color: '#FFFFFF'}}>
-                        Mentoring
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                    </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions style={{justifyContent: "center"}}>
-                    <Button size="small" variant="outlined" color="inherit" style={{color: '#FF9505', textTransform: 'none', fontSize: 14}}>
-                        Read More
-                    </Button>
-                </CardActions>
-            </Card>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={TeamworkImg}
+                        handleClick={handleClickOpen}
+                        colour={'#FF9505'}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={CodingImg}
+                        handleClick={handleClickOpen}
+                        colour={'#FF9505'}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={ExerciseImg}
+                        handleClick={handleClickOpen}
+                        colour={'#FF9505'}
+                    />
+                </Grid>
+            </Grid>
+
+            <Grid container spacing={1} style={{marginLeft:"1%", marginTop:"2%"}}>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={SocialInteractionImg}
+                        handleClick={handleClickOpen}
+                        colour={'#83008F'}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={PersonalImg}
+                        handleClick={handleClickOpen}
+                        colour={'#83008F'}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={HomeImg}
+                        handleClick={handleClickOpen}
+                        colour={'#83008F'}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <CardCustom
+                        category={'Mentoring'}
+                        snippet={'Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.'}
+                        title={'TITLE'}
+                        img={HomeImg}
+                        handleClick={handleClickOpen}
+                        colour={'#83008F'}
+                    />
+                </Grid>
+            </Grid>
+
+            <DialogCustom
+                onClickOpen={open}
+                ref={descriptionElementRef}
+                onClickClose={handleClose}
+                title={'TITLE'}
+            />
         </React.Fragment>
     )
 }
