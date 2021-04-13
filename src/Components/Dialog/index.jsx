@@ -9,11 +9,13 @@ import {
 } from '@material-ui/core';
 
 export default function DialogCustom(props) {
-    const {onClickOpen, ref, onClickClose, title} = props;
+    const {children, onClickOpen, ref, onClickClose, title, keyID} = props;
 
     return (
         <div>
             <Dialog
+                key={keyID}
+                maxWidth={'md'}
                 open={onClickOpen}
                 onClose={onClickClose}
                 scroll={'paper'}
@@ -27,19 +29,18 @@ export default function DialogCustom(props) {
                     ref={ref}
                     tabIndex={-1}
                 >
-                    {[...new Array(50)]
-                    .map(
-                        () => `Cras mattis consectetur purus sit amet fermentum.
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                                Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-                                Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-                    )
-                    .join('\n')}
+                    {children}
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={onClickClose} color="primary">
-                    Cancel
+                <Button 
+                    size="small"
+                    variant="outlined"
+                    color="inherit"
+                    style={{textTransform: 'none', fontSize: 14}}
+                    onClick={onClickClose} 
+                    color="primary">
+                    Done
                 </Button>
                 </DialogActions>
             </Dialog>

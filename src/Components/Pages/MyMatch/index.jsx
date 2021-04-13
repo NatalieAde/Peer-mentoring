@@ -289,7 +289,7 @@ export default function MyMatchPage() {
                                         </DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={handleCloseC} color="primary">
+                                        <Button onClick={handleCloseC} style={{textTransform: 'none'}} color="primary">
                                             Cancel
                                         </Button>
                                         <Button 
@@ -298,6 +298,7 @@ export default function MyMatchPage() {
                                                 match.confirmedMatch = true;
                                             }} 
                                             color="primary"
+                                            style={{textTransform: 'none'}}
                                         >
                                             Yes
                                         </Button>

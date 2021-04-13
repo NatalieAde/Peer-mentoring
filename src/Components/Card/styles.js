@@ -6,6 +6,6 @@ export default makeStyles(theme => ({
         borderRadius: 30
     },
       media: {
-        height: 140,
+        height: 160,
     },
 }));
