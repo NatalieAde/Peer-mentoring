@@ -1,10 +1,12 @@
+const cron = require('node-cron');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-const User = require('../Models/SignUpModels');
 const bcrypt = require('bcrypt');
+const User = require('../Models/SignUpModels');
 const MatchesModel = require('../Models/MatchesModel');
-const { update } = require('../Models/SignUpModels');
+const MessagesModel = require('../Models/MessagesModel');
+
 
 router.post('/signup', async (request, response) =>{
    
@@ -100,7 +102,7 @@ router.put('/updateProfile/:id', (req, res) => {
     interests: req.body.interests,
     // imageURL: req.body.imageURL,
   };
-console.log(update);
+  console.log(update);
   User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
     if (err) {
       console.log("err", err);
@@ -120,23 +122,204 @@ router.get("/getUserDetails/:id", (req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.get("/createMatch", (req,res) => {
-  
-  User.findOne({role: "Mentee"})
-  .then(user => { 
-    User.findOne({role: "Mentor"})
-      .then(mentor => {
-         if(user.gender = mentor.gender){
-          res.json('Mentee: '+user + 'Mentor: '+mentor)
-          const newMatch = new MatchesModel({
-            mentor: mentor._id,
-            mentee: user._id
-          })
-          newMatch.save();
-        }
-        res.json(mentor + user)}) 
+const findMatch = async (req, res) => {
+  console.log("running every minute");
+  const mentees = await User.find({role: "Mentee"})
+  const mentors = await User.find({role: "Mentor"})
+  const matches = await MatchesModel.find()
+  // console.log(matches);
+
+
+  mentees.map((mentee) => {
+    
+      mentors.map((mentor) => {
+        // console.log(mentee.course);
+        //   console.log(mentor.course);
+        //   console.log(mentee.course == mentor.course);
+        if(mentee.applicationStatus != "Matched"){
+          if(mentee.course == mentor.course){
+            const newMatch = new MatchesModel({
+              mentor: mentor._id,
+              mentorName: mentor.firstName,
+              mentee: mentee._id
+            })
+            console.log("MATCH - COURSE");
+            if(mentee.matchingCriteria == "Same Gender" || mentor.matchingCriteria == "Same Gender"){
+              if(mentee.gender == mentor.gender){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - GENDER");
+              }
+            }else if(mentee.matchingCriteria == "Same Ethnicity" || mentor.matchingCriteria == "Same Ethnicity"){
+              if(mentee.ethniciy == mentor.ethnicity){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - ETHNICITY");
+              }
+            }else if(mentee.matchingCriteria == "Same Nationality" || mentor.matchingCriteria == "Same Nationality"){
+              if(mentee.nationality == mentor.nationality){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - NATIONALITY");
+              }
+            }else if(mentee.matchingCriteria == "Placement" || mentor.matchingCriteria == "Placement"){
+              if(mentor.placement == "Yes"){
+                const newMatch = new MatchesModel({
+                  mentor: mentor._id,
+                  mentorName: mentor.firstName,
+                  mentee: mentee._id
+                })
+                console.log("MATCH - PLACEMENT");
+              }
+            }
+            
+            User.findByIdAndUpdate(mentee._id, {applicationStatus: "Matched"}, (err, data) =>  {
+              if (err) {
+                console.log("err", err);
+              } else {
+                console.log("successful status update-MENTEE");
+                // console.log(data);
+              }
+            });
+
+            User.findByIdAndUpdate(mentor._id, {applicationStatus: "Matched"}, (err, data) =>  {
+              if (err) {
+                console.log("err", err);
+              } else {
+                console.log("successful status update-MENTOR");
+              }
+            });
+
+            if(matches.length > 0) {
+              console.log(matches.length == 0);
+              matches.map((match) => {
+                console.log(match.mentor);
+                if(match.mentor == mentor._id) {
+                  console.log("MATCH" + match);
+                  MatchesModel.updateOne(
+                    { mentor: mentor._id },
+                    { $push: { mentee: [mentee._id] } },
+                    function(err, result) {
+                      if (err) {
+                        res.send(err);
+                      } else {
+                      }
+                    }
+                  );
+                }else {
+                  newMatch.save();
+                  console.log("NewMatch");
+            } 
+              })
+            }
+          }
+        console.log("EVERYONE MATCHED");
+     } })
+    
+  })
+};
+
+cron.schedule("3 * * * *", async() => {
+  await findMatch();
+});
+
+router.get("/getMatchDetails/:id", async(req,res) => {
+  const mentee = await MatchesModel.findOne({mentee:req.params.id});
+  const mentor = await MatchesModel.findOne({mentor:req.params.id});
+  const menteeDetails = [];
+  console.log("HEEE"+mentee);
+
+  if (mentor) {
+    MatchesModel.findOne({mentor:req.params.id})
+    .then(match => {
+      User.find({_id:match.mentee}) 
+        .then(mentee => res.json(mentee))
+      // res.json(mentor)
     })
+  }
+
+
+  if (mentee) {
+    MatchesModel.findOne({mentee:req.params.id})
+    .then(match => {
+      console.log(match);
+        User.findOne({_id:match.mentor}) 
+          .then(mentor => res.json(mentor))
+        // res.json(mentee.mentor)
+      })
+  }
+
+});
+
+router.post("/saveMessage", (req, res) => {
+ const message = new MessagesModel({
+  //  chatID: req.body.chatID,
+   from: req.body.from,
+   to: req.body.to,
+   message: req.body.message
+ });
+
+  message.save()
+    .then(message => {
+      console.log(message + "SAVED");
+    }).catch(err => {
+      console.log(err);
+      // res.status(500).json({msg: `User ${err.keyValue['email']} already exists. Try Loggin In.`});
+  });
+});
+
+router.get("/getMessages/:id", (req,res) => {
+//find chat based on if sender id:
+// if from == user.id or to==user.id
+  const fromMsg = MessagesModel.find({from:req.params.id});
+  const toMsg = MessagesModel.find({to:req.params.id});
+  if(fromMsg){
+    MessagesModel.find({from:req.params.id}).sort({createdAt: -1}) 
+    .then(message => res.json(message))
     .catch(err => res.status(400).json('Error: ' + err));
+  } else if (toMsg){
+    MessagesModel.find({to:req.params.id}).sort({createdAt: -1}) 
+    .then(message => res.json("MESSAGE" + message))
+    .catch(err => res.status(400).json('Error: ' + err));
+  }
+});
+
+router.put('/declineReason/:id', (req,res) => {
+  const update ={
+    declineReason: req.body.declineReason,
+    isConfirmed: req.body.isConfirmed
+  };
+
+  User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
+    if (err) {
+      console.log("err", err);
+    } else {
+      console.log("success");
+      console.log(data);
+      res.send(data);
+    }
+  });
+});
+
+router.put('/confirmMatch/:id', (req,res) => {
+  User.findByIdAndUpdate(req.params.id, {isConfirmed: req.body.isConfirmed}, (err, data) =>  {
+    if (err) {
+      console.log("err", err);
+    } else {
+      console.log("success");
+      console.log(data);
+      res.send(data);
+    }
+  });
 });
 
 

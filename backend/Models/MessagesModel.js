@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const MessagesSchema = new mongoose.Schema({
+    chatID: {
+        type: String,
+        required: false
+    },
     from: {
         type: String,
         required: true
@@ -10,7 +14,7 @@ const MessagesSchema = new mongoose.Schema({
         required: true
     },
     message: {
-        type: [String],
+        type: String,
         required: true
     }
 },  {

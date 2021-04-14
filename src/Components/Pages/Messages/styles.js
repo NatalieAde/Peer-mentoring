@@ -4,6 +4,7 @@ export default makeStyles(theme => ({
         display: 'none',
         // margin: '1%',
         [theme.breakpoints.up('md')]: {
+            position:'fixed',
             backgroundColor: '#F6F6F6',
             height: '650px',
             borderRadius: 15,

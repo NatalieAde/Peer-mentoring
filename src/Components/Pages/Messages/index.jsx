@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { 
     Typography,
     TextField,
@@ -12,21 +12,94 @@ import {
 } from '@material-ui/icons';
 import useStyles from './styles';
 import useChat from './useChat';
+import axios from 'axios';
+
 
 export default function MessagesPage() {
     const classes = useStyles();
     // const { roomId } = props.match.params; // Gets roomId from URL
     const { messages, sendMessage } = useChat(); // Creates a websocket and manages messaging
-    const [newMessage, setNewMessage] = React.useState(""); // Message to be sent
+    const [sentMessage, setSentMessage] = useState("");
+    const [newMessage, setNewMessage] = useState(""); // Message to be sent
+    const [profileInfo, setProfileInfo] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        course: '',
+        yearOfStudy: '',
+        summary: '',
+        interests: '',
+        placement: '',
+
+    });
+    const myRef = useRef(null)
+
+    const executeScroll = () => myRef.current.scrollIntoView()   
+
+    async function _saveMessage(values) {
+        axios.post('http://localhost:5000/app/saveMessage', values)
+        .then(response => console.log(response.data))
+    }
 
     const handleNewMessageChange = (event) => {
         setNewMessage(event.target.value);
+        // _saveMessage(event.target.value);
     };
     
     const handleSendMessage = () => {
+        const msgOwnerId = JSON.parse(localStorage.getItem('users')).id;
+        const msgRecieverId = JSON.parse(localStorage.getItem('matchInfo')).data._id;
         sendMessage(newMessage);
+        _saveMessage({
+            from: msgOwnerId,
+            to:msgRecieverId,
+            message: newMessage
+        });
         setNewMessage("");
     };
+
+    useEffect(() => {
+        const id = JSON.parse(localStorage.getItem('users')).id;
+        console.log(id);
+        if(id){
+            console.log("match");
+            axios.get("http://localhost:5000/app/getMatchDetails/"+id,{
+                headers: {
+                    "content-type": "application/json"
+                }
+            }).then(res=>{
+                setProfileInfo({
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName,
+                    email: res.data.email,
+                    course: res.data.course,
+                    yearOfStudy: res.data.yearOfStudy,
+                    summary: res.data.summary,
+                    interests: res.data.interests,
+                    placement: res.data.placement
+                })   
+                localStorage.setItem("matchInfo", JSON.stringify(res));                
+                // console.log(JSON.parse(localStorage.getItem('matchInfo')).data._id);    
+            })
+            .catch(err=>console.log(err))
+        }
+
+    axios.get("http://localhost:5000/app/getMessages/"+id,{
+      headers: {
+          "content-type": "application/json"
+      }
+    }).then(res=>{
+        const a = JSON.parse(JSON.stringify(res)).data;
+        a.map((message, i) => {
+          console.log(message);
+          sendMessage([message.message])
+         
+        })
+        console.log(messages)
+    })
+    }, [])
+
+    // console.log(newMessage);
 
     return (
         <React.Fragment>
@@ -45,11 +118,11 @@ export default function MessagesPage() {
                         <AccountCircle style={{fontSize: 250}}/>
 
                         {/* TODO: set match infor here */}
-                        {JSON.parse(localStorage.getItem('userInfo')).id = JSON.parse(localStorage.getItem('users')).id &&
+                        {/* {JSON.parse(localStorage.getItem('userInfo')).id = JSON.parse(localStorage.getItem('users')).id && */}
                             <Typography variant='h4' align={'center'} style={{marginBottom: '2%'}}>
-                                {JSON.parse(localStorage.getItem('userInfo')).firstName} {JSON.parse(localStorage.getItem('userInfo')).lastName}
+                                {profileInfo.firstName} {profileInfo.lastName}
                             </Typography>
-                        }
+                        {/* } */}
                         
                         <div style={{marginBottom: '5%'}}>
                             <Button
@@ -95,7 +168,8 @@ export default function MessagesPage() {
                     <Grid item xs={4}>
                         {JSON.parse(localStorage.getItem('userInfo')).id = JSON.parse(localStorage.getItem('users')).id &&
                             <Typography variant='h5' align={'left'} style={{marginTop: '8%'}}>
-                                {JSON.parse(localStorage.getItem('userInfo')).firstName} {JSON.parse(localStorage.getItem('userInfo')).lastName}
+                               {profileInfo.firstName} {profileInfo.lastName}
+                                {/* {JSON.parse(localStorage.getItem('userInfo')).firstName} {JSON.parse(localStorage.getItem('userInfo')).lastName} */}
                             </Typography>
                         }
                     </Grid>
@@ -127,8 +201,8 @@ export default function MessagesPage() {
                     
                 </Grid>
 
-                <Grid item xs={12} sm={8} style={{marginLeft: '5%', flexDirection:"row", alignSelf:"flex-start"}} >
-                    {/* <div className={classes.messagesContainer}> */}
+                <Grid item xs={12} sm={8} style={{marginLeft: '28%', flexDirection:"row", alignSelf:"flex-start"}} >
+                    {/* <div ref={myRef}> */}
                         <ol style={{listStyleType: 'none', padding: 0,}}>
                         {messages.map((message, i) => (
                             <li

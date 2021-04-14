@@ -17,7 +17,7 @@ import {
 } from '@material-ui/icons';
 import axios from 'axios';
 import { AuthContext } from '../../../App';
-import ProfileImg from '../../../profilePic.jpg';
+import ProfileImg from '../../../Images/profilePic.jpg';
 import { identity } from 'lodash';
 
 
@@ -33,7 +33,7 @@ export default function ProfilePage() {
         interests: '',
         placement: '',
 
-      });
+    });
     const handleDelete = () => {
         console.info('You clicked the delete icon.');
       };
@@ -71,7 +71,9 @@ export default function ProfilePage() {
     return (
         <React.Fragment>
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
-                    <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Profile</Typography> 
+                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>
+                    Profile
+                </Typography> 
             </div>
             <div style={{marginLeft: '90%', position: 'absolute'}}>
                 <Button
@@ -85,7 +87,7 @@ export default function ProfilePage() {
                 </Button>
             </div>
             <Grid container style={{marginTop: "3%"}}>
-                <Grid item xs={12} sm={3} >
+                <Grid item xs={12} sm={3}>
                     <AccountCircle style={{fontSize: 300}}/>
                     <Grid item xs={12} style={{marginLeft: "5%"}}>
                         <div style={{display: "flex", flexDirection:"row"}}>
