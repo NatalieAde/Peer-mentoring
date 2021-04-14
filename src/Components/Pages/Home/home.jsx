@@ -2,18 +2,16 @@ import React from 'react';
 import { 
     Typography,
     Grid,
-    Button,
     Paper,
-    Slide
 } from '@material-ui/core';
-import HomeImg from '../../../Images/imgt.png';
+import HomeImg from '../../../Images/pair5.jpg';
 import arrow from '../../../Images/arrow2.png';
 import TextModel from '../../PageText/model';
 import Slider from 'infinite-react-carousel';
-import GoalsImg from '../../../Images/teamWork.svg';
+import GoalsImg from '../../../Images/pair10.jpg';
 import FriendsImg from '../../../Images/friends.svg';
-import VideoChatImg from '../../../Images/videoChat2.svg';
-import PairImg from '../../../Images/pairLaptop.svg';
+import VideoChatImg from '../../../Images/pair4.jpg';
+import PairImg from '../../../Images/pair6.jpg';
 
 
 

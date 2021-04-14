@@ -19,16 +19,21 @@ import {
 import DialogCustom from '../../Dialog/index'; 
 import CardCustom from '../../Card/index';
 import HomeImg from '../../../Images/imgt.png';
-import TeamworkImg from '../../../Images/teamWork.svg';
-import CodingImg from '../../../Images/coding.png';
+import TeamworkImg from '../../../Images/pair1.jpg';
+import CodingImg from '../../../Images/pair2.jpg';
 import ExerciseImg from '../../../Images/exercise.png';
-import SocialInteractionImg from '../../../Images/socialInteraction.svg';
+import SocialInteractionImg from '../../../Images/individual1.jpg';
 import PersonalImg from '../../../Images/personalInfo.png';
 import GradImg from '../../../Images/grad.png';
-import WorkImg from '../../../Images/coWork.png';
+import WorkImg from '../../../Images/pair3.jpg';
 import EdImg from '../../../Images/education.png';
 import Wheel1Img from '../../../Images/balanceWheel.jpg';
 import Wheel2Img from '../../../Images/balanceWheel2.jpg';
+import Pair13Img from '../../../Images/pair13Mask.jpg';
+import Pair13bImg from '../../../Images/pair13bMask.jpg';
+import Pair14Img from '../../../Images/pair14.jpg';
+import Pair18Img from '../../../Images/pair18.jpg';
+import Pair5Img from '../../../Images/pair5.jpg';
 
 import TextModel from '../../PageText/model';
 
@@ -63,7 +68,7 @@ const resource =[
     },
     {
         id: 2,
-        img: TeamworkImg,
+        img: SocialInteractionImg,
         title: "Student Support and Services at Aston University",
         category: "Support",
         snippet: 'The Hub is located on the ground floor of the main building and can be used on a drop in basis, but',
@@ -75,7 +80,7 @@ const resource =[
     },
     {
         id: 3,
-        img: SocialInteractionImg,
+        img: TeamworkImg,
         title: "Guidelines for Mentoring Students Looking for a Placement",
         category: "Mentoring Guideline",
         snippet: 'Placement Mentors are usually third years who are currently out on placement, who offer mentoring via e-mail.',
@@ -100,6 +105,75 @@ const resource =[
         img2: Wheel1Img,
         img3: Wheel2Img,
         title: "Balance Wheel",
+        category: "Tips and Tools",
+        snippet: 'The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, ',
+        para1:`The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, and enables the identification and setting of goals. The eight 
+                sections of the wheel represent balance or satisfaction. The more a section is shaded, the more level of satisfaction within that area of your life.`,
+        list: [
+            `Draw a circle and intersections and name each segment as an area of your life or study which is important to you.`,
+            'Your areas may include study as well as socialising, family, volunteering or part time work. Or you might focus solely on study and look at specific elements of your course and University life, for example particular modules or planning for placement.',
+            'Now shade out how satisfied or content you feel in each of these areas. This is not about how much time you spend on each, or how highly you achieve, it is about personal satisfaction in each area. In the above example the person might have said ‘I feel like my volunteering is great and I’m really enjoying it, so I’ll shade that one in full, but I am finding my social life boring and unfulfilling.’',
+            'The perfect wheel should be balanced. Areas in which you have not shaded very much need some attention. If you do this exercise with your mentee/mentor, this would give you a good basis of which areas need focusing on and which you can work together on.',
+            'To improve the balance of your wheel, and the balance of your life - you need to have a strategy of setting targets – see Smart Targets for guidance on this.',
+            'The balance wheel can be completed as an initial assessment, then repeated following a period of time to observe progress and review targets.',
+        ]
+    },
+    {
+        id: 5,
+        img: Pair13Img,
+        img2: Pair13bImg,
+        title: "Mentoring in a Pandemic",
+        category: "Blog",
+        snippet: 'The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, ',
+        para1:`The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, and enables the identification and setting of goals. The eight 
+                sections of the wheel represent balance or satisfaction. The more a section is shaded, the more level of satisfaction within that area of your life.`,
+        list: [
+            `Draw a circle and intersections and name each segment as an area of your life or study which is important to you.`,
+            'Your areas may include study as well as socialising, family, volunteering or part time work. Or you might focus solely on study and look at specific elements of your course and University life, for example particular modules or planning for placement.',
+            'Now shade out how satisfied or content you feel in each of these areas. This is not about how much time you spend on each, or how highly you achieve, it is about personal satisfaction in each area. In the above example the person might have said ‘I feel like my volunteering is great and I’m really enjoying it, so I’ll shade that one in full, but I am finding my social life boring and unfulfilling.’',
+            'The perfect wheel should be balanced. Areas in which you have not shaded very much need some attention. If you do this exercise with your mentee/mentor, this would give you a good basis of which areas need focusing on and which you can work together on.',
+            'To improve the balance of your wheel, and the balance of your life - you need to have a strategy of setting targets – see Smart Targets for guidance on this.',
+            'The balance wheel can be completed as an initial assessment, then repeated following a period of time to observe progress and review targets.',
+        ]
+    },
+    {
+        id: 6,
+        img: Pair14Img,
+        title: "Setting SMART Goals",
+        category: "Tips and Tools",
+        snippet: 'The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, ',
+        para1:`The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, and enables the identification and setting of goals. The eight 
+                sections of the wheel represent balance or satisfaction. The more a section is shaded, the more level of satisfaction within that area of your life.`,
+        list: [
+            `Draw a circle and intersections and name each segment as an area of your life or study which is important to you.`,
+            'Your areas may include study as well as socialising, family, volunteering or part time work. Or you might focus solely on study and look at specific elements of your course and University life, for example particular modules or planning for placement.',
+            'Now shade out how satisfied or content you feel in each of these areas. This is not about how much time you spend on each, or how highly you achieve, it is about personal satisfaction in each area. In the above example the person might have said ‘I feel like my volunteering is great and I’m really enjoying it, so I’ll shade that one in full, but I am finding my social life boring and unfulfilling.’',
+            'The perfect wheel should be balanced. Areas in which you have not shaded very much need some attention. If you do this exercise with your mentee/mentor, this would give you a good basis of which areas need focusing on and which you can work together on.',
+            'To improve the balance of your wheel, and the balance of your life - you need to have a strategy of setting targets – see Smart Targets for guidance on this.',
+            'The balance wheel can be completed as an initial assessment, then repeated following a period of time to observe progress and review targets.',
+        ]
+    },
+    {
+        id: 7,
+        img: Pair18Img,
+        title: "What I Gained from Mentoring",
+        category: "Blog",
+        snippet: 'The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, ',
+        para1:`The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, and enables the identification and setting of goals. The eight 
+                sections of the wheel represent balance or satisfaction. The more a section is shaded, the more level of satisfaction within that area of your life.`,
+        list: [
+            `Draw a circle and intersections and name each segment as an area of your life or study which is important to you.`,
+            'Your areas may include study as well as socialising, family, volunteering or part time work. Or you might focus solely on study and look at specific elements of your course and University life, for example particular modules or planning for placement.',
+            'Now shade out how satisfied or content you feel in each of these areas. This is not about how much time you spend on each, or how highly you achieve, it is about personal satisfaction in each area. In the above example the person might have said ‘I feel like my volunteering is great and I’m really enjoying it, so I’ll shade that one in full, but I am finding my social life boring and unfulfilling.’',
+            'The perfect wheel should be balanced. Areas in which you have not shaded very much need some attention. If you do this exercise with your mentee/mentor, this would give you a good basis of which areas need focusing on and which you can work together on.',
+            'To improve the balance of your wheel, and the balance of your life - you need to have a strategy of setting targets – see Smart Targets for guidance on this.',
+            'The balance wheel can be completed as an initial assessment, then repeated following a period of time to observe progress and review targets.',
+        ]
+    },
+    {
+        id: 8,
+        img: Pair5Img,
+        title: "Ice Breakers",
         category: "Tips and Tools",
         snippet: 'The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, ',
         para1:`The Balance Wheel is an adaptable mentoring tool which can help you to identify which areas you may wish to explore during your mentoring relationship, and enables the identification and setting of goals. The eight 
@@ -159,6 +233,18 @@ export default function ResourcesPage() {
                             img={product.img}
                             handleClick={event => handleClickOpen(event, product)}
                             colour={'#83008F'}
+                        />
+                    </Grid>
+                    :
+                    product.category === "Blog" ?
+                    <Grid item xs={12} sm={3} key={product.id}>
+                        <CardCustom
+                            category={product.category}
+                            snippet={product.snippet}
+                            title={product.title}
+                            img={product.img}
+                            handleClick={event => handleClickOpen(event, product)}
+                            colour={'#087FD8'}
                         />
                     </Grid>
                     :
