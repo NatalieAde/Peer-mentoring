@@ -54,19 +54,26 @@ export default {
     },
 }
 
-// 'Improve communication and personal skills and develop leadership and management qualities Reinforce your study skills and knowledge of your course'
-// Engage in a volunteering opportunity, valued by employers
-// Enhance your CV and employability
-// Increase your cirecle of friends 
-// Gain recognition of yoru skills and experience
-// Benefit from a sense of fulfilment and personal growth'
+// export default Resources = {
+//     resource =[
+//     {
+//       Title: "Computer Science",
+//       category: "Mentoring",
+//       snippet: 'Aston University Student, Ashraf talks about his experiences of the University Peer Mentoring Scheme',
+//       content: `Cras mattis consectetur purus sit amet fermentum.
+//                 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+//                 Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+//                 Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
+//     },
+//     {
+//         Title: "Exam Prep",
+//         category: "Study Tips",
+//         snippet: 'Aston University Student, Ashraf talks about his experiences of the University Peer Mentoring Scheme',
+//         content: `Cras mattis consectetur purus sit amet fermentum.
+//                   Cras justo odio, dapibus ac facilisis in, egestas eget quam.
+//                   Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+//                   Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
+//     },
+//   ]
+// }
 
-// Gain practical advice, encouragement and support
-// Learn from the experiences of others
-// Increase your social and academic confidence
-// Become more empowered to make decisions 
-// Develop your communication, study and personal skills
-// Develop strategies for dealing with both personal and academic issues
-// Identify goals and establish a sense of direction
-// Gain valuable insight into the next stage of your university career
-// Make new friends across year groups.
