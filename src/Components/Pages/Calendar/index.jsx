@@ -79,6 +79,12 @@ export default function CalendarPage() {
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Calendar</Typography> 
             </div>
+            {/* <div style={{backgroundColor: '#83008F', marginTop: '-2%', marginBottom: '2%'}}>
+            <Typography variant={'caption'} align={'center'}>Click to add your events</Typography> 
+            </div> */}
+
+{/* <div style={{marginLeft:'2%', marginRight:'2%', display: 'flex', minHeight: '100%'}}> */}
+
 
             <FullCalendar
                 plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
@@ -109,6 +115,7 @@ export default function CalendarPage() {
                 eventChange={function(){}}
                 eventRemove={function(){}} */
             />
+            {/* </div> */}
         </React.Fragment>
     )
 }

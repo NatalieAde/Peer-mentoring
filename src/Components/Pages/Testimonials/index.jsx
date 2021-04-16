@@ -68,13 +68,45 @@ export default function TestimonialsPage() {
                     </Grid>
                 </Grid> */}
                 </div>
+                <div>
+                <Grid container spacing={1}>
+                    <Grid item xs={12} sm={12} style={{marginLeft:"10%", marginRight:"10%"}}>
+                        <ReactPlayer 
+                            url='https://www.youtube.com/watch?v=_o8e55dz7Eo'
+                            width={"90%"}
+                            controls={true}
+                        /> 
+                    </Grid>
+                    <Grid item xs={12} sm={12} style={{}}>
+                        <Typography variant={"h6"} style={{backgroundColor:"#FF9505", textAlign:"center", color:"#FFFFFF"}}>
+                            {Testimonials.slider.three} - {Testimonials.slider.three2}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                </div>
+                <div>
+                <Grid container spacing={1}>
+                    <Grid item xs={12} sm={12} style={{marginLeft:"10%", marginRight:"10%"}}>
+                        <ReactPlayer 
+                            url='https://www.youtube.com/watch?v=nJr1szeKYSI'
+                            width={"90%"}
+                            controls={true}
+                        /> 
+                    </Grid>
+                    <Grid item xs={12} sm={12} style={{}}>
+                        <Typography variant={"h6"} style={{backgroundColor:"#FF9505", textAlign:"center", color:"#FFFFFF"}}>
+                            {Testimonials.slider.four} - {Testimonials.slider.four2}
+                        </Typography>
+                    </Grid>
+                </Grid>
+                </div>
             </Slider>
 
-            <Typography align={"center"} variant={"h4"} style={{marginTop:"5%"}}>
+            <Typography align={"center"} variant={"h4"} style={{marginTop:"4%"}}>
                 More Testimonials
             </Typography>
                  
-            <Grid container spacing={5} style={{padding:"2%"}}>
+            <Grid container spacing={5} style={{paddingLeft:"2%", paddingRight:"2%"}}>
                 <Grid item xs={12} sm={4}>
                     <Typography style={{color: '#83008F', fontSize: '55px'}} align={'center'}>
                         <FormatQuoteIcon style={{fontSize:40}}/>
