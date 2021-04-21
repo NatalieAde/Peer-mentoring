@@ -13,11 +13,13 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    CircularProgress 
 } from '@material-ui/core';
 import useStyle from './styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import HomeImg from '../../../Images/goalsImg.svg';
+import MaterialLayout from '../../../Components/Layout/layout';
 import axios from 'axios';
 
 function TabPanel(props) {
@@ -148,6 +150,17 @@ export default function GoalsPage() {
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Goals</Typography> 
             </div>
+            {profileInfo.length === 0 &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography align={'center'}>Once you get matched, you will be able to start setting and tracking your goals together!</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            }
             {profileInfo.length > 1 &&
                 <div className={classes.root2}>
                     <Tabs
@@ -188,9 +201,14 @@ export default function GoalsPage() {
                             </Grid>
 
                             {goals.length == 0 &&
-                                <div style={{marginTop: "5%"}}>
-                                    <img src={HomeImg} alt="Logo" style={{width: "60%", height: "50%"}} />
-                                    <Typography variant='h6' align={'center'}>Set your first goal.</Typography>
+                               <div style={{marginTop: "5%"}}>
+                                    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                        <img src={HomeImg} alt="Logo" style={{width: "60%", height: "50%"}} />
+                                    </div>
+                                    <div>
+                                        <Typography style={{color:'black'}} variant={'h4'} align={'center'}>Set your first goal.</Typography>
+                                    </div>
+                               
                                 </div>
                             }
                             <div style={{margin: 'auto', width: '100%'}}>
@@ -275,14 +293,14 @@ export default function GoalsPage() {
 
                     {goals.length == 0 &&
                         <div style={{marginTop: "5%"}}>
-                            <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                                <img src={HomeImg} alt="Logo" style={{width: "60%", height: "50%"}} />
-                            </div>
-                            <div>
-                                <Typography style={{color:'black'}} variant={'h4'} align={'center'}>Start tracking goals with your match.</Typography>
-                            </div>
-                            
+                        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                            <img src={HomeImg} alt="Logo" style={{width: "60%", height: "80%"}} />
                         </div>
+                        <div>
+                            <Typography style={{color:'black'}} variant={'h4'} align={'center'}>Set your first goal.</Typography>
+                        </div>
+                        
+                    </div>
                     }
                     <div style={{margin: 'auto', width: '100%'}}>
                         {goals.map((item, index) => (

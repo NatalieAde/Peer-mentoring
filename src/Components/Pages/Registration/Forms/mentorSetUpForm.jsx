@@ -15,7 +15,14 @@ export default function MentorSetUpForm(props) {
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Personal Information
+        <div>
+          <Typography variant='caption' style={{color:"#83008F", marginTop:"5%"}} gutterBottom>
+            * = Required fields
+          </Typography>
+        </div>
+        
       </Typography>
+      
       <Grid container spacing={3}>
       <Grid item xs={12}>
         <SelectField

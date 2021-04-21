@@ -3,13 +3,15 @@ import {
     Typography,
     TextField,
     Button,
-    Grid
+    Grid,
+    CircularProgress 
 } from '@material-ui/core';
 import {
     AccountCircle,
     TrackChanges,
     EventAvailable,
 } from '@material-ui/icons';
+import MaterialLayout from '../../../Components/Layout/layout';
 import useStyles from './styles';
 import useChat from './useChat';
 import axios from 'axios';
@@ -107,6 +109,18 @@ export default function MessagesPage() {
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Messages</Typography> 
             </div>
 
+            {profileInfo.firstName === '' &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography align={'center'}>Once you get matched, you will be able to start messaging!</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            }
+
             
 
             <Grid container style={{margin: '1%'}}>
@@ -201,7 +215,7 @@ export default function MessagesPage() {
                     
                 </Grid>
 
-                <Grid item xs={12} sm={8} style={{marginLeft: '28%', flexDirection:"row", alignSelf:"flex-start"}} >
+                <Grid item xs={12} sm={8} style={{flexDirection:"row", alignSelf:"flex-start"}} >
                     {/* <div ref={myRef}> */}
                         <ol style={{listStyleType: 'none', padding: 0,}}>
                         {messages.map((message, i) => (
@@ -217,8 +231,8 @@ export default function MessagesPage() {
                         </ol>
                     {/* </div> */}
 
-                    <Grid container style={{position:'fixed', bottom:10, width:'75%' }}>
-                        <Grid item xs={10}>
+                    <Grid container style={{marginTop:'25%', width:'100%' }}>
+                        <Grid item xs={10} sm={10}>
                             <TextField
                                 id="outlined-basic"                                    
                                 variant="outlined"
@@ -228,10 +242,10 @@ export default function MessagesPage() {
                                 onChange={handleNewMessageChange}
                                 placeholder='Type message here'
                                 fullWidth
-                                style={{height: "10px"}}
+                                style={{height: "10px", marginLeft:"2%"}}
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={2} sm={2}>
                             <Button
                                 variant="contained"
                                 onClick={handleSendMessage}

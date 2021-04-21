@@ -410,6 +410,7 @@ export default {
       gender: {
         name: 'gender',
         label: 'Gender',
+        requiredErrorMsg: 'Please select one',
         options: genders
       },
       age: {
@@ -439,7 +440,8 @@ export default {
       },
       role: {
         name: 'role',
-        label: 'I would like to be a:',
+        label: 'I would like to be a:*',
+        requiredErrorMsg: 'Please select one',
         options: roles
       },
       numOfMentees: {
@@ -465,7 +467,8 @@ export default {
       },
       matchingCriteria: {
         name: 'matchingCriteria',
-        label: 'Criteria you would liked to be matched on:',
+        label: 'Criteria you would liked to be matched on:*',
+        requiredErrorMsg: 'Please select one',
         options: criteria
       },
     }

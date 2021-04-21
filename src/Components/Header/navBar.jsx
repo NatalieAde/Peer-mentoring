@@ -20,6 +20,8 @@ import {
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
+import Logo from '../../Images/mentoringLogo.png';
+
 import { AuthContext } from '../../App';
 
 import { Link, NavLink } from "react-router-dom";
@@ -143,7 +145,7 @@ export default function Header() {
           </IconButton>
         </div>
 
-        <Tab className={classes.tabsText} label="Home" icon={<Home/>} href="/" value={value}/>
+        <Tab className={classes.tabsText} label="Home" icon={<img src={Logo} alt="Logo" style={{width: "80%", height: "70%"}} />} href="/" value={value}/>
 
         <div className={classes.sectionDesktop}>
         <NavLink

@@ -117,23 +117,16 @@ export default function ProfilePage() {
                         </Typography>
                     { profileInfo.placement &&
                         <>
-                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                             <Typography style={{marginBottom: "2%"}}>
                                 {profileInfo.placement}
                             </Typography>
                         </>
                     }
                     
-                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Hobbies:</Typography>
                         <Typography style={{marginBottom: "2%"}}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
+                            Dancing, sports, food
                         </Typography>
                     <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
                         <div>

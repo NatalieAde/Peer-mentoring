@@ -7,6 +7,7 @@ export default makeStyles(theme => ({
     fontWeight: '700'
   },
   title: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    backgroundColor: '#FFC971'
   }
 }));

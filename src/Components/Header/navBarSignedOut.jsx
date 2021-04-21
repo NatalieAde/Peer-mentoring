@@ -17,6 +17,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 
+import Logo from '../../Images/mentoringLogo.png';
+
 import { Link, NavLink } from "react-router-dom";
 
 import useStyles from './styles';
@@ -107,7 +109,7 @@ export default function Header() {
               <MenuIcon />
             </IconButton>
           </div>
-          <Tab className={classes.tabsText} label="Home" icon={<Home/>} href="/" value={value}/>
+          <Tab className={classes.tabsText} label="Home" icon={<img src={Logo} alt="Logo" style={{width: "80%", height: "70%"}} />} href="/" value={value}/>
           <div className={classes.sectionDesktop}>  
             <NavLink
               to="/resources"

@@ -10,7 +10,8 @@ function RegistrationSuccess() {
       </Typography>
       <Typography variant="subtitle1">
         Your application is now being reviewed, and we will match you.
-        In the mean time, head to the resources section to complete your training.
+        In the mean time, head to the resources section to view some useful resources.
+        Make sure you check the "My Match" page for updates!
       </Typography>
     </React.Fragment>
   );

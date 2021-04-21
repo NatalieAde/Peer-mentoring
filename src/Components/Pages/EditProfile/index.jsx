@@ -144,7 +144,7 @@ export default function EditProfilePage() {
                                     variant="outlined"
                                     color="primary"
                                     size="small"
-                                    style={{width: "25%"}}
+                                    style={{width: "30%"}}
                                 />
                             </div>
                         </Grid>
@@ -184,19 +184,19 @@ export default function EditProfilePage() {
                         />
                         <Typography variant="h5" style={{marginBottom: "2%"}}>Personal Information:</Typography>
                         <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
-                            <TextField
-                                id="outlined-basic"
-                                // onChange={(event) => setProfileInfo({summary: event})}
-                                // defaultValue={profileInfo.summary}
-                                // value={profileInfo.summary}
-                                variant="outlined"
-                                color="primary"
-                                // size="small"
-                                style={{width: "95%"}}
-                            />
+                        <TextField
+                                    id="outlined-basic"
+                                    name="placement"
+                                    onChange={handleInputChange}                                       // defaultValue={profileInfo.placement}
+                                    value={profileInfo.summary}
+                                    variant="outlined"
+                                    color="primary"
+                                    // size="small"
+                                    style={{width: "95%"}}
+                                />
                         { profileInfo.placement &&
                             <>
-                                <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                                <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                                 <TextField
                                     id="outlined-basic"
                                     name="placement"
@@ -210,12 +210,12 @@ export default function EditProfilePage() {
                             </>
                         }
                         
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
+                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Hobbies:</Typography>
                         <TextField
                             id="outlined-basic"
                             // onChange={(event) => setProfileInfo({summary: event})}
                             // defaultValue={profileInfo.summary}
-                            value="IDK WHAT THIS IS YET"
+                            value=""
                             variant="outlined"
                             color="primary"
                             // size="small"

@@ -207,10 +207,10 @@ export default function MyMatchPage() {
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>My Match</Typography> 
             </div>
-            {/* {profileInfo.length === 0 | !profileInfo &&
+            {/* {profileInfo.length === 0 &&
                 <MaterialLayout>
                     <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
-                        <Typography>Status: We are searching for your match.</Typography>
+                        <Typography>Status: We are searching for your match. Come back later.</Typography>
                         <CircularProgress
                             size={60}
                             style={{color: '#EC6D0A'}}
@@ -219,8 +219,11 @@ export default function MyMatchPage() {
                 </MaterialLayout>
             } */}
 
-            {profileInfo.length > 1 ?
+            {profileInfo.length > 1 &&
+            <>
+            <Typography variant={'h4'} align={'left'}>Your Matches</Typography>
                 <div className={classes.root2}>
+                    
                 <Tabs
                     orientation="vertical"
                     variant="scrollable"
@@ -353,7 +356,7 @@ export default function MyMatchPage() {
                                         </Typography>
                                     { match.placement == "No" &&
                                         <>
-                                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                                             <Typography style={{marginBottom: "2%"}}>
                                                 {match.placement}
                                             </Typography>
@@ -378,19 +381,10 @@ export default function MyMatchPage() {
                     </TabPanel>
                 ))}
             </div>
-            :
-            <MaterialLayout>
-                <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
-                    <Typography>Status: We are searching for your match.</Typography>
-                    <CircularProgress
-                        size={60}
-                        style={{color: '#EC6D0A'}}
-                    />
-                </div>
-            </MaterialLayout>
+            </>
             }
 
-            { typeof profileInfo.firstName === 'string' ?
+            { typeof profileInfo.firstName === 'string' &&
                 <div className={classes.root}>
                     <Paper className={classes.paper} style={{backgroundColor: '#FFFFFF', color: 'black'}}>
                         <Grid container style={{marginTop: "3%"}}>
@@ -504,7 +498,7 @@ export default function MyMatchPage() {
                                     </Typography>
                                 { profileInfo.placement == "No" &&
                                     <>
-                                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                                         <Typography style={{marginBottom: "2%"}}>
                                             {profileInfo.placement}
                                         </Typography>
@@ -526,16 +520,6 @@ export default function MyMatchPage() {
                         </Grid>
                     </Paper>
                 </div> 
-                :
-                <MaterialLayout>
-                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
-                        <Typography>Status: We are searching for your match.</Typography>
-                        <CircularProgress
-                            size={60}
-                            style={{color: '#EC6D0A'}}
-                        />
-                    </div>
-                </MaterialLayout>
             }
 
             <Snackbar anchorOrigin={{vertical:'top', horizontal: 'center'}} open={open} autoHideDuration={2000} onClose={handleCloseAlert}>
@@ -549,6 +533,18 @@ export default function MyMatchPage() {
                 </Alert>
             }
             </Snackbar>
+
+            {profileInfo.length === 0 &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography>Status: We are searching for your match. Come back later.</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            }
 
         </React.Fragment>
     )

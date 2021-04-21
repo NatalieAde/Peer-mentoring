@@ -9,17 +9,19 @@ import arrow from '../../../Images/arrow2.png';
 import TextModel from '../../PageText/model';
 import Slider from 'infinite-react-carousel';
 import GoalsImg from '../../../Images/pair20.jpg';
-import FriendsImg from '../../../Images/friends.svg';
 import VideoChatImg from '../../../Images/pair4.jpg';
 import PairImg from '../../../Images/pair10.jpg';
 import Pair2Img from '../../../Images/pair6.jpg';
 
 
-
 export default function HomePage() {
     const {Home} = TextModel;
+    
     return (
         <React.Fragment>
+            <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
+               <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Aston University's Peer Mentoring</Typography> 
+            </div>
             <Slider 
                 dots
                 autoplay

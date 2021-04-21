@@ -9,6 +9,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import Check from "@material-ui/icons/Check";
+import CreateIcon from '@material-ui/icons/Create';
 import clsx from "clsx";
 import { Formik, Form } from 'formik';
 import axios from 'axios';
@@ -131,7 +132,7 @@ export default function RegistrationPage() {
           [classes.completed]: completed
         })}
       >
-        {completed ? <Check /> : <div className={classes.circle}>Icon</div>}
+        {completed ? <Check /> : <div className={classes.circle}><CreateIcon /></div>}
       </div>
     );
 };
