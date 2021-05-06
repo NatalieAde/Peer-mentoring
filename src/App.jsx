@@ -70,6 +70,7 @@ function App() {
     >
       <Router>
         <div>
+          {/* checks if user is signed in to determine what nav bar appears */}
           {localStorage.getItem("users") ? <Navbar /> : <NavbarSignedOut/>}
           <br/>
           <Route path="/" exact component={Home} />
@@ -84,9 +85,8 @@ function App() {
           <Route path="/resources" exact component={ResourcesPage} />
           <Route path="/testimonials" exact component={TestimonialsPage} />
         </div>
-        
       </Router>
-      <Footer />
+      {/* <Footer /> */}
     </AuthContext.Provider>
   );
 }

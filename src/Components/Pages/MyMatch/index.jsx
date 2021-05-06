@@ -115,7 +115,7 @@ export default function MyMatchPage() {
 
         axios.put('http://localhost:5000/app/declineReason/'+id, confirmationInfo)
         .then( res => {
-          alert(res.data);
+        //   alert(res.data);
          }   
         )
         .catch(err => {
@@ -134,7 +134,7 @@ export default function MyMatchPage() {
 
         axios.put('http://localhost:5000/app/confirmMatch/'+id, {isConfirmed: true})
         .then( res => {
-          alert(res.data);
+        //   alert(res.data);
          }   
         )
         .catch(err => {
@@ -496,7 +496,7 @@ export default function MyMatchPage() {
                                     <Typography style={{marginBottom: "2%"}}>
                                         {profileInfo.summary}
                                     </Typography>
-                                { profileInfo.placement == "No" &&
+                                { profileInfo.placement !== "No" &&
                                     <>
                                         <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                                         <Typography style={{marginBottom: "2%"}}>
@@ -504,32 +504,24 @@ export default function MyMatchPage() {
                                         </Typography>
                                     </>
                                 }
-                                <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
-                                    <Typography style={{marginBottom: "2%"}}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                                    </Typography>
                                 <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
+                                {profileInfo.interests && profileInfo.interests.map(interest => (
+                                    <li style={{marginBottom:'2%'}}>{interest}</li>
+                                ))}
                             </Grid>
                         </Grid>
                     </Paper>
                 </div> 
             }
 
-            <Snackbar anchorOrigin={{vertical:'top', horizontal: 'center'}} open={open} autoHideDuration={2000} onClose={handleCloseAlert}>
+            <Snackbar anchorOrigin={{vertical:'top', horizontal: 'center'}} open={open} autoHideDuration={6000} onClose={handleCloseAlert}>
             {confirmation === 'Confirmed' ? 
                 <Alert onClose={handleClose} severity="success">
                     You have successfully Confirmed your match!
                 </Alert>
                 :
                 <Alert onClose={handleClose} severity="info">
-                    You have successfully Declined your match!
+                    You have successfully Declined your match! They will be removed from the list once reviewed by the peer mentoring team.
                 </Alert>
             }
             </Snackbar>

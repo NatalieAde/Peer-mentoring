@@ -112,8 +112,9 @@ export default function TestimonialsPage() {
                         <FormatQuoteIcon style={{fontSize:40}}/>
                     </Typography> 
                     <Typography variant={"h6"} style={{ marginBottom: "5%", lineHeight: 2, textAlign:"center", fontStyle:"italic"}}>
-                        Joining The Step-Up Sorority was one of the best decisions I’ve made. Pursuing a career in technology as a woman is not the easiest, 
-                        and there are so many days where I feel like I’m at a dead end or imposter syndrome kicks in.
+                        I absolutely have no regrets joining this mentoring scheme. I was matched with an amazing mentor who complely
+                        understood how I was feeling and what I was going through and he gave me great tips on how to combat stress.
+                        I honestly don't know how I would have coped with uni if I hadn't joined the scheme.
                     </Typography>
                     <Typography variant={"h6"} style={{ color: '#83008F', marginBottom: "5%", lineHeight: 2, textAlign:"center", fontStyle:"italic"}}>
                         -Tim Read.
@@ -124,8 +125,8 @@ export default function TestimonialsPage() {
                         <FormatQuoteIcon style={{fontSize:40}}/>
                     </Typography> 
                     <Typography variant={"h6"} style={{ marginBottom: "5%", lineHeight: 2, textAlign:"center", fontStyle:"italic"}}>
-                        However, SUS matched me with an amazing mentor who has provided me with great advice and tips with how to navigate this industry. 
-                        She genuinely has fulfilled her title as a “big sister” and I appreciate the effort and time she puts into making sure I’m equipped for the industry I’m entering. 
+                        I would honestly encourage everyone to register to become a mentor. It's just such a fulfilling role. I absolutely enjoyed
+                        my experience as a mentor, and I completed the scheme having made a great friend.
                     </Typography>  
                     <Typography variant={"h6"} style={{ color: '#83008F', marginBottom: "5%", lineHeight: 2, textAlign:"center", fontStyle:"italic"}}>
                         -Abi Khan.
@@ -136,8 +137,9 @@ export default function TestimonialsPage() {
                         <FormatQuoteIcon style={{fontSize:40}}/>
                     </Typography> 
                     <Typography variant={"h6"} style={{ marginBottom: "5%", lineHeight: 2, textAlign:"center", fontStyle:"italic"}}>
-                        I always leave our calls feeling motivated and encouraged to keep going. Another thing I love about SUS is the community of women that has been built, 
-                        it’s just amazing to see and be a part of.
+                        Joining this scheme matched me with the best mentor ever. During my second year I was really struggling with applying for placements,
+                        but my mentor helped me with the entire process. He shared some things he had learned when he was applying for placements and gave me some great 
+                        tips and resources for interviews. Couldn't have chosen a better match, everyone should apply for this scheme.
                     </Typography>
                     <Typography variant={"h6"} style={{ color: '#83008F', marginBottom: "5%", lineHeight: 2, textAlign:"center", fontStyle:"italic"}}>
                         -Precious Wallace.

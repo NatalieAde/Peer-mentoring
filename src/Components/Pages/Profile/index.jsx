@@ -115,7 +115,16 @@ export default function ProfilePage() {
                         <Typography style={{marginBottom: "2%"}}>
                             {profileInfo.summary}
                         </Typography>
-                    { profileInfo.placement &&
+                    
+                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Hobbies:</Typography>
+                        {/* <Typography style={{marginBottom: "2%"}}>
+                            {profileInfo.interests}
+                        </Typography> */}
+                        {profileInfo.interests && profileInfo.interests.map(interest => (
+                            <li style={{marginBottom:'2%'}}>{interest}</li>
+                        ))}
+
+                    { profileInfo.placement !== "No" &&
                         <>
                             <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                             <Typography style={{marginBottom: "2%"}}>
@@ -123,12 +132,8 @@ export default function ProfilePage() {
                             </Typography>
                         </>
                     }
-                    
-                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Hobbies:</Typography>
-                        <Typography style={{marginBottom: "2%"}}>
-                            Dancing, sports, food
-                        </Typography>
-                    <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
+
+                    {/* <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
                         <div>
                             <Chip 
                                 label="Deletable primary"
@@ -148,7 +153,7 @@ export default function ProfilePage() {
                                 // color="primary" 
                                 style={{backgroundColor: "#ffdbbf", color: "#000000"}}
                             />
-                        </div>
+                        </div> */}
                 </Grid>
             </Grid>
         </React.Fragment>

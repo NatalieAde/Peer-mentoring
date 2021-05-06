@@ -101,7 +101,7 @@ export default function RegistrationPage() {
      //everything stored in 'registered' is posted to the endpoint(backend)
      axios.post('http://localhost:5000/app/signup', values)
       .then(response => console.log(response.data))
-     alert(JSON.stringify(values, null, 2));
+    //  alert(JSON.stringify(values, null, 2));
     actions.setSubmitting(false);
 
     setActiveStep(activeStep + 1);

@@ -358,7 +358,7 @@ export default {
         name: 'studentNo',
         label: 'Student Number*',
         requiredErrorMsg: 'Student number is required',
-        invalidErrorMsg: 'Student number is invalid (7 digits)'
+        invalidErrorMsg: 'Student number is invalid (9 digits)'
       },
       email: {
         name: 'email',
