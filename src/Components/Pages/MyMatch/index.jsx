@@ -12,15 +12,24 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    Snackbar,
+    CircularProgress 
 } from '@material-ui/core';
 import {
     AccountCircle,
     EmailRounded,
     SchoolRounded,
+    VerticalAlignTop,
 } from '@material-ui/icons';
 import useStyle from './styles';
 import axios from 'axios';
+import MuiAlert from '@material-ui/lab/Alert';
+import MaterialLayout from '../../../Components/Layout/layout';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -59,8 +68,25 @@ export default function MyMatchPage() {
     const [openConfirm, setOpenConfirm] = useState(false);
     const [profileInfo, setProfileInfo] = useState([]);
     const [declineReason, setDeclineReason] = useState('');
-    const [confirmation, setConfirmation] = useState();
+    const [confirmation, setConfirmation] = useState('');
     const [matchName, setMatchName] = useState('');
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+      setOpen(true);
+    };
+
+    const handleClickDec = () => {
+        setOpen(true);
+      };
+  
+    const handleCloseAlert = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -83,18 +109,20 @@ export default function MyMatchPage() {
         };
         setOpenDecline(false);
         setConfirmed(true);
+        setConfirmation('Declined');
 
         console.log(confirmationInfo);
 
         axios.put('http://localhost:5000/app/declineReason/'+id, confirmationInfo)
         .then( res => {
-          alert(res.data);
+        //   alert(res.data);
          }   
         )
         .catch(err => {
           console.log(err.response);
         //   alert('An error occurred! Try submitting the form again.');
         }); 
+        handleClickDec();
     };
 
     //TODO: FIGURE OUT CONFIRM LOGIC
@@ -102,16 +130,18 @@ export default function MyMatchPage() {
         const id = JSON.parse(localStorage.getItem('users')).id;
         setOpenConfirm(false);
         setConfirmed(true);
+        setConfirmation('Confirmed');
 
         axios.put('http://localhost:5000/app/confirmMatch/'+id, {isConfirmed: true})
         .then( res => {
-          alert(res.data);
+        //   alert(res.data);
          }   
         )
         .catch(err => {
           console.log(err.response);
         //   alert('An error occurred! Try submitting the form again.');
         }); 
+        handleClick();
     };
 
     const handleClose = () => {
@@ -177,9 +207,23 @@ export default function MyMatchPage() {
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>My Match</Typography> 
             </div>
+            {/* {profileInfo.length === 0 &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography>Status: We are searching for your match. Come back later.</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            } */}
 
             {profileInfo.length > 1 &&
+            <>
+            <Typography variant={'h4'} align={'left'}>Your Matches</Typography>
                 <div className={classes.root2}>
+                    
                 <Tabs
                     orientation="vertical"
                     variant="scrollable"
@@ -312,7 +356,7 @@ export default function MyMatchPage() {
                                         </Typography>
                                     { match.placement == "No" &&
                                         <>
-                                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                                            <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                                             <Typography style={{marginBottom: "2%"}}>
                                                 {match.placement}
                                             </Typography>
@@ -336,7 +380,9 @@ export default function MyMatchPage() {
                         </div> 
                     </TabPanel>
                 ))}
-            </div>}
+            </div>
+            </>
+            }
 
             { typeof profileInfo.firstName === 'string' &&
                 <div className={classes.root}>
@@ -382,6 +428,66 @@ export default function MyMatchPage() {
                                         </Button>  
                                     </div>
                                 }
+                                    {/* dialogue pops up when user clicks decline button */}
+                                    <Dialog open={openDecline} onClose={handleClose} aria-labelledby="form-dialog-title">
+                                        <DialogTitle id="form-dialog-title">Decline Match</DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText>
+                                            Please enter the reason why you do not want to be match with {profileInfo.firstName} {profileInfo.lastName}?
+                                        </DialogContentText>
+                                        <TextField
+                                            onChange={(event) => setDeclineReason(event.target.value)}
+                                            InputProps={{
+                                                className: classes.MuiInputBase
+                                            }}
+                                            autoFocus
+                                            margin="dense"
+                                            id="reason"
+                                            label="Reason"
+                                            value={declineReason}
+                                            fullWidth
+                                        />
+                                        </DialogContent>
+                                        <DialogActions>
+                                        <Button style={{textTransform: 'none', color:'#83008F'}} onClick={handleClose}>
+                                            Cancel
+                                        </Button>
+                                        <Button 
+                                            style={{textTransform: 'none', color:'#83008F'}}
+                                            onClick={() => {
+                                                handleCloseDecline();
+                                                profileInfo.confirmedMatch = true;
+                                            }} 
+                                        >
+                                            Submit
+                                        </Button>
+                                        </DialogActions>
+                                    </Dialog>
+
+                                    {/* dialogue pops up when user clicks confirm button */}
+                                    <Dialog open={openConfirm} onClose={handleCloseC} aria-labelledby="form-dialog-title">
+                                        <DialogTitle id="form-dialog-title">Confirm Match</DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText>
+                                            Are you sure you want to be matched with {profileInfo.firstName} {profileInfo.lastName}
+                                        </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                        <Button onClick={handleCloseC} style={{textTransform: 'none'}} color="primary">
+                                            Cancel
+                                        </Button>
+                                        <Button 
+                                            onClick={() => {
+                                                handleCloseConfirm();
+                                                profileInfo.confirmedMatch = true;
+                                            }} 
+                                            color="primary"
+                                            style={{textTransform: 'none'}}
+                                        >
+                                            Yes
+                                        </Button>
+                                        </DialogActions>
+                                    </Dialog>
                                 <Typography variant="h3" style={{marginBottom: "5%"}}>
                                     {profileInfo.firstName} {profileInfo.lastName}
                                 </Typography>
@@ -390,31 +496,48 @@ export default function MyMatchPage() {
                                     <Typography style={{marginBottom: "2%"}}>
                                         {profileInfo.summary}
                                     </Typography>
-                                { profileInfo.placement == "No" &&
+                                { profileInfo.placement !== "No" &&
                                     <>
-                                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experience:</Typography>
                                         <Typography style={{marginBottom: "2%"}}>
                                             {profileInfo.placement}
                                         </Typography>
                                     </>
                                 }
-                                <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
-                                    <Typography style={{marginBottom: "2%"}}>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
-                                    </Typography>
                                 <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
+                                {profileInfo.interests && profileInfo.interests.map(interest => (
+                                    <li style={{marginBottom:'2%'}}>{interest}</li>
+                                ))}
                             </Grid>
                         </Grid>
                     </Paper>
                 </div> 
             }
+
+            <Snackbar anchorOrigin={{vertical:'top', horizontal: 'center'}} open={open} autoHideDuration={6000} onClose={handleCloseAlert}>
+            {confirmation === 'Confirmed' ? 
+                <Alert onClose={handleClose} severity="success">
+                    You have successfully Confirmed your match!
+                </Alert>
+                :
+                <Alert onClose={handleClose} severity="info">
+                    You have successfully Declined your match! They will be removed from the list once reviewed by the peer mentoring team.
+                </Alert>
+            }
+            </Snackbar>
+
+            {profileInfo.length === 0 &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography>Status: We are searching for your match. Come back later.</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            }
+
         </React.Fragment>
     )
 }

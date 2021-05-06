@@ -88,8 +88,9 @@ router.post("/signin", (req, res) => {
       });
 });
 
+//update user profile
 router.put('/updateProfile/:id', (req, res) => {
-  const _id = req.params._id;
+  //updates recieved from the fron-end
   const update ={
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -98,11 +99,10 @@ router.put('/updateProfile/:id', (req, res) => {
     yearOfStudy: req.body.yearOfStudy,
     placement: req.body.placement,
     summary: req.body.summary,
-    // experience: req.body.experience,
     interests: req.body.interests,
-    // imageURL: req.body.imageURL,
   };
   console.log(update);
+  //find user in database by their id and update their details.
   User.findByIdAndUpdate(req.params.id, update, (err, data) =>  {
     if (err) {
       console.log("err", err);
@@ -122,28 +122,30 @@ router.get("/getUserDetails/:id", (req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//find matches
 const findMatch = async (req, res) => {
-  console.log("running every minute");
+  //array of mentees
   const mentees = await User.find({role: "Mentee"})
+  //array of mentors
   const mentors = await User.find({role: "Mentor"})
+  //array of existing matches
   const matches = await MatchesModel.find()
-  // console.log(matches);
 
-
+  //loop through each mentee
   mentees.map((mentee) => {
-    
+    //loop through each mentor
       mentors.map((mentor) => {
-        // console.log(mentee.course);
-        //   console.log(mentor.course);
-        //   console.log(mentee.course == mentor.course);
         if(mentee.applicationStatus != "Matched"){
+          //firstly checks if they study the same course as this is a default compulsory criteria
           if(mentee.course == mentor.course){
+            // creates a new match if they study the same course
             const newMatch = new MatchesModel({
               mentor: mentor._id,
               mentorName: mentor.firstName,
               mentee: mentee._id
             })
             console.log("MATCH - COURSE");
+            //not a compulsory criteria so checks if either opted to be match to the same gender
             if(mentee.matchingCriteria == "Same Gender" || mentor.matchingCriteria == "Same Gender"){
               if(mentee.gender == mentor.gender){
                 const newMatch = new MatchesModel({
@@ -153,6 +155,7 @@ const findMatch = async (req, res) => {
                 })
                 console.log("MATCH - GENDER");
               }
+              //not a compulsory criteria so checks if either opted to be match to the same ethnicity
             }else if(mentee.matchingCriteria == "Same Ethnicity" || mentor.matchingCriteria == "Same Ethnicity"){
               if(mentee.ethniciy == mentor.ethnicity){
                 const newMatch = new MatchesModel({
@@ -162,6 +165,7 @@ const findMatch = async (req, res) => {
                 })
                 console.log("MATCH - ETHNICITY");
               }
+              //not a compulsory criteria so checks if either opted to be match to the same nationality
             }else if(mentee.matchingCriteria == "Same Nationality" || mentor.matchingCriteria == "Same Nationality"){
               if(mentee.nationality == mentor.nationality){
                 const newMatch = new MatchesModel({
@@ -171,6 +175,7 @@ const findMatch = async (req, res) => {
                 })
                 console.log("MATCH - NATIONALITY");
               }
+              //not a compulsory criteria so checks if either opted to be match based on placement
             }else if(mentee.matchingCriteria == "Placement" || mentor.matchingCriteria == "Placement"){
               if(mentor.placement == "Yes"){
                 const newMatch = new MatchesModel({
@@ -182,15 +187,15 @@ const findMatch = async (req, res) => {
               }
             }
             
+            // if mentee has been matched then their status is updated
             User.findByIdAndUpdate(mentee._id, {applicationStatus: "Matched"}, (err, data) =>  {
               if (err) {
                 console.log("err", err);
               } else {
                 console.log("successful status update-MENTEE");
-                // console.log(data);
               }
             });
-
+            // if mentor has been matched then their status is updated
             User.findByIdAndUpdate(mentor._id, {applicationStatus: "Matched"}, (err, data) =>  {
               if (err) {
                 console.log("err", err);
@@ -199,10 +204,13 @@ const findMatch = async (req, res) => {
               }
             });
 
+            // if the matching collection is not empty
             if(matches.length > 0) {
               console.log(matches.length == 0);
+              // loops thought each match
               matches.map((match) => {
                 console.log(match.mentor);
+                // for those who opted for more than one match, it updates and adds another match to their existing match object
                 if(match.mentor == mentor._id) {
                   console.log("MATCH" + match);
                   MatchesModel.updateOne(
@@ -216,6 +224,7 @@ const findMatch = async (req, res) => {
                     }
                   );
                 }else {
+                  //saves the new match
                   newMatch.save();
                   console.log("NewMatch");
             } 
@@ -228,6 +237,7 @@ const findMatch = async (req, res) => {
   })
 };
 
+//rund the algorithm every 3 days
 cron.schedule("3 * * * *", async() => {
   await findMatch();
 });

@@ -46,8 +46,9 @@ export default function EditProfilePage() {
         setProfileInfo({ ...profileInfo, [name]: value })
     }
         
-
+//useEffect is a React hook that performs an action anytime the component renders
       useEffect(() => {
+          //gets the signed in users id from the local storage
         const id = JSON.parse(localStorage.getItem('users')).id;
         console.log(id);
         if(id){
@@ -75,7 +76,9 @@ export default function EditProfilePage() {
       }, [])
     console.log(profileInfo);
 
+    //function renders when user clicks save button
     function updateProfile() {  
+        //gets the signed in users id from the local storage
         const id = JSON.parse(localStorage.getItem('users')).id;
         setProfileInfo({
             firstName: profileInfo.firstName,
@@ -87,14 +90,15 @@ export default function EditProfilePage() {
             interests: profileInfo.interests,
             placement: profileInfo.placement
         })  
+        //axios request to backend to update the user's details
         axios.put('http://localhost:5000/app/updateProfile/' + id, profileInfo)
         .then( res => {
-          alert(res.data);
+        //   alert(res.data);
          }   
         )
         .catch(err => {
           console.log(err.response);
-          alert('An error occurred! Try submitting the form again.');
+        //   alert('An error occurred! Try submitting the form again.');
         });
     }
       
@@ -138,13 +142,14 @@ export default function EditProfilePage() {
                                 </Typography>
                                 <TextField
                                     id="outlined-basic"
+                                    multiline
                                     name="course"
                                     onChange={handleInputChange}                                    // defaultValue={profileInfo.course}
                                     value={profileInfo.course}
                                     variant="outlined"
                                     color="primary"
                                     size="small"
-                                    style={{width: "25%"}}
+                                    style={{width: "30%"}}
                                 />
                             </div>
                         </Grid>
@@ -184,19 +189,32 @@ export default function EditProfilePage() {
                         />
                         <Typography variant="h5" style={{marginBottom: "2%"}}>Personal Information:</Typography>
                         <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
-                            <TextField
-                                id="outlined-basic"
-                                // onChange={(event) => setProfileInfo({summary: event})}
-                                // defaultValue={profileInfo.summary}
-                                // value={profileInfo.summary}
-                                variant="outlined"
-                                color="primary"
-                                // size="small"
-                                style={{width: "95%"}}
-                            />
+                        <TextField
+                                    id="outlined-basic"
+                                    multiline
+                                    name="summary"
+                                    onChange={handleInputChange}                                       // defaultValue={profileInfo.placement}
+                                    value={profileInfo.summary}
+                                    variant="outlined"
+                                    color="primary"
+                                    // size="small"
+                                    style={{width: "95%"}}
+                                />
+                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Hobbies:</Typography>
+                        <TextField
+                            id="outlined-basic"
+                            name="interests"
+                            onChange={handleInputChange}                               // defaultValue={profileInfo.interests}
+                            value={profileInfo.interests}
+                            variant="outlined"
+                            color="primary"
+                            // size="small"
+                            style={{width: "95%"}}
+                        />
+
                         { profileInfo.placement &&
                             <>
-                                <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Ecperience:</Typography>
+                                <Typography variant="h6" style={{color: "#C4C4C4"}}>Placement Experienceee:</Typography>
                                 <TextField
                                     id="outlined-basic"
                                     name="placement"
@@ -210,28 +228,6 @@ export default function EditProfilePage() {
                             </>
                         }
                         
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Summary:</Typography>
-                        <TextField
-                            id="outlined-basic"
-                            // onChange={(event) => setProfileInfo({summary: event})}
-                            // defaultValue={profileInfo.summary}
-                            value="IDK WHAT THIS IS YET"
-                            variant="outlined"
-                            color="primary"
-                            // size="small"
-                            style={{width: "95%"}}
-                        />
-                        <Typography variant="h6" style={{color: "#C4C4C4"}}>Interests:</Typography>
-                        <TextField
-                            id="outlined-basic"
-                            name="interests"
-                            onChange={handleInputChange}                               // defaultValue={profileInfo.interests}
-                            value={profileInfo.interests}
-                            variant="outlined"
-                            color="primary"
-                            // size="small"
-                            style={{width: "95%"}}
-                        />
                             {/* <div>
                                 <Chip 
                                     label="Deletable primary"

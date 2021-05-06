@@ -8,17 +8,20 @@ import HomeImg from '../../../Images/pair5.jpg';
 import arrow from '../../../Images/arrow2.png';
 import TextModel from '../../PageText/model';
 import Slider from 'infinite-react-carousel';
-import GoalsImg from '../../../Images/pair10.jpg';
-import FriendsImg from '../../../Images/friends.svg';
+import GoalsImg from '../../../Images/pair20.jpg';
 import VideoChatImg from '../../../Images/pair4.jpg';
-import PairImg from '../../../Images/pair6.jpg';
-
+import PairImg from '../../../Images/pair10.jpg';
+import Pair2Img from '../../../Images/pair6.jpg';
 
 
 export default function HomePage() {
     const {Home} = TextModel;
+    
     return (
         <React.Fragment>
+            <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
+               <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Aston University's Peer Mentoring</Typography> 
+            </div>
             <Slider 
                 dots
                 autoplay
@@ -110,6 +113,20 @@ export default function HomePage() {
                             <img src={PairImg} alt="Logo" style={{width: "100%"}} />
                         </div>
                     </Grid>
+                </Grid>
+                </div>
+                <div>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={8}>
+                        <div style={{}}>
+                            <img src={Pair2Img} alt="Logo" style={{width: "100%"}} />
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} sm={4} style={{marginTop:"5%"}}>
+                        <Typography variant={"h3"} style={{marginRight: "10%", marginBottom: "5%", lineHeight: 1, textAlign:"center", color:"#FF9505"}}>
+                            {Home.Header.text11}
+                        </Typography>
+                    </Grid>   
                 </Grid>
                 </div>
             </Slider>

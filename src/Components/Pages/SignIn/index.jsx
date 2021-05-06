@@ -36,7 +36,7 @@ export default function SignInPage() {
       console.log(json);
       if(json.success){
         setSignIn(true);
-        alert('SUCCESS')
+        // alert('SUCCESS')
         
         // console.log(isSignedIn);
         localStorage.setItem("users", JSON.stringify(json));
@@ -46,7 +46,7 @@ export default function SignInPage() {
         })
         
       }else{
-        alert('FAIL')
+        // alert('FAIL')
         setSignIn(false)
       }
     })
@@ -115,6 +115,7 @@ export default function SignInPage() {
               </Button>
             </form>
       </MaterialLayout>
+      <div style={{marginBottom:"24%"}}/>
     </React.Fragment>
   )
 

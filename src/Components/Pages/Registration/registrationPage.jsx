@@ -9,6 +9,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import Check from "@material-ui/icons/Check";
+import CreateIcon from '@material-ui/icons/Create';
 import clsx from "clsx";
 import { Formik, Form } from 'formik';
 import axios from 'axios';
@@ -100,7 +101,7 @@ export default function RegistrationPage() {
      //everything stored in 'registered' is posted to the endpoint(backend)
      axios.post('http://localhost:5000/app/signup', values)
       .then(response => console.log(response.data))
-     alert(JSON.stringify(values, null, 2));
+    //  alert(JSON.stringify(values, null, 2));
     actions.setSubmitting(false);
 
     setActiveStep(activeStep + 1);
@@ -131,7 +132,7 @@ export default function RegistrationPage() {
           [classes.completed]: completed
         })}
       >
-        {completed ? <Check /> : <div className={classes.circle}>Icon</div>}
+        {completed ? <Check /> : <div className={classes.circle}><CreateIcon /></div>}
       </div>
     );
 };

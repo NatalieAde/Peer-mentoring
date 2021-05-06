@@ -6,6 +6,7 @@ import SignInPage from './Components/Pages/SignIn';
 import Home from './Components/Pages/Home/home';
 import Navbar from './Components/Header';
 import NavbarSignedOut from './Components/Header/navBarSignedOut';
+import Footer from "./Components/Footer";
 import ProfilePage from "./Components/Pages/Profile";
 import MyMatchPage from "./Components/Pages/MyMatch";
 import MessagesPage from "./Components/Pages/Messages";
@@ -69,6 +70,7 @@ function App() {
     >
       <Router>
         <div>
+          {/* checks if user is signed in to determine what nav bar appears */}
           {localStorage.getItem("users") ? <Navbar /> : <NavbarSignedOut/>}
           <br/>
           <Route path="/" exact component={Home} />
@@ -84,6 +86,7 @@ function App() {
           <Route path="/testimonials" exact component={TestimonialsPage} />
         </div>
       </Router>
+      {/* <Footer /> */}
     </AuthContext.Provider>
   );
 }

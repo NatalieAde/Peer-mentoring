@@ -31,12 +31,18 @@ const {
 
 
 export default [
+  //checks if the rquired fields are empty, if they are then an error message is shown.
   Yup.object().shape({
     [firstName.name]: Yup.string().required(`${firstName.requiredErrorMsg}`),
     [lastName.name]: Yup.string().required(`${lastName.requiredErrorMsg}`),
-    [studentNo.name]: Yup.string().required(`${studentNo.requiredErrorMsg}`).test('len', `${studentNo.invalidErrorMsg}`, val => val && val.length === 7),
-    [email.name]: Yup.string().required(`${email.requiredErrorMsg}`).matches(/^(\w+(\.-)?\w+)*@+([aston])+([\.])+([ac])+([\.])+([uk])+$/ , `${email.invalidErrorMsg}`),
+    //checks that the student number is the expected 9 digits, if not then an error message is shown
+    [studentNo.name]: Yup.string().required(`${studentNo.requiredErrorMsg}`).test('len', `${studentNo.invalidErrorMsg}`, val => val && val.length === 9),
+    // RegEx to check that the email extention is @aston.ac.uk, if not then an error massge is shown
+    [email.name]: Yup.string().required(`${email.requiredErrorMsg}`)
+      .matches(/^(\w+(\.-)?\w+)*@+([aston])+([\.])+([ac])+([\.])+([uk])+$/ , `${email.invalidErrorMsg}`),
     [password.name]: Yup.string().required(`${password.requiredErrorMsg}`),
-    [confirmPassword.name]: Yup.string().required(`${confirmPassword.requiredErrorMsg}`).required(`${confirmPassword.invalidErrorMsg}`).oneOf([Yup.ref('password'), null], "Passwords don't match.")
+    //checks if passwords match, if not then an error message is shown
+    [confirmPassword.name]: Yup.string().required(`${confirmPassword.requiredErrorMsg}`)
+      .required(`${confirmPassword.invalidErrorMsg}`).oneOf([Yup.ref('password'), null], "Passwords do not match."),
   })
 ];

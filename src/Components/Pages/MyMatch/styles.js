@@ -1,5 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        '& > * + *': {
+          marginTop: theme.spacing(1),
+        },
+    },
     sectionDesktop: {
         display: 'none',
         // margin: '1%',
@@ -16,7 +22,7 @@ export default makeStyles((theme) => ({
     },
    
     MuiInputBase: {
-        olor:'red'
+        color:'red'
     },
     root2: {
         flexGrow: 1,
@@ -42,8 +48,8 @@ export default makeStyles((theme) => ({
         color: '#FFFFFF'
     },
     paper: {
-        marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3),
+        // marginTop: theme.spacing(3),
+        // marginBottom: theme.spacing(3),
         padding: theme.spacing(2),
         [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
             // marginTop: theme.spacing(6),

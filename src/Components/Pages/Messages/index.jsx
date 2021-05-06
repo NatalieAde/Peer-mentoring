@@ -3,13 +3,15 @@ import {
     Typography,
     TextField,
     Button,
-    Grid
+    Grid,
+    CircularProgress 
 } from '@material-ui/core';
 import {
     AccountCircle,
     TrackChanges,
     EventAvailable,
 } from '@material-ui/icons';
+import MaterialLayout from '../../../Components/Layout/layout';
 import useStyles from './styles';
 import useChat from './useChat';
 import axios from 'axios';
@@ -107,8 +109,20 @@ export default function MessagesPage() {
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Messages</Typography> 
             </div>
 
-            
+            {profileInfo.firstName === '' &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography align={'center'}>Once you get matched, you will be able to start messaging!</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            }
 
+            
+{profileInfo.firstName !== '' &&
             <Grid container style={{margin: '1%'}}>
                 {/* <div className={classes.sectionDesktop}> */}
                     <Grid item xs={12} sm={3} className={classes.sectionDesktop}>
@@ -129,7 +143,7 @@ export default function MessagesPage() {
                                 href="/mymatch"
                                 variant="contained"
                                 size="large"
-                                style={{color: '#000000', backgroundColor: '#FFFFFF'}}
+                                style={{color: '#000000', backgroundColor: '#FFFFFF', textTransform: 'none'}}
                                 startIcon={<AccountCircle />}
                             >
                                 View Profile
@@ -140,7 +154,7 @@ export default function MessagesPage() {
                                 href="/calendar"
                                 variant="contained"
                                 size="large"
-                                style={{color: '#000000', backgroundColor: '#FFFFFF'}}
+                                style={{color: '#000000', backgroundColor: '#FFFFFF', textTransform: 'none'}}
                                 startIcon={<EventAvailable />}
                             >  
                                 Schedule Meeting
@@ -151,7 +165,7 @@ export default function MessagesPage() {
                                 href="/goals"
                                 variant="contained"
                                 size="large"
-                                style={{color: '#000000', backgroundColor: '#FFFFFF'}}
+                                style={{color: '#000000', backgroundColor: '#FFFFFF', textTransform: 'none'}}
                                 startIcon={<TrackChanges />}
                             >
                                 Goals
@@ -165,15 +179,19 @@ export default function MessagesPage() {
                         <Typography style={{fontSize: 10}}>Your Match</Typography>
                         <AccountCircle style={{fontSize: 40}} />
                     </Grid>
-                    <Grid item xs={4}>
-                        {JSON.parse(localStorage.getItem('userInfo')).id = JSON.parse(localStorage.getItem('users')).id &&
-                            <Typography variant='h5' align={'left'} style={{marginTop: '8%'}}>
-                               {profileInfo.firstName} {profileInfo.lastName}
-                                {/* {JSON.parse(localStorage.getItem('userInfo')).firstName} {JSON.parse(localStorage.getItem('userInfo')).lastName} */}
-                            </Typography>
-                        }
-                    </Grid>
+                    
                     <Grid item xs={3}>
+                        <Button
+                            href="/mymatch"
+                            variant="contained"
+                            size="small"
+                            style={{color: '#000000', backgroundColor: '#FFFFFF', marginTop: '10%', textTransform: 'none'}}
+                            startIcon={<AccountCircle />}
+                        >
+                            Profile
+                        </Button>
+                    </Grid>
+                    <Grid item xs={4}>
                         <Button
                             href="/goals"
                             variant="contained"
@@ -201,7 +219,7 @@ export default function MessagesPage() {
                     
                 </Grid>
 
-                <Grid item xs={12} sm={8} style={{marginLeft: '28%', flexDirection:"row", alignSelf:"flex-start"}} >
+                <Grid item xs={12} sm={8} style={{flexDirection:"row", alignSelf:"flex-start"}} >
                     {/* <div ref={myRef}> */}
                         <ol style={{listStyleType: 'none', padding: 0,}}>
                         {messages.map((message, i) => (
@@ -217,8 +235,8 @@ export default function MessagesPage() {
                         </ol>
                     {/* </div> */}
 
-                    <Grid container style={{position:'fixed', bottom:10, width:'75%' }}>
-                        <Grid item xs={10}>
+                    <Grid container style={{marginTop:'15%', width:'100%' }}>
+                        <Grid item xs={10} sm={8}>
                             <TextField
                                 id="outlined-basic"                                    
                                 variant="outlined"
@@ -228,15 +246,15 @@ export default function MessagesPage() {
                                 onChange={handleNewMessageChange}
                                 placeholder='Type message here'
                                 fullWidth
-                                style={{height: "10px"}}
+                                style={{height: "10px", marginLeft:"2%"}}
                             />
                         </Grid>
-                        <Grid item xs={2}>
+                        <Grid item xs={2} sm={2}>
                             <Button
                                 variant="contained"
                                 onClick={handleSendMessage}
                                 size="large"
-                                style={{ color: '#FFFFFF', backgroundColor: '#83008F'}}
+                                style={{ color: '#FFFFFF', backgroundColor: '#83008F', textTransform: 'none', marginLeft:"20%"}}
                             >
                                 Send
                             </Button>
@@ -246,6 +264,7 @@ export default function MessagesPage() {
                     </Grid>
                 </Grid>
             </Grid>
+}
 
             
         </React.Fragment>

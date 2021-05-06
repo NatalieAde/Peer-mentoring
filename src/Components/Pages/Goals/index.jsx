@@ -13,11 +13,13 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    CircularProgress 
 } from '@material-ui/core';
 import useStyle from './styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import HomeImg from '../../../Images/goalsImg.svg';
+import MaterialLayout from '../../../Components/Layout/layout';
 import axios from 'axios';
 
 function TabPanel(props) {
@@ -54,9 +56,9 @@ export default function GoalsPage() {
     const [inputValue, setInputValue] = useState('');
     const [confirmed, setConfirmed] = useState();
     const [openDecline, setOpenDecline] = useState(false);
-    const [openConfirm, setOpenConfirm] = useState(false);
+    const [open, setOpen] = useState(false);
     const [goals, setGoals] = useState([
-        { goalName: 'Example', isSelected: false },
+        
     ]);
 
     const handleChange = (event, newValue) => {
@@ -75,26 +77,20 @@ export default function GoalsPage() {
         setInputValue('');
     };
 
-    const handleClickDecline = () => {
-        setOpenDecline(true);
-    };
 
-    const handleClickConfirm = () => {
-        setOpenConfirm(true);
-    };
+    // const handleClickConfirm = () => {
+    //     setOpenConfirm(true);
+    // };
     
-    const handleCloseDecline = () => {
-        setOpenDecline(false);
-        setConfirmed(true);
-    };
+    function handleClickOpen(event, item) {
+        event.persist();
+        setGoals(item);
+        setOpen(true);
+      }
 
-    const handleCloseConfirm = () => {
-        setOpenConfirm(false);
-        setConfirmed(true);
-    };
 
     const handleClose = () => {
-        setOpenConfirm(false);
+        setOpen(false);
     };
 
     function handleRemove(goal) {
@@ -154,113 +150,215 @@ export default function GoalsPage() {
             <div style={{backgroundColor: '#EC6D0A', marginTop: '-1.5%', marginBottom: '2%'}}>
                <Typography style={{color: '#FFFFFF', fontSize: '55px'}} align={'center'}>Goals</Typography> 
             </div>
+            {profileInfo.length === 0 &&
+                <MaterialLayout>
+                    <div style={{display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: "center"}}>
+                        <Typography align={'center'}>Once you get matched, you will be able to start setting and tracking your goals together!</Typography>
+                        <CircularProgress
+                            size={60}
+                            style={{color: '#EC6D0A'}}
+                        />
+                    </div>
+                </MaterialLayout>
+            }
             {profileInfo.length > 1 &&
                 <div className={classes.root2}>
-                <Tabs
-                    orientation="vertical"
-                    variant="scrollable"
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Vertical tabs example"
-                    className={classes.tabs}
-                >
-                {profileInfo.map((match, i) => (
-                    <Tab style={{textTransform: 'none'}} label={match.firstName + " " + match.lastName} {...a11yProps(i)} />
-                ))} 
-                </Tabs> 
+                    <Tabs
+                        orientation="vertical"
+                        variant="scrollable"
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="Vertical tabs example"
+                        className={classes.tabs}
+                    >
+                    {profileInfo.map((match, i) => (
+                        <Tab style={{textTransform: 'none'}} label={match.firstName + " " + match.lastName} {...a11yProps(i)} />
+                    ))} 
+                    </Tabs> 
                 {profileInfo.map((match, i) => (
                     <TabPanel value={value} index={i} style={{width:"100%"}}>
                         <div className={classes.root}>
                             <Typography variant='h6' align={'center'} style={{color:"black", marginBottom:"3%"}}>{match.firstName}'s Goals</Typography>
-                        {/* <Paper className={classes.paper}> */}
-                        <Grid container spacing={3} >
-                            <Grid item xs={12} sm={11}>
-                                <TextField 
-                                    onChange={(event) => setInputValue(event.target.value)}
-                                    variant="outlined"
-                                    style={{backgroundColor: '#FFFFFF', marginLeft: '1%'}}
-                                    value={inputValue}
-                                    fullWidth
-                                />
+                            <Grid container spacing={3} >
+                                <Grid item xs={12} sm={11}>
+                                    <TextField 
+                                        onChange={(event) => setInputValue(event.target.value)}
+                                        variant="outlined"
+                                        style={{backgroundColor: '#FFFFFF', marginLeft: '1%'}}
+                                        value={inputValue}
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={1}>
+                                    <Button 
+                                        variant="contained"
+                                        style={{backgroundColor: '#83008F', color: '#FFFFFF', textTransform: 'none', fontSize: 20}}
+                                        onClick={() => handleAddButtonClick()}
+                                    >
+                                        Add
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={1}>
-                                <Button 
-                                    variant="contained"
-                                    style={{backgroundColor: '#83008F', color: '#FFFFFF', textTransform: 'none', fontSize: 20}}
-                                    onClick={() => handleAddButtonClick()}
-                                >
-                                    Add
-                                </Button>
-                            </Grid>
-                        </Grid>
 
-        {goals.length == 0 &&
-            <div style={{marginTop: "5%"}}>
-                <img src={HomeImg} alt="Logo" style={{width: "60%", height: "50%"}} />
-                <Typography variant='h6' align={'center'}>Set your first goal.</Typography>
-            </div>
-        }
-        <div style={{margin: 'auto', width: '100%'}}>
-            {goals.map((item, index) => (
-                <div style={{marginTop: '2%'}}>
-                    <Grid container spacing={3}  style={{backgroundColor: '#FAF4FB', width: '100%', borderRadius: 10}}>
-                        <Grid item xs={12} sm={2}>
-                            <Checkbox style={{color:'#83008F'}}/>
-                        </Grid>
-                        <Grid item xs={12} sm={7}>
-                            <Typography style={{color: '#000000', fontSize: '30px'}}>{item.goalName}</Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={1}>
-                                <Button
-                                variant="contained"
-                                size="large"
-                                style={{color: 'black', backgroundColor: '#FEF3EB', textTransform: 'none', marginRight: "10%"}}
-                                onClick={handleClickConfirm}
-                                >
-                                    Details
-                                </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={1}>
-                            <Button
-                                variant="contained"
-                                size="large"
-                                style={{color: 'black', backgroundColor: '#FFC971', textTransform: 'none', marginRight: "10%"}}
-                                onClick={() => handleRemove(item.goalName)}
-                                startIcon={<HighlightOffIcon/>}
-                            >
-                                Delete
-                            </Button>
-                                
-                        </Grid>
-                    </Grid>
-                </div>
-            ))}
-        </div>
-                            
-                        {/* </Paper> */}
+                            {goals.length == 0 &&
+                               <div style={{marginTop: "5%"}}>
+                                    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                        <img src={HomeImg} alt="Logo" style={{width: "60%", height: "50%"}} />
+                                    </div>
+                                    <div>
+                                        <Typography style={{color:'black'}} variant={'h4'} align={'center'}>Set your first goal.</Typography>
+                                    </div>
+                               
+                                </div>
+                            }
+                            <div style={{margin: 'auto', width: '100%'}}>
+                                {goals.map((item, index) => (
+                                    <div style={{marginTop: '2%'}}>
+                                        <Grid container spacing={3}  style={{backgroundColor: '#FAF4FB', width: '100%', borderRadius: 10}}>
+                                            <Grid item xs={12} sm={2}>
+                                                <Checkbox style={{color:'#83008F'}}/>
+                                            </Grid>
+                                            <Grid item xs={12} sm={7}>
+                                                <Typography style={{color: '#000000', fontSize: '30px'}}>{item.goalName}</Typography>
+                                            </Grid>
+                                            <Grid item xs={12} sm={1}>
+                                                    <Button
+                                                    variant="contained"
+                                                    size="large"
+                                                    style={{color: 'black', backgroundColor: '#FEF3EB', textTransform: 'none', marginRight: "10%"}}
+                                                    onClick={event => handleClickOpen(event, item)}
+                                                    >
+                                                        Details
+                                                    </Button>
+                                            </Grid>
+                                            <Grid item xs={12} sm={1}>
+                                                <Button
+                                                    variant="contained"
+                                                    size="large"
+                                                    style={{color: 'black', backgroundColor: '#FFC971', textTransform: 'none', marginRight: "10%"}}
+                                                    onClick={() => handleRemove(item.goalName)}
+                                                    startIcon={<HighlightOffIcon/>}
+                                                >
+                                                    Delete
+                                                </Button>
+                                                    
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                ))}
+                            </div>
                         </div> 
 
-                        <Dialog open={openConfirm} onClose={handleClose} aria-labelledby="form-dialog-title">
-                                        <DialogTitle id="form-dialog-title">Decline Match</DialogTitle>
-                                        <DialogContent>
-                                        <DialogContentText>
-                                            Are you sure you want to be matched with {match.firstName} {match.lastName}
-                                        </DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                        <Button onClick={handleClose} color="primary">
-                                            Cancel
-                                        </Button>
-                                        <Button onClick={handleCloseConfirm} color="primary">
-                                            Yes
-                                        </Button>
-                                        </DialogActions>
-                                    </Dialog>
+                        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                            <DialogTitle id="form-dialog-title">Decline Match</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to be matched with {match.firstName} {match.lastName}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                    Done
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </TabPanel>
                 ))}
             </div>}
-            
-            
+
+            { typeof profileInfo.firstName === 'string' &&
+            <>
+                <div className={classes.root}>
+                    <Typography variant='h6' align={'center'} style={{color:"black", marginBottom:"3%"}}>{profileInfo.firstName}'s Goals</Typography>
+                    <Grid container spacing={3} >
+                        <Grid item xs={12} sm={11}>
+                            <TextField 
+                                onChange={(event) => setInputValue(event.target.value)}
+                                variant="outlined"
+                                style={{backgroundColor: '#FFFFFF', marginLeft: '1%'}}
+                                value={inputValue}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={1}>
+                            <Button 
+                                variant="contained"
+                                style={{backgroundColor: '#83008F', color: '#FFFFFF', textTransform: 'none', fontSize: 20}}
+                                onClick={() => handleAddButtonClick()}
+                            >
+                                Add
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                    {goals.length == 0 &&
+                        <div style={{marginTop: "5%"}}>
+                        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                            <img src={HomeImg} alt="Logo" style={{width: "60%", height: "80%"}} />
+                        </div>
+                        <div>
+                            <Typography style={{color:'black'}} variant={'h4'} align={'center'}>Set your first goal.</Typography>
+                        </div>
+                        
+                    </div>
+                    }
+                    <div style={{margin: 'auto', width: '100%'}}>
+                        {goals.map((item, index) => (
+                            <>
+                            <div style={{marginTop: '2%'}}>
+                                <Grid container spacing={3}  style={{backgroundColor: '#FAF4FB', width: '100%', borderRadius: 10, display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                    <Grid item xs={12} sm={2}>
+                                        <Checkbox style={{color:'#83008F'}}/>
+                                    </Grid>
+                                    <Grid item xs={12} sm={7}>
+                                        <Typography style={{color: '#000000', fontSize: '30px'}}>{item.goalName}</Typography>
+                                    </Grid>
+                                    <Grid item xs={12} sm={1}>
+                                            <Button
+                                            variant="contained"
+                                            size="large"
+                                            style={{color: 'black', backgroundColor: '#FEF3EB', textTransform: 'none', marginRight: "10%"}}
+                                            onClick={event => handleClickOpen(event, item)}
+                                            >
+                                                Details
+                                            </Button>
+                                    </Grid>
+                                    <Grid item xs={12} sm={1}>
+                                        <Button
+                                            variant="contained"
+                                            size="large"
+                                            style={{color: 'black', backgroundColor: '#FFC971', textTransform: 'none', marginRight: "10%"}}
+                                            onClick={() => handleRemove(item.goalName)}
+                                            startIcon={<HighlightOffIcon/>}
+                                        >
+                                            Delete
+                                        </Button>
+                                            
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            </>
+                        ))}
+                    </div>
+                </div> 
+
+                {open && goals && (
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">{goals.goalName}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Are you sure you want to be matched with {profileInfo.firstName} {profileInfo.lastName}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Done
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                )}
+            </>
+            }
            
         </React.Fragment>
     )

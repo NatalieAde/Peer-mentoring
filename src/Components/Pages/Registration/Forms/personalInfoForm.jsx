@@ -27,6 +27,9 @@ export default function PersonalInfoForm(props) {
       <Typography variant="h6" gutterBottom>
         Mentor Set Up
       </Typography>
+      <Typography variant='caption' style={{color:"#83008F"}} gutterBottom>
+        * = Required fields
+      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <SelectField

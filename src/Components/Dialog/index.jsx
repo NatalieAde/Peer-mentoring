@@ -9,7 +9,14 @@ import {
 } from '@material-ui/core';
 
 export default function DialogCustom(props) {
-    const {children, onClickOpen, ref, onClickClose, title, keyID} = props;
+    const {
+        children,
+        onClickOpen,
+        ref,
+        onClickClose,
+        title,
+        keyID
+    } = props;
 
     return (
         <div>
